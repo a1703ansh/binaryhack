@@ -4,28 +4,28 @@ import {
   Plus, 
   Upload, 
   CheckCircle2, 
-  FileSpreadsheet, 
   Download, 
   Fuel, 
   Wrench, 
   Utensils, 
   Smartphone, 
   Home, 
-  Clock, 
-  Sparkles,
-  Info
+  CreditCard, 
+  Sparkles
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
-import { Expense, ExpenseCategory } from '../types';
+import { type ExpenseCategory } from '@earnwise/shared';
+import { api } from '../api/client';
 
 export const ExpensesView: React.FC = () => {
-  const { expenses, addExpense, safeSpending } = useEarnWise();
+  const { expenses, addExpense, safeSpending, refresh } = useEarnWise();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [amount, setAmount] = useState<number>(450);
   const [category, setCategory] = useState<ExpenseCategory>('Fuel');
   const [note, setNote] = useState('');
   const [isReceiptScanning, setIsReceiptScanning] = useState(false);
   const [detectedReceipt, setDetectedReceipt] = useState<{ category: ExpenseCategory; amount: number } | null>(null);
+  const [importSummary, setImportSummary] = useState<string | null>(null);
 
   const categories: { label: ExpenseCategory; icon: any; color: string }[] = [
     { label: 'Fuel', icon: Fuel, color: '#EF4444' },
@@ -33,6 +33,7 @@ export const ExpensesView: React.FC = () => {
     { label: 'Food', icon: Utensils, color: '#EAB308' },
     { label: 'Phone/Data', icon: Smartphone, color: '#3B82F6' },
     { label: 'Rent', icon: Home, color: '#8B5CF6' },
+    { label: 'EMI/Repayment', icon: CreditCard, color: '#F43F5E' },
     { label: 'Other', icon: Receipt, color: '#64748B' }
   ];
 
@@ -73,15 +74,35 @@ export const ExpensesView: React.FC = () => {
     setDetectedReceipt(null);
   };
 
-  const handleExportCSV = () => {
-    const header = 'Date,Category,Amount,Note,Status\n';
-    const rows = expenses.map(e => `"${e.date}","${e.category}",${e.amount},"${e.note}","${e.receiptStatus || 'verified'}"`).join('\n');
-    const blob = new Blob([header + rows], { type: 'text/csv' });
+  const handleExportCSV = async () => {
+    const blob = await api.download('/expenses/export-csv');
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `earnwise-expenses-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // Expense CSV import (Date, Category, Amount, Note) — mirrors the export format
+  const handleImportCSV = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const text = String(reader.result || '');
+      try {
+        const res = await api.post<{ imported: number }>('/expenses/import-csv', { csv: text });
+        await refresh();
+        setImportSummary(res.imported > 0
+          ? `Imported ${res.imported} expense record${res.imported === 1 ? '' : 's'}.`
+          : 'No valid rows found. Expected columns: Date, Category, Amount, Note.');
+      } catch {
+        setImportSummary('Could not import that file. Expected columns: Date, Category, Amount, Note.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
   };
 
   const totalExpense = expenses.reduce((acc, e) => acc + e.amount, 0);
@@ -110,6 +131,12 @@ export const ExpensesView: React.FC = () => {
             <span>Export CSV</span>
           </button>
 
+          <label className="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer">
+            <Upload className="w-3.5 h-3.5" />
+            <span>Import CSV</span>
+            <input type="file" accept=".csv" onChange={handleImportCSV} className="hidden" />
+          </label>
+
           <button
             onClick={() => setIsAddModalOpen(true)}
             className="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center gap-1.5 shadow-md shadow-emerald-500/20 transition-all"
@@ -134,7 +161,10 @@ export const ExpensesView: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-xs">
+        <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-right">
+          {importSummary && (
+            <div className="text-[10px] text-emerald-400 mb-1">{importSummary}</div>
+          )}
           <span className="text-slate-400">Total Tracked:</span>
           <div className="text-xl font-black font-mono text-white mt-0.5">
             ₹{totalExpense.toLocaleString('en-IN')}
@@ -217,6 +247,8 @@ export const ExpensesView: React.FC = () => {
                    exp.category === 'Vehicle Maintenance' ? <Wrench className="w-4 h-4 text-orange-400" /> :
                    exp.category === 'Food' ? <Utensils className="w-4 h-4 text-yellow-400" /> :
                    exp.category === 'Phone/Data' ? <Smartphone className="w-4 h-4 text-blue-400" /> :
+                   exp.category === 'Rent' ? <Home className="w-4 h-4 text-violet-400" /> :
+                   exp.category === 'EMI/Repayment' ? <CreditCard className="w-4 h-4 text-rose-400" /> :
                    <Receipt className="w-4 h-4 text-slate-400" />}
                 </div>
 

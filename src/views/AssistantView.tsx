@@ -3,15 +3,12 @@ import {
   Bot, 
   Send, 
   Sparkles, 
-  User, 
-  ShieldCheck, 
-  Info,
-  HelpCircle
+  User
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 
 export const AssistantView: React.FC = () => {
-  const { chatMessages, sendAssistantMessage, userName } = useEarnWise();
+  const { chatMessages, sendAssistantMessage } = useEarnWise();
   const [inputText, setInputText] = useState('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 

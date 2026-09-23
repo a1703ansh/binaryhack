@@ -21,7 +21,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeView, setActiveView }) => {
-  const { savingsSettings, isDemoMode } = useEarnWise();
+  const { savingsSettings } = useEarnWise();
 
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },

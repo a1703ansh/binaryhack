@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Questrial&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-lowest": "#ffffff", "on-surface": "#1b1c1c", "surface-container-high": "#eae7e7", "surface-bright": "#fcf9f8", "on-primary-fixed": "#2a1800", "surface-container-highest": "#e5e2e1", "outline": "#857461", "on-secondary": "#ffffff", "on-secondary-fixed": "#001f2b", "on-error-container": "#93000a", "primary-container": "#f9a61f", "on-tertiary-fixed-variant": "#842500", "surface-container": "#f0eded", "on-tertiary": "#ffffff", "tertiary-container": "#ff9f80", "tertiary": "#ad3300", "tertiary-fixed-dim": "#ffb59d", "primary-fixed": "#ffddb6", "secondary": "#006686", "on-secondary-fixed-variant": "#004d66", "surface-variant": "#e5e2e1", "tertiary-fixed": "#ffdbd0", "inverse-primary": "#ffb959", "on-surface-variant": "#524434", "on-tertiary-fixed": "#390b00", "error-container": "#ffdad6", "inverse-surface": "#303030", "on-primary-container": "#664000", "outline-variant": "#d8c3ad", "on-error": "#ffffff", "surface-tint": "#845400", "secondary-fixed": "#c0e8ff", "on-tertiary-container": "#872600", "primary": "#845400", "on-secondary-container": "#005773", "on-primary": "#ffffff", "on-primary-fixed-variant": "#643f00", "surface-container-low": "#f6f3f2", "secondary-fixed-dim": "#6fd2ff", "surface": "#fcf9f8", "background": "#fcf9f8", "primary-fixed-dim": "#ffb959", "error": "#ba1a1a", "surface-dim": "#dcd9d9", "inverse-on-surface": "#f3f0ef", "on-background": "#1b1c1c", "secondary-container": "#66d0fe" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "margin-desktop": "3rem", "space-md": "1rem", "gutter": "1rem", "space-xs": "0.25rem", "space-xl": "2rem", "gutter-desktop": "1.5rem" }, fontFamily: { "body-md": [ "Questrial" ], "headline-md": [ "Questrial" ], "label-sm": [ "Questrial" ], "display-lg-mobile": [ "Questrial" ], "body-lg": [ "Questrial" ], "label-lg": [ "Questrial" ], "headline-lg-mobile": [ "Questrial" ], "headline-lg": [ "Questrial" ], "label-md": [ "Questrial" ], "display-lg": [ "Questrial" ], "body-sm": [ "Questrial" ], "currency-display": [ "Questrial" ] }, fontSize: { "body-md": [ "16px", { lineHeight: "24px", fontWeight: "400" } ], "headline-md": [ "24px", { lineHeight: "32px", fontWeight: "400" } ], "label-sm": [ "12px", { lineHeight: "16px", fontWeight: "600" } ], "display-lg-mobile": [ "36px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "300" } ], "body-lg": [ "18px", { lineHeight: "28px", fontWeight: "400" } ], "label-lg": [ "16px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" } ], "headline-lg-mobile": [ "28px", { lineHeight: "36px", fontWeight: "400" } ], "headline-lg": [ "36px", { lineHeight: "44px", fontWeight: "400" } ], "label-md": [ "14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" } ], "display-lg": [ "56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "300" } ], "body-sm": [ "14px", { lineHeight: "20px", fontWeight: "400" } ], "currency-display": [ "40px", { lineHeight: "48px", fontWeight: "400" } ] } } } };</script></head><body class="bg-secondary-container font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center py-6 bg-secondary-container select-none"><div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center mb-8 shadow-[0_4px_0_0_#ad3300]"><span class="material-symbols-outlined text-on-primary-fixed text-2xl">savings</span></div><nav class="flex flex-col items-center gap-space-sm w-full px-2" data-active-classes="bg-primary-container text-on-primary-container shadow-[0_4px_0_0_#ad3300]"><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="dashboard" href="#" title="Dashboard"><span class="material-symbols-outlined text-2xl">home</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="income" href="#" title="Income"><span class="material-symbols-outlined text-2xl">payments</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="auto-save" href="#" title="Auto-Save"><span class="material-symbols-outlined text-2xl">autorenew</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="invest" href="#" title="Invest"><span class="material-symbols-outlined text-2xl">trending_up</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="tax" href="#" title="Tax"><span class="material-symbols-outlined text-2xl">receipt_long</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="goals" href="#" title="Goals"><span class="material-symbols-outlined text-2xl">flag</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="activity" href="#" title="Activity"><span class="material-symbols-outlined text-2xl">history</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="settings" href="#" title="Settings"><span class="material-symbols-outlined text-2xl">settings</span></a></nav></aside><div class="pl-20 min-h-screen bg-secondary-container"><header class="fixed top-0 left-20 right-0 h-16 bg-secondary-container z-40"><div class="h-16 w-full px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm uppercase tracking-wider text-surface-container-lowest opacity-90 px-space-sm py-space-xs rounded-full bg-secondary text-on-secondary">Hackathon Prototype — simulated data</span></div><div class="flex items-center gap-space-md"><div class="px-space-md py-1 rounded-full bg-surface-container-lowest text-on-secondary-container font-label-md text-label-md flex items-center gap-space-xs shadow-[0_3px_0_0_#d8c3ad]"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span>health: 78/100</span></div><div class="flex items-center gap-space-sm pl-space-sm py-1 pr-space-md rounded-full bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad]"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label-md text-label-md text-on-surface lowercase">rahul</span></div></div></div></header><main class="relative pt-16 w-full px-space-xl pb-space-xl bg-secondary-container"><div class="flex flex-col w-full">
+<div class="w-full max-w-7xl mx-auto flex flex-col gap-space-xl">
+<!-- Top Header & Mascot Welcome Banner -->
+<div class="relative w-full pt-space-lg flex flex-col lg:flex-row items-start lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs z-10">
+<div class="flex items-center gap-space-sm">
+<span class="px-space-md py-0.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm uppercase tracking-wider shadow-[0_3px_0_0_#006686]">
+            Smart Target Piggy
+          </span>
+<span class="flex items-center gap-1 text-surface-container-lowest font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+            3 Goals Active
+          </span>
+</div>
+<h1 class="font-display-lg text-display-lg text-surface-container-lowest lowercase tracking-tight">
+          savings goals,
+        </h1>
+<p class="font-body-lg text-body-lg text-surface-container-lowest opacity-95 max-w-xl">
+          every gig delivery inches you closer to what matters
+        </p>
+</div>
+<!-- Playful Top Mascot Peeking on the header side -->
+<div class="relative w-44 h-32 self-center lg:self-end flex items-end justify-center select-none">
+<div class="relative w-28 h-28 bg-primary-container rounded-full flex flex-col items-center justify-start pt-3 shadow-[0_6px_0_0_#ad3300] animate-bounce duration-1000">
+<!-- Mascot Little Horns/Ears -->
+<div class="absolute -top-2 left-3 w-5 h-6 bg-tertiary rounded-t-full rotate-[-18deg]"></div>
+<div class="absolute -top-2 right-3 w-5 h-6 bg-tertiary rounded-t-full rotate-[18deg]"></div>
+<!-- Eyes with blinking animation -->
+<div class="flex items-center gap-3 mt-2">
+<div class="w-4 h-5 bg-surface-container-lowest rounded-full flex items-center justify-center">
+<div class="w-2 h-2.5 bg-on-surface rounded-full translate-x-0.5 transition-transform"></div>
+</div>
+<div class="w-4 h-5 bg-surface-container-lowest rounded-full flex items-center justify-center">
+<div class="w-2 h-2.5 bg-on-surface rounded-full translate-x-0.5 transition-transform"></div>
+</div>
+</div>
+<!-- Rosy Cheeks -->
+<div class="flex justify-between w-16 px-1 mt-1">
+<div class="w-2.5 h-1.5 rounded-full bg-tertiary opacity-60"></div>
+<div class="w-2.5 h-1.5 rounded-full bg-tertiary opacity-60"></div>
+</div>
+<!-- Cheerful Smile -->
+<div class="w-5 h-2.5 border-b-2 border-on-surface rounded-b-full mt-0.5"></div>
+<!-- Coin held in paws -->
+<div class="absolute -bottom-3 w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center shadow-[0_3px_0_0_#845400] text-primary font-headline-md text-headline-md">
+            ₹
+          </div>
+</div>
+</div>
+</div>
+<!-- Top Action & Policy Banner -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-md lg:p-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md shadow-[0_6px_0_0_#006686]">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center flex-shrink-0 shadow-[0_3px_0_0_#006686]">
+<span class="material-symbols-outlined text-secondary text-2xl">waterfall_chart</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md text-on-surface">Auto-Funded Waterfall</span>
+<span class="px-space-xs py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm">70/30 Model</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Splits ₹120 daily earnings directly: 70% secures Emergency Cushion, 30% fills active milestone goals.
+          </p>
+</div>
+</div>
+<button class="w-full md:w-auto px-space-xl py-space-sm rounded-full bg-tertiary text-on-tertiary font-label-lg text-label-lg flex items-center justify-center gap-space-sm shadow-[0_5px_0_0_#842500] hover:brightness-105 active:translate-y-1 active:shadow-[0_2px_0_0_#842500] transition-all cursor-pointer" id="open-modal-btn">
+<span class="material-symbols-outlined text-xl">add_circle</span>
+<span>+ create new goal</span>
+</button>
+</div>
+<!-- 3 Core Goal Cards Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
+<!-- GOAL 1: Emergency Cushion (High Priority) -->
+<div class="relative bg-surface-container-lowest rounded-lg p-space-lg flex flex-col justify-between shadow-[0_6px_0_0_#845400] transition-transform hover:-translate-y-1">
+<!-- Cute Badge Strip -->
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-space-sm py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm flex items-center gap-1 shadow-[0_2px_0_0_#842500]">
+<span class="material-symbols-outlined text-sm">shield</span>
+            Priority: High
+          </span>
+<span class="px-space-sm py-1 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm">
+            Auto-Funded ₹60/day
+          </span>
+</div>
+<!-- Mascot Sticker & Goal Title -->
+<div class="flex items-start justify-between gap-space-sm mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Base Floor Target</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Emergency Cushion</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Protects against medical or bike breakdown gaps.</p>
+</div>
+<div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center shadow-[0_4px_0_0_#ad3300] flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-fixed text-3xl">savings</span>
+</div>
+</div>
+<!-- Currency Figures -->
+<div class="my-space-md bg-surface-container rounded p-space-md flex items-baseline justify-between">
+<div>
+<div class="font-label-sm text-label-sm text-outline">Current Saved</div>
+<div class="font-currency-display text-currency-display text-primary font-bold">₹10,500</div>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-outline">Target</div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold">₹25,000</div>
+</div>
+</div>
+<!-- Progress Bar & Milestones -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface">
+<span class="font-bold text-primary">42% completed</span>
+<span class="text-outline">₹14,500 remaining</span>
+</div>
+<div class="w-full h-5 bg-surface-container-highest rounded-full overflow-hidden p-1 shadow-inner relative">
+<div class="h-full bg-primary-container rounded-full relative transition-all duration-700" style="width: 42%;">
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-surface-container-lowest opacity-60 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Status Action -->
+<div class="mt-space-lg pt-space-md flex items-center justify-between">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-secondary font-medium">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Est. 240 days left</span>
+</div>
+<button class="px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm shadow-[0_3px_0_0_#006686] active:translate-y-0.5 active:shadow-[0_1px_0_0_#006686]">
+            Boost +₹50
+          </button>
+</div>
+</div>
+<!-- GOAL 2: Bike Service & New Tyres (Medium Priority) -->
+<div class="relative bg-surface-container-lowest rounded-lg p-space-lg flex flex-col justify-between shadow-[0_6px_0_0_#006686] transition-transform hover:-translate-y-1">
+<!-- Cute Badge Strip -->
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm flex items-center gap-1 shadow-[0_2px_0_0_#845400]">
+<span class="material-symbols-outlined text-sm">build</span>
+            Priority: Medium
+          </span>
+<span class="px-space-sm py-1 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm">
+            Auto-Funded ₹35/day
+          </span>
+</div>
+<!-- Mascot Sticker & Goal Title -->
+<div class="flex items-start justify-between gap-space-sm mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Vehicle Maintenance</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Bike Service &amp; Tyres</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Scheduled 15,000km overhaul + rear tyre.</p>
+</div>
+<div class="w-14 h-14 rounded-full bg-secondary-fixed flex items-center justify-center shadow-[0_4px_0_0_#006686] flex-shrink-0">
+<span class="material-symbols-outlined text-secondary text-3xl">two_wheeler</span>
+</div>
+</div>
+<!-- Currency Figures -->
+<div class="my-space-md bg-surface-container rounded p-space-md flex items-baseline justify-between">
+<div>
+<div class="font-label-sm text-label-sm text-outline">Current Saved</div>
+<div class="font-currency-display text-currency-display text-secondary font-bold">₹4,500</div>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-outline">Target</div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold">₹10,000</div>
+</div>
+</div>
+<!-- Progress Bar & Milestones -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface">
+<span class="font-bold text-secondary">45% completed</span>
+<span class="text-outline">18 days left</span>
+</div>
+<div class="w-full h-5 bg-surface-container-highest rounded-full overflow-hidden p-1 shadow-inner relative">
+<div class="h-full bg-secondary rounded-full relative transition-all duration-700" style="width: 45%;">
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-surface-container-lowest opacity-60 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Status Action -->
+<div class="mt-space-lg pt-space-md flex items-center justify-between">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-primary font-medium">
+<span class="material-symbols-outlined text-sm">bolt</span>
+<span>Pace: on track!</span>
+</div>
+<button class="px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm shadow-[0_3px_0_0_#006686] active:translate-y-0.5 active:shadow-[0_1px_0_0_#006686]">
+            Boost +₹25
+          </button>
+</div>
+</div>
+<!-- GOAL 3: Diwali Family Celebration (Normal Priority) -->
+<div class="relative bg-surface-container-lowest rounded-lg p-space-lg flex flex-col justify-between shadow-[0_6px_0_0_#ad3300] transition-transform hover:-translate-y-1">
+<!-- Cute Badge Strip -->
+<div class="flex items-center justify-between mb-space-md">
+<span class="px-space-sm py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-1 shadow-[0_2px_0_0_#857461]">
+<span class="material-symbols-outlined text-sm">celebration</span>
+            Priority: Normal
+          </span>
+<span class="px-space-sm py-1 rounded-full bg-secondary-fixed text-secondary font-label-sm text-label-sm">
+            Auto-Funded ₹25/day
+          </span>
+</div>
+<!-- Mascot Sticker & Goal Title -->
+<div class="flex items-start justify-between gap-space-sm mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Festival &amp; Gifting</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Diwali Celebration</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sweets, home gifts, and festive train travel.</p>
+</div>
+<div class="w-14 h-14 rounded-full bg-tertiary-fixed flex items-center justify-center shadow-[0_4px_0_0_#ad3300] flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary text-3xl">redeem</span>
+</div>
+</div>
+<!-- Currency Figures -->
+<div class="my-space-md bg-surface-container rounded p-space-md flex items-baseline justify-between">
+<div>
+<div class="font-label-sm text-label-sm text-outline">Current Saved</div>
+<div class="font-currency-display text-currency-display text-tertiary font-bold">₹2,000</div>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-outline">Target</div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold">₹8,000</div>
+</div>
+</div>
+<!-- Progress Bar & Milestones -->
+<div class="flex flex-col gap-space-xs mt-space-sm">
+<div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface">
+<span class="font-bold text-tertiary">25% completed</span>
+<span class="text-outline">42 days left</span>
+</div>
+<div class="w-full h-5 bg-surface-container-highest rounded-full overflow-hidden p-1 shadow-inner relative">
+<div class="h-full bg-tertiary rounded-full relative transition-all duration-700" style="width: 25%;">
+<div class="absolute right-0 top-0 bottom-0 w-2 bg-surface-container-lowest opacity-60 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Status Action -->
+<div class="mt-space-lg pt-space-md flex items-center justify-between">
+<div class="flex items-center gap-1 font-body-sm text-body-sm text-outline font-medium">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<span>Target: Nov 10</span>
+</div>
+<button class="px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm shadow-[0_3px_0_0_#006686] active:translate-y-0.5 active:shadow-[0_1px_0_0_#006686]">
+            Boost +₹20
+          </button>
+</div>
+</div>
+</div>
+<!-- 70/30 Waterfall Explainer Strip -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-lg flex flex-col gap-space-md shadow-[0_6px_0_0_#006686]">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Automated Intelligence</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">How the 70/30 Waterfall Works</h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">70% Emergency Cushion</span>
+<span class="w-3 h-3 rounded-full bg-secondary ml-space-sm"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">30% Goals Cascade</span>
+</div>
+</div>
+<!-- Diagram Flow -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md pt-space-sm">
+<!-- Stage 1 -->
+<div class="bg-surface-container rounded p-space-md flex flex-col gap-space-xs shadow-[0_3px_0_0_#d8c3ad]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Stage 1: Daily Split</span>
+<span class="material-symbols-outlined text-primary text-xl">payments</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface">₹150 Per Day</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Deducted seamlessly across accepted orders without disrupting your grocery cash in hand.
+          </p>
+</div>
+<!-- Stage 2 -->
+<div class="bg-primary-fixed rounded p-space-md flex flex-col gap-space-xs shadow-[0_3px_0_0_#845400]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">70% Emergency First</span>
+<span class="material-symbols-outlined text-primary text-xl">security</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-primary-fixed">₹105 / Day</div>
+<p class="font-body-sm text-body-sm text-on-primary-fixed-variant">
+            Routes straight to your Emergency Floor until the ₹25,000 threshold is fully secured.
+          </p>
+</div>
+<!-- Stage 3 -->
+<div class="bg-secondary-fixed rounded p-space-md flex flex-col gap-space-xs shadow-[0_3px_0_0_#006686]">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">30% Dream Goals</span>
+<span class="material-symbols-outlined text-secondary text-xl">star</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-secondary-fixed">₹45 / Day</div>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant">
+            Divides smoothly into Bike Maintenance (₹35) and Diwali Celebration (₹10) targets.
+          </p>
+</div>
+</div>
+</div>
+<!-- Interactive Create Goal Section / Slideout Preview -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-lg flex flex-col lg:flex-row gap-space-xl shadow-[0_6px_0_0_#845400]" id="create-goal-section">
+<!-- Form Input Column -->
+<div class="flex-1 flex flex-col gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Custom Target Planner</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Create a New Savings Goal</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Set your dream or milestone and watch daily micro-splits automatically hit it.</p>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-md text-label-md text-on-surface">Goal Name</label>
+<input class="w-full p-space-md rounded bg-surface-container-low text-on-surface font-body-md text-body-md outline-none focus:bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad] focus:shadow-[0_3px_0_0_#f9a61f]" id="input-goal-name" placeholder="e.g. Electric Scooter Downpayment" type="text" value="Electric Scooter Downpayment"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-md text-label-md text-on-surface">Target Amount (₹)</label>
+<div class="relative flex items-center">
+<span class="absolute left-space-md text-primary font-bold text-headline-md">₹</span>
+<input class="w-full pl-10 pr-space-md py-space-md rounded bg-surface-container-low text-on-surface font-body-md text-body-md outline-none focus:bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad] focus:shadow-[0_3px_0_0_#f9a61f]" id="input-goal-amount" type="number" value="18000"/>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-md text-label-md text-on-surface">Target Date</label>
+<input class="w-full p-space-md rounded bg-surface-container-low text-on-surface font-body-md text-body-md outline-none focus:bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad] focus:shadow-[0_3px_0_0_#f9a61f]" id="input-goal-date" type="date" value="2025-06-15"/>
+</div>
+</div>
+<!-- Priority Selector Chips -->
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-md text-label-md text-on-surface">Priority Allocation Tier</label>
+<div class="flex flex-wrap gap-space-sm" id="priority-chips">
+<button class="priority-btn px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md shadow-[0_3px_0_0_#ad3300] cursor-pointer" data-priority="high" type="button">
+              High (Next in Waterfall)
+            </button>
+<button class="priority-btn px-space-lg py-space-sm rounded-full bg-surface-container text-on-surface font-label-md text-label-md shadow-[0_3px_0_0_#857461] cursor-pointer" data-priority="medium" type="button">
+              Medium (Parallel)
+            </button>
+<button class="priority-btn px-space-lg py-space-sm rounded-full bg-surface-container text-on-surface font-label-md text-label-md shadow-[0_3px_0_0_#857461] cursor-pointer" data-priority="low" type="button">
+              Low (Change Roundup)
+            </button>
+</div>
+</div>
+<div class="pt-space-sm">
+<button class="w-full py-space-md rounded-full bg-tertiary text-on-tertiary font-headline-md text-headline-md shadow-[0_5px_0_0_#842500] hover:brightness-105 active:translate-y-1 active:shadow-[0_2px_0_0_#842500] transition-all cursor-pointer flex items-center justify-center gap-space-sm" id="save-goal-btn">
+<span class="material-symbols-outlined text-2xl">verified</span>
+<span>Confirm &amp; Start Daily Split</span>
+</button>
+</div>
+</div>
+<!-- Live Calculation Card with Peeking Mascot -->
+<div class="w-full lg:w-96 flex flex-col justify-between bg-surface-container rounded-lg p-space-lg shadow-[0_4px_0_0_#d8c3ad]">
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Live Projection</span>
+<span class="w-3 h-3 rounded-full bg-primary-container animate-pulse"></span>
+</div>
+<div class="flex flex-col items-center text-center p-space-md bg-surface-container-lowest rounded shadow-[0_3px_0_0_#d8c3ad]">
+<!-- Cheering Mascot Mini Illustration -->
+<div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center mb-space-sm shadow-[0_3px_0_0_#ad3300]">
+<span class="material-symbols-outlined text-on-primary-fixed text-4xl animate-bounce">electric_scooter</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold" id="preview-title">
+              Electric Scooter Downpayment
+            </div>
+<div class="font-currency-display text-currency-display text-primary mt-1" id="preview-amount">
+              ₹18,000
+            </div>
+</div>
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest p-space-md rounded shadow-[0_3px_0_0_#d8c3ad]">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Waterfall Daily Cut:</span>
+<span class="font-bold text-on-surface" id="preview-split">₹55 / day</span>
+</div>
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Required Deliveries:</span>
+<span class="font-bold text-on-surface">~4 daily orders</span>
+</div>
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Projected Completion:</span>
+<span class="font-bold text-secondary" id="preview-days">34 days!</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md p-space-sm rounded bg-secondary-fixed text-on-secondary-fixed text-center font-label-sm text-label-sm shadow-[0_2px_0_0_#006686]">
+          🎉 at your current pace, you will reach this easily!
+        </div>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      // Priority Button Selectors
+      const priorityBtns = document.querySelectorAll('.priority-btn');
+      priorityBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          priorityBtns.forEach(b => {
+            b.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-[0_3px_0_0_#ad3300]');
+            b.classList.add('bg-surface-container', 'text-on-surface', 'shadow-[0_3px_0_0_#857461]');
+          });
+          btn.classList.remove('bg-surface-container', 'text-on-surface', 'shadow-[0_3px_0_0_#857461]');
+          btn.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-[0_3px_0_0_#ad3300]');
+        });
+      });
+
+      // Realtime Form Live-Preview logic
+      const nameInput = document.getElementById('input-goal-name');
+      const amountInput = document.getElementById('input-goal-amount');
+      const previewTitle = document.getElementById('preview-title');
+      const previewAmount = document.getElementById('preview-amount');
+      const previewDays = document.getElementById('preview-days');
+
+      function updatePreview() {
+        if (nameInput.value.trim() !== '') {
+          previewTitle.textContent = nameInput.value;
+        } else {
+          previewTitle.textContent = 'Untitled Goal';
+        }
+
+        const val = parseFloat(amountInput.value) || 0;
+        previewAmount.textContent = '₹' + val.toLocaleString('en-IN');
+
+        const dailyAllocation = 55;
+        const days = Math.ceil(val / dailyAllocation);
+        previewDays.textContent = days > 0 ? days + ' days!' : 'Immediate';
+      }
+
+      nameInput.addEventListener('input', updatePreview);
+      amountInput.addEventListener('input', updatePreview);
+
+      // Scroll smoothly to creator form on top action click
+      const openModalBtn = document.getElementById('open-modal-btn');
+      const createSection = document.getElementById('create-goal-section');
+      if (openModalBtn && createSection) {
+        openModalBtn.addEventListener('click', () => {
+          createSection.scrollIntoView({ behavior: 'smooth' });
+          nameInput.focus();
+        });
+      }
+
+      // Quick visual feedback on Save button
+      const saveBtn = document.getElementById('save-goal-btn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+          const originalText = saveBtn.innerHTML;
+          saveBtn.innerHTML = '<span class="material-symbols-outlined text-2xl">check_circle</span><span>Goal Activated!</span>';
+          saveBtn.classList.remove('bg-tertiary');
+          saveBtn.classList.add('bg-primary');
+          setTimeout(() => {
+            saveBtn.innerHTML = originalText;
+            saveBtn.classList.remove('bg-primary');
+            saveBtn.classList.add('bg-tertiary');
+          }, 2000);
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

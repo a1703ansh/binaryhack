@@ -2,13 +2,9 @@ import React, { useState } from 'react';
 import { 
   Settings as SettingsIcon, 
   RotateCcw, 
-  ShieldCheck, 
-  User, 
-  Bell, 
   Sliders, 
   CheckCircle2, 
-  AlertCircle,
-  HelpCircle
+  AlertCircle
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 

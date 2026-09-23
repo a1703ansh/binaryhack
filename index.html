@@ -8,14 +8,28 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@300;400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
     <!-- Tailwind CDN with custom config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
+            // Custom shades & utilities the app depends on (not in default Tailwind)
             colors: {
+              monster: {
+                body: '#f89a1c',
+                bodyAngry: '#e84e12',
+                mouth: '#e8780c',
+                button: '#e84e12',
+                buttonBevel: '#872600',
+                sky: '#3ba7ea',
+                skyLight: '#66d0fe',
+              },
+              slate: {
+                750: '#293548', // between slate-700 & slate-800
+                850: '#151d2e', // between slate-800 & slate-900
+              },
               brand: {
                 50: '#F0FDF4',
                 100: '#DCFCE7',
@@ -49,6 +63,20 @@
             fontFamily: {
               sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
               mono: ['"JetBrains Mono"', 'monospace'],
+              questrial: ['"Questrial"', 'sans-serif'],
+              montserrat: ['"Montserrat"', 'sans-serif'],
+            },
+            screens: {
+              xs: '420px', // used by TopNavbar's hidden xs:inline responsive labels
+            },
+            keyframes: {
+              'spin-reverse': {
+                from: { transform: 'rotate(360deg)' },
+                to: { transform: 'rotate(0deg)' },
+              },
+            },
+            animation: {
+              reverse: 'spin-reverse 1s linear infinite', // used by PayoutSimulatorModal's counter-rotating ring
             }
           }
         }

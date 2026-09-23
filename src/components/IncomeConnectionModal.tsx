@@ -11,7 +11,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
-import { Platform } from '../types';
+import { type Platform, ALL_PLATFORMS, parseCSVTransactions, sanitizeCSVTransactions } from '@earnwise/shared';
 
 interface IncomeConnectionModalProps {
   isOpen: boolean;
@@ -22,12 +22,16 @@ export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
   isOpen,
   onClose
 }) => {
-  const { simulatePlatformConnection, addIncomeSource } = useEarnWise();
+  const { simulatePlatformConnection, addIncomeSource, importIncomeTransactions } = useEarnWise();
   const [selectedMethod, setSelectedMethod] = useState<'platform' | 'upi' | 'bank' | 'csv'>('platform');
   const [selectedPlatform, setSelectedPlatform] = useState<Platform>('Zomato');
   const [isConnecting, setIsConnecting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [csvFileName, setCsvFileName] = useState<string | null>(null);
+  const [csvFile, setCsvFile] = useState<File | null>(null);
+  const [csvError, setCsvError] = useState<string | null>(null);
+  // Real ingested records shown on the success screen (instead of a hardcoded list)
+  const [ingestedRecords, setIngestedRecords] = useState<{ date: string; amount: number; platform: string }[]>([]);
+  const csvFileName = csvFile?.name ?? null;
 
   if (!isOpen) return null;
 
@@ -37,15 +41,61 @@ export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
     
     if (selectedMethod === 'platform') {
       await simulatePlatformConnection(selectedPlatform);
+      setIngestedRecords([
+        { date: 'Sep 18', amount: 920, platform: selectedPlatform },
+        { date: 'Sep 19', amount: 1150, platform: selectedPlatform },
+        { date: 'Sep 20', amount: 740, platform: selectedPlatform },
+        { date: 'Sep 21', amount: 1280, platform: selectedPlatform },
+        { date: 'Sep 22', amount: 1050, platform: selectedPlatform }
+      ]);
     } else if (selectedMethod === 'upi') {
       addIncomeSource('Other', 'UPI');
       await simulatePlatformConnection('Other');
+      setIngestedRecords([
+        { date: 'Sep 18', amount: 920, platform: 'UPI' },
+        { date: 'Sep 19', amount: 1150, platform: 'UPI' },
+        { date: 'Sep 20', amount: 740, platform: 'UPI' },
+        { date: 'Sep 21', amount: 1280, platform: 'UPI' },
+        { date: 'Sep 22', amount: 1050, platform: 'UPI' }
+      ]);
     } else if (selectedMethod === 'bank') {
       addIncomeSource('Freelancing', 'Bank Statement');
       await simulatePlatformConnection('Freelancing');
+      setIngestedRecords([
+        { date: 'Sep 18', amount: 920, platform: 'Bank' },
+        { date: 'Sep 19', amount: 1150, platform: 'Bank' },
+        { date: 'Sep 20', amount: 740, platform: 'Bank' },
+        { date: 'Sep 21', amount: 1280, platform: 'Bank' },
+        { date: 'Sep 22', amount: 1050, platform: 'Bank' }
+      ]);
     } else if (selectedMethod === 'csv') {
-      addIncomeSource('Other', 'CSV Upload');
-      await simulatePlatformConnection('Other');
+      if (!csvFile) {
+        setIsConnecting(false);
+        setCsvError('Please choose a CSV file before connecting.');
+        return;
+      }
+      try {
+        const text = await csvFile.text();
+        const rows = parseCSVTransactions(text);
+        const txs = sanitizeCSVTransactions(rows, ALL_PLATFORMS);
+        if (txs.length === 0) {
+          setIsConnecting(false);
+          setCsvError('No valid payout rows found. Expected columns: Date, Amount, Platform, Description.');
+          return;
+        }
+        addIncomeSource('Other', 'CSV Upload');
+        importIncomeTransactions(txs);
+        // Show the ACTUAL parsed records from the uploaded file
+        setIngestedRecords(txs.slice(0, 5).map(t => ({
+          date: t.date,
+          amount: t.amount,
+          platform: t.source
+        })));
+      } catch {
+        setIsConnecting(false);
+        setCsvError('Could not read that file. Please try a plain-text CSV.');
+        return;
+      }
     }
 
     setIsConnecting(false);
@@ -163,11 +213,17 @@ export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
                     {csvFileName || "Click to upload payout CSV or statement"}
                   </p>
                   <p className="text-[10px] text-slate-500 mt-1">Columns: Date, Amount, Platform, Description</p>
+                  {csvError && (
+                    <p className="text-[10px] text-rose-400 mt-1">{csvError}</p>
+                  )}
                   <input
                     type="file"
                     accept=".csv"
                     onChange={e => {
-                      if (e.target.files?.[0]) setCsvFileName(e.target.files[0].name);
+                      if (e.target.files?.[0]) {
+                        setCsvFile(e.target.files[0]);
+                        setCsvError(null);
+                      }
                     }}
                     className="hidden"
                     id="csv-file-input"
@@ -217,11 +273,9 @@ export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
               </p>
             </div>
             <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-left text-xs space-y-1 font-mono text-slate-300">
-              <div>• Sep 18 — ₹920 (Synced)</div>
-              <div>• Sep 19 — ₹1,150 (Synced)</div>
-              <div>• Sep 20 — ₹740 (Synced)</div>
-              <div>• Sep 21 — ₹1,280 (Synced)</div>
-              <div>• Sep 22 — ₹1,050 (Synced)</div>
+              {ingestedRecords.map((r, idx) => (
+                <div key={idx}>• {r.date} — ₹{r.amount.toLocaleString('en-IN')} ({r.platform} • Synced)</div>
+              ))}
             </div>
             <button
               onClick={handleReset}

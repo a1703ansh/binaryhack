@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Welcome - Sign In</title>
+<!-- Google Fonts: Montserrat for geometric ultra-clean aesthetic matching reference -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,200&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with forms plugin -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandSky: '#3ba7ea',
+            monsterBody: '#f89a1c',
+            monsterMouth: '#e8780c',
+            monsterButton: '#e84e12',
+          },
+          fontFamily: {
+            sans: ['Montserrat', 'Century Gothic', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Prevent text selection during playful interactions */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    input {
+      user-select: auto;
+    }
+
+    /* Monster Body Elements & Smooth Transitions */
+    .monster-color-transition {
+      transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1), 
+                  border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1), 
+                  box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    /* Eyebrows */
+    .eyebrow {
+      width: 32px;
+      height: 6px;
+      background-color: #b85002;
+      border-radius: 9999px;
+      position: absolute;
+      top: -12px;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: center center;
+      opacity: 0.85;
+      z-index: 25;
+    }
+    .eyebrow-left {
+      left: 6px;
+      transform: rotate(0deg);
+    }
+    .eyebrow-right {
+      right: 6px;
+      transform: rotate(0deg);
+    }
+
+    /* Eyes & Pupils */
+    .eye-ball {
+      width: 46px;
+      height: 46px;
+      background: #ffffff;
+      border-radius: 9999px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .pupil {
+      width: 10px;
+      height: 10px;
+      background: #231f20;
+      border-radius: 9999px;
+      position: absolute;
+      transition: transform 0.08s ease-out, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+      pointer-events: none;
+    }
+
+    /* Eye highlight */
+    .pupil::after {
+      content: '';
+      position: absolute;
+      top: 1.5px;
+      right: 1.5px;
+      width: 3px;
+      height: 3px;
+      background: #ffffff;
+      border-radius: 50%;
+    }
+
+    /* Natural blinking eyelids */
+    .eyelid-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background: #f89a1c;
+      transition: height 0.12s ease-in-out, background-color 0.4s ease;
+      z-index: 5;
+    }
+
+    /* Squint lid for angry / annoyed face */
+    .eyelid-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background: #f89a1c;
+      transition: height 0.25s ease-in-out, background-color 0.4s ease;
+      z-index: 5;
+    }
+
+    /* Monster Hands Covering Animation */
+    .paw {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      background-color: #f89a1c;
+      border-radius: 9999px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      transition: transform 0.48s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.45s ease, opacity 0.2s ease;
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    /* Paw claws / knuckles detail */
+    .paw-knuckle {
+      position: absolute;
+      background-color: #e47d0d;
+      border-radius: 9999px;
+      opacity: 0.6;
+      transition: background-color 0.45s ease;
+    }
+
+    /* Hand positions in Resting State (holding the 'go' button) */
+    .paw-left {
+      bottom: 22px;
+      left: calc(50% - 66px);
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    .paw-right {
+      bottom: 22px;
+      right: calc(50% - 66px);
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    /* Covering Eyes State: paws travel up onto the eyes */
+    .hands-covering .paw-left {
+      transform: translate3d(21px, -188px, 0) scale(1.18);
+    }
+    .hands-covering .paw-right {
+      transform: translate3d(-21px, -188px, 0) scale(1.18);
+    }
+
+    /* Peeking state: Right eye opens by shifting right hand down/right */
+    .hands-covering.peeking .paw-right {
+      transform: translate3d(8px, -156px, 0) rotate(24deg) scale(1.1);
+    }
+
+    /* Typing state in password mode: lowered slightly so face expression is dramatically visible! */
+    .hands-covering.typing-active .paw-left {
+      transform: translate3d(10px, -145px, 0) scale(1.05) rotate(-14deg);
+    }
+    .hands-covering.typing-active .paw-right {
+      transform: translate3d(-10px, -145px, 0) scale(1.05) rotate(14deg);
+    }
+
+    /* Horn transforms */
+    #horn-l, #horn-r {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform-origin: bottom center;
+    }
+
+    /* Subtle steam indicators for angry mode */
+    .steam-bubble {
+      opacity: 0;
+      transform: scale(0.4) translateY(0);
+      transition: opacity 0.3s ease;
+    }
+    .mood-angry .steam-bubble-1 {
+      animation: steamFloat1 1.4s infinite ease-out;
+    }
+    .mood-angry .steam-bubble-2 {
+      animation: steamFloat2 1.6s 0.4s infinite ease-out;
+    }
+    @keyframes steamFloat1 {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      40% { opacity: 0.75; }
+      100% { opacity: 0; transform: translateY(-34px) translateX(-8px) scale(1.3); }
+    }
+    @keyframes steamFloat2 {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      40% { opacity: 0.75; }
+      100% { opacity: 0; transform: translateY(-36px) translateX(8px) scale(1.3); }
+    }
+
+    /* Anger rumble shake */
+    @keyframes angryRumble {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-2px, 1px) rotate(-0.6deg); }
+      40% { transform: translate(2px, -1px) rotate(0.6deg); }
+      60% { transform: translate(-1.5px, -1px) rotate(-0.4deg); }
+      80% { transform: translate(1.5px, 1px) rotate(0.4deg); }
+    }
+    .anim-rumble {
+      animation: angryRumble 0.22s infinite ease-in-out;
+    }
+
+    /* Calm breathing pulse */
+    @keyframes calmBreathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .anim-calm {
+      animation: calmBreathe 3.4s ease-in-out infinite;
+    }
+
+    /* Squish form feedback animation */
+    @keyframes monsterBounce {
+      0% { transform: scale(1, 1); }
+      30% { transform: scale(1.04, 0.95); }
+      60% { transform: scale(0.97, 1.03); }
+      100% { transform: scale(1, 1); }
+    }
+    .anim-bounce {
+      animation: monsterBounce 0.5s ease-out;
+    }
+
+    /* Custom input override */
+    .monster-field {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background: transparent;
+    }
+    .monster-field:focus {
+      ring: 0 !important;
+      box-shadow: none !important;
+    }
+  </style>
+</head>
+<body class="bg-[#3aa6e9] min-h-screen w-full flex flex-col justify-between items-center overflow-x-hidden font-sans select-none antialiased">
+<!-- Header Section -->
+<header class="w-full text-center pt-10 sm:pt-14 md:pt-16 px-4 z-10 flex flex-col items-center">
+<h1 class="text-white text-5xl sm:text-6xl md:text-7xl font-[200] tracking-tight leading-tight">
+      Welcome,
+    </h1>
+<p class="text-white text-lg sm:text-2xl font-[300] tracking-wide mt-1.5 opacity-90">
+      let’s get signed in!
+    </p>
+</header>
+<!-- Monster & Interactive Form Area -->
+<div class="relative w-full max-w-4xl flex flex-col items-center justify-end mt-auto pointer-events-auto" id="monster-scene">
+<!-- Outer Monster Container (Responsive Scaling) -->
+<div class="relative w-[540px] sm:w-[720px] md:w-[860px] h-[375px] sm:h-[455px] flex flex-col items-center justify-end" id="monster-character">
+<!-- Steam Elements for Angry Mode -->
+<div class="absolute -top-16 sm:-top-20 z-20 flex justify-between w-64 pointer-events-none">
+<div class="steam-bubble steam-bubble-1 w-6 h-6 rounded-full bg-white/70 blur-[1px]"></div>
+<div class="steam-bubble steam-bubble-2 w-7 h-7 rounded-full bg-white/70 blur-[1px]"></div>
+</div>
+<!-- Horns Layer -->
+<div class="absolute -top-12 sm:-top-16 w-[360px] sm:w-[440px] flex justify-between items-center pointer-events-none z-0">
+<!-- Left Horn -->
+<svg class="w-24 h-24 sm:w-28 sm:h-28 -rotate-12 -translate-x-2 drop-shadow-sm monster-color-transition" fill="none" id="horn-l" viewbox="0 0 100 100">
+<path d="M 90 85 C 65 75 22 55 12 18 C 36 24 72 48 95 65 Z" fill="#f89a1c" id="horn-path-l" stroke="#e47d0d" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<!-- Right Horn -->
+<svg class="w-24 h-24 sm:w-28 sm:h-28 rotate-12 translate-x-2 drop-shadow-sm monster-color-transition" fill="none" id="horn-r" viewbox="0 0 100 100">
+<path d="M 10 85 C 35 75 78 55 88 18 C 64 24 28 48 5 65 Z" fill="#f89a1c" id="horn-path-r" stroke="#e47d0d" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<!-- Hair Tufts (3 rounded curls on top of head) -->
+<div class="absolute top-[2px] sm:-top-[2px] z-10 flex items-end gap-0.5 pointer-events-none">
+<div class="hair-tuft w-5 h-6 sm:w-6 sm:h-7 rounded-t-full bg-[#f89a1c] border-t border-orange-400 monster-color-transition"></div>
+<div class="hair-tuft w-6 h-8 sm:w-7 sm:h-9 rounded-t-full bg-[#f89a1c] border-t border-orange-400 -mx-1 z-10 monster-color-transition"></div>
+<div class="hair-tuft w-5 h-6 sm:w-6 sm:h-7 rounded-t-full bg-[#f89a1c] border-t border-orange-400 monster-color-transition"></div>
+</div>
+<!-- Massive Monster Torso (Huge Dome matching image) -->
+<div class="monster-body-el absolute bottom-0 w-full h-[320px] sm:h-[400px] bg-[#f89a1c] rounded-t-[270px] sm:rounded-t-[360px] md:rounded-t-[430px] shadow-2xl flex flex-col items-center monster-color-transition">
+<!-- Subtle body contour lines -->
+<div class="absolute inset-x-8 sm:inset-x-12 top-6 bottom-0 rounded-t-[250px] sm:rounded-t-[340px] border-t-2 border-orange-400/20 pointer-events-none"></div>
+</div>
+<!-- Monster Head (Upper rounded crest) -->
+<div class="monster-head-el absolute top-[16px] sm:top-[12px] w-[270px] sm:w-[320px] h-[210px] sm:h-[240px] bg-[#f89a1c] rounded-t-full z-10 flex flex-col items-center pointer-events-none monster-color-transition">
+<!-- Eyes Area -->
+<div class="relative flex items-center space-x-5 sm:space-x-6 mt-16 sm:mt-20 pointer-events-auto" id="eyes-container">
+<!-- Left Eye with Eyebrow -->
+<div class="relative">
+<div class="eyebrow eyebrow-left" id="eyebrow-left"></div>
+<div class="eye-ball" id="eye-left">
+<div class="eyelid-top" id="eyelid-left"></div>
+<div class="eyelid-bottom" id="eyelid-bottom-left"></div>
+<div class="pupil" id="pupil-left"></div>
+</div>
+</div>
+<!-- Right Eye with Eyebrow -->
+<div class="relative">
+<div class="eyebrow eyebrow-right" id="eyebrow-right"></div>
+<div class="eye-ball" id="eye-right">
+<div class="eyelid-top" id="eyelid-right"></div>
+<div class="eyelid-bottom" id="eyelid-bottom-right"></div>
+<div class="pupil" id="pupil-right"></div>
+</div>
+</div>
+</div>
+<!-- Subtle mouth smile line for calm/happy state -->
+<div class="w-10 h-3 border-b-2 border-[#b85002]/0 rounded-full mt-2 transition-all duration-300" id="monster-happy-smile"></div>
+</div>
+<!-- Mouth Frame & Form Container -->
+<div class="relative z-20 mb-6 sm:mb-8 w-[270px] sm:w-[316px] flex flex-col items-center">
+<form class="w-full relative" id="login-form" onsubmit="event.preventDefault(); handleSubmit();">
+<!-- Mouth Shape: Darker Orange rounded container -->
+<div class="w-full bg-[#e8780c] p-2.5 sm:p-3 rounded-[18px] shadow-md flex flex-col items-center monster-color-transition border-2 border-transparent" id="mouth-frame">
+<!-- White Card with Email and Password -->
+<div class="w-full bg-white rounded-xl shadow-sm overflow-hidden flex flex-col transition-all duration-300" id="input-card">
+<!-- Email Input -->
+<div class="relative flex items-center px-3.5 py-2 sm:py-2.5">
+<input autocomplete="username" class="monster-field w-full text-sm sm:text-base text-gray-700 placeholder-gray-400 p-0 m-0 font-light" id="email-input" name="email" placeholder="Email" required="" type="email"/>
+</div>
+<!-- Thin divider line -->
+<div class="w-full h-[1px] bg-gray-200"></div>
+<!-- Password Input + Peek Toggle -->
+<div class="relative flex items-center px-3.5 py-2 sm:py-2.5">
+<input autocomplete="current-password" class="monster-field w-full text-sm sm:text-base text-gray-700 placeholder-gray-400 p-0 m-0 font-light pr-8" id="password-input" name="password" placeholder="Password" required="" type="password"/>
+<!-- Password Visibility Toggle Button ("Peek") -->
+<button aria-label="Toggle password preview" class="absolute right-3 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors p-1" id="peek-toggle" tabindex="-1" type="button">
+<svg class="w-4 h-4 fill-none stroke-current stroke-2" id="peek-icon" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="3"></circle>
+<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Dynamic Emotional Feedback Tooltip / Strength Bar -->
+<div class="w-full max-h-0 overflow-hidden transition-all duration-300 opacity-0 px-1 pt-0" id="password-feedback-container">
+<div class="flex items-center justify-between text-[11px] font-medium pt-2 pb-1 text-white" id="password-feedback-text">
+<span>Strength</span>
+<span id="password-feedback-label">Too weak</span>
+</div>
+<div class="w-full h-1.5 bg-black/20 rounded-full overflow-hidden flex">
+<div class="h-full w-0 transition-all duration-300 rounded-full" id="password-strength-bar"></div>
+</div>
+</div>
+</div>
+<!-- Submit Button Container with Hands -->
+<div class="relative w-full flex justify-center items-center mt-3" id="hands-assembly">
+<!-- Left Hand Paw -->
+<div class="paw paw-left" id="paw-l">
+<div class="paw-knuckle w-1.5 h-3 top-2.5 left-2.5 rotate-12"></div>
+<div class="paw-knuckle w-1.5 h-3.5 top-2 left-4.5"></div>
+<div class="paw-knuckle w-1.5 h-3 top-2.5 right-2.5 -rotate-12"></div>
+</div>
+<!-- "go" Action Button -->
+<button class="relative bg-[#eb4e13] hover:bg-[#d9440c] active:scale-95 text-white font-normal text-base sm:text-lg px-8 py-1.5 sm:py-2 rounded-full shadow-md border-b-2 border-[#b93807] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#eb4e13] z-10 cursor-pointer" id="go-button" type="submit">
+              go
+            </button>
+<!-- Right Hand Paw -->
+<div class="paw paw-right" id="paw-r">
+<div class="paw-knuckle w-1.5 h-3 top-2.5 left-2.5 rotate-12"></div>
+<div class="paw-knuckle w-1.5 h-3.5 top-2 left-4.5"></div>
+<div class="paw-knuckle w-1.5 h-3 top-2.5 right-2.5 -rotate-12"></div>
+</div>
+</div>
+</form>
+<!-- Footer Links: subtle white text -->
+<nav aria-label="Account recovery" class="mt-5 flex items-center space-x-2 text-xs sm:text-sm text-white/95 font-light">
+<a class="hover:underline transition-all" href="#forgot">Forgot password?</a>
+<span class="opacity-70">·</span>
+<a class="hover:underline transition-all" href="#create">Create account</a>
+</nav>
+</div>
+</div>
+</div>
+<!-- Vanilla Interactive Logic -->
+<script>
+    // Elements
+    const eyeLeft = document.getElementById('eye-left');
+    const eyeRight = document.getElementById('eye-right');
+    const pupilLeft = document.getElementById('pupil-left');
+    const pupilRight = document.getElementById('pupil-right');
+    const eyelidLeft = document.getElementById('eyelid-left');
+    const eyelidRight = document.getElementById('eyelid-right');
+    const eyelidBottomLeft = document.getElementById('eyelid-bottom-left');
+    const eyelidBottomRight = document.getElementById('eyelid-bottom-right');
+    const eyebrowLeft = document.getElementById('eyebrow-left');
+    const eyebrowRight = document.getElementById('eyebrow-right');
+    const handsAssembly = document.getElementById('hands-assembly');
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+    const peekToggle = document.getElementById('peek-toggle');
+    const goButton = document.getElementById('go-button');
+    const monsterChar = document.getElementById('monster-character');
+    const monsterScene = document.getElementById('monster-scene');
+    const mouthFrame = document.getElementById('mouth-frame');
+    const inputCard = document.getElementById('input-card');
+    const happySmile = document.getElementById('monster-happy-smile');
+    const hornL = document.getElementById('horn-l');
+    const hornR = document.getElementById('horn-r');
+    const hornPathL = document.getElementById('horn-path-l');
+    const hornPathR = document.getElementById('horn-path-r');
+    const pawL = document.getElementById('paw-l');
+    const pawR = document.getElementById('paw-r');
+    const pawKnuckles = document.querySelectorAll('.paw-knuckle');
+    const hairTufts = document.querySelectorAll('.hair-tuft');
+    const monsterBodyEl = document.querySelector('.monster-body-el');
+    const monsterHeadEl = document.querySelector('.monster-head-el');
+    const feedbackContainer = document.getElementById('password-feedback-container');
+    const feedbackLabel = document.getElementById('password-feedback-label');
+    const strengthBar = document.getElementById('password-strength-bar');
+
+    // States
+    let isCoveringEyes = false;
+    let isPeeking = false;
+    let isEmailFocused = false;
+    let isPasswordFocused = false;
+    let currentMood = 'idle'; // 'idle', 'weak', 'medium', 'strong'
+
+    // 1. Mouse Tracking with natural eye bounding
+    window.addEventListener('mousemove', (e) => {
+      if (isCoveringEyes && !isPeeking) return;
+      if (isEmailFocused) return; // while typing email, pupils focus downward
+
+      positionPupil(eyeLeft, pupilLeft, e.clientX, e.clientY);
+      positionPupil(eyeRight, pupilRight, e.clientX, e.clientY);
+    });
+
+    function positionPupil(eyeEl, pupilEl, targetX, targetY) {
+      const rect = eyeEl.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const deltaX = targetX - centerX;
+      const deltaY = targetY - centerY;
+      const angle = Math.atan2(deltaY, deltaX);
+
+      // Max radius pupil can travel inside sclera
+      const maxDistance = currentMood === 'weak' ? 6 : 11;
+      const distance = Math.min(maxDistance, Math.hypot(deltaX, deltaY) / 16);
+
+      const moveX = Math.cos(angle) * distance;
+      const moveY = Math.sin(angle) * distance;
+
+      pupilEl.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    }
+
+    // 2. Email typing animation (pupils look down and move with cursor length)
+    emailInput.addEventListener('focus', () => {
+      if (isCoveringEyes) return;
+      isEmailFocused = true;
+      resetToIdleExpression();
+      updateEmailPupilPosition();
+    });
+
+    emailInput.addEventListener('input', () => {
+      if (isEmailFocused && !isCoveringEyes) {
+        updateEmailPupilPosition();
+      }
+    });
+
+    emailInput.addEventListener('blur', () => {
+      isEmailFocused = false;
+      pupilLeft.style.transform = `translate(0px, 0px)`;
+      pupilRight.style.transform = `translate(0px, 0px)`;
+    });
+
+    function updateEmailPupilPosition() {
+      const len = emailInput.value.length;
+      // Interpolate horizontal gaze based on character count: -5px to +7px
+      const clampedLen = Math.min(len, 28);
+      const shiftX = -5 + (clampedLen / 28) * 12;
+      const shiftY = 8; // Look down into the mouth
+
+      pupilLeft.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
+      pupilRight.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
+    }
+
+    // 3. Password Strength Evaluation Function
+    function evaluatePassword(pwd) {
+      if (!pwd || pwd.length === 0) return 'empty';
+      if (pwd.length < 6) return 'weak';
+
+      const hasNumber = /[0-9]/.test(pwd);
+      const hasSpecial = /[^A-Za-z0-9]/.test(pwd);
+      const hasUpper = /[A-Z]/.test(pwd);
+      const hasLower = /[a-z]/.test(pwd);
+      const varietyScore = [hasNumber, hasSpecial, hasUpper, hasLower].filter(Boolean).length;
+
+      if (pwd.length >= 8 && (varietyScore >= 2 || pwd.length >= 12)) {
+        return 'strong';
+      }
+      return 'medium';
+    }
+
+    // 4. Mood and Expression Renderer
+    function applyMonsterMood(mood) {
+      currentMood = mood;
+      monsterScene.classList.remove('mood-angry');
+      monsterChar.classList.remove('anim-rumble', 'anim-calm');
+
+      if (mood === 'weak') {
+        monsterScene.classList.add('mood-angry');
+        monsterChar.classList.add('anim-rumble');
+
+        // Body Fur: Heat angry red-orange shift
+        setMonsterColor('#f05d23', '#c93b0b', '#d04918');
+
+        // Horns tilt aggressively inwards
+        hornL.style.transform = 'rotate(-28deg) translateY(-2px)';
+        hornR.style.transform = 'rotate(28deg) translateY(-2px)';
+
+        // Eyebrows furrow sharply into an angry scowl
+        eyebrowLeft.style.transform = 'rotate(26deg) translateY(6px)';
+        eyebrowRight.style.transform = 'rotate(-26deg) translateY(6px)';
+        eyebrowLeft.style.backgroundColor = '#901d00';
+        eyebrowRight.style.backgroundColor = '#901d00';
+
+        // Squint eyes with angry lower & upper lid pinch
+        eyelidLeft.style.height = '28%';
+        eyelidRight.style.height = '28%';
+        eyelidBottomLeft.style.height = '28%';
+        eyelidBottomRight.style.height = '28%';
+
+        // Pupils look sharp & dilated
+        pupilLeft.style.width = '7px';
+        pupilLeft.style.height = '7px';
+        pupilLeft.style.backgroundColor = '#6d1000';
+        pupilRight.style.width = '7px';
+        pupilRight.style.height = '7px';
+        pupilRight.style.backgroundColor = '#6d1000';
+
+        // Mouth frame and container: irritated red border / glow
+        mouthFrame.classList.remove('border-emerald-400', 'border-amber-300');
+        mouthFrame.classList.add('border-rose-500/80', 'shadow-[0_0_18px_rgba(244,63,94,0.45)]');
+        inputCard.classList.remove('ring-emerald-400', 'ring-amber-300');
+        inputCard.classList.add('ring-2', 'ring-rose-400');
+
+        // Go button subtle angry warning
+        goButton.classList.remove('bg-emerald-600', 'border-emerald-800');
+        goButton.classList.add('bg-[#e8380d]', 'border-[#a82202]');
+
+        // Smile disappears
+        happySmile.classList.remove('border-b-2', 'border-emerald-700');
+        happySmile.style.opacity = '0';
+
+        // Feedback Text & Bar
+        feedbackContainer.style.maxHeight = '50px';
+        feedbackContainer.style.opacity = '1';
+        feedbackLabel.textContent = 'Grrr! Too weak! Needs 6+ characters';
+        feedbackLabel.className = 'text-rose-100 font-semibold drop-shadow-sm';
+        strengthBar.style.width = '28%';
+        strengthBar.className = 'h-full bg-rose-400 transition-all duration-300 rounded-full shadow-sm';
+
+      } else if (mood === 'medium') {
+        // Curious / cautious / questioning face
+        setMonsterColor('#f89a1c', '#e47d0d', '#e8780c');
+
+        // One horn tilted curious, head alert
+        hornL.style.transform = 'rotate(-18deg) translateY(-4px)';
+        hornR.style.transform = 'rotate(8deg) translateY(0px)';
+
+        // Asymmetrical curious eyebrows
+        eyebrowLeft.style.transform = 'rotate(-8deg) translateY(-4px)';
+        eyebrowRight.style.transform = 'rotate(-18deg) translateY(3px)';
+        eyebrowLeft.style.backgroundColor = '#b85002';
+        eyebrowRight.style.backgroundColor = '#b85002';
+
+        // Cautious slightly opened eyes
+        eyelidLeft.style.height = '0%';
+        eyelidRight.style.height = '0%';
+        eyelidBottomLeft.style.height = '0%';
+        eyelidBottomRight.style.height = '0%';
+
+        pupilLeft.style.width = '10px';
+        pupilLeft.style.height = '10px';
+        pupilLeft.style.backgroundColor = '#231f20';
+        pupilRight.style.width = '10px';
+        pupilRight.style.height = '10px';
+        pupilRight.style.backgroundColor = '#231f20';
+
+        mouthFrame.classList.remove('border-rose-500/80', 'border-emerald-400', 'shadow-[0_0_18px_rgba(244,63,94,0.45)]', 'shadow-[0_0_20px_rgba(52,211,153,0.4)]');
+        mouthFrame.classList.add('border-amber-300/80');
+        inputCard.classList.remove('ring-rose-400', 'ring-emerald-400');
+        inputCard.classList.add('ring-2', 'ring-amber-300');
+
+        goButton.classList.remove('bg-emerald-600', 'border-emerald-800');
+        goButton.classList.add('bg-[#eb4e13]', 'border-[#b93807]');
+
+        happySmile.style.opacity = '0';
+
+        feedbackContainer.style.maxHeight = '50px';
+        feedbackContainer.style.opacity = '1';
+        feedbackLabel.textContent = 'Getting better... add numbers or symbols';
+        feedbackLabel.className = 'text-amber-100 font-medium drop-shadow-sm';
+        strengthBar.style.width = '64%';
+        strengthBar.className = 'h-full bg-amber-300 transition-all duration-300 rounded-full shadow-sm';
+
+      } else if (mood === 'strong') {
+        // Monster becomes CALM, satisfied, happy & relaxed!
+        monsterChar.classList.add('anim-calm');
+
+        // Warm soothing peach-orange glow
+        setMonsterColor('#ffa633', '#ea8b1a', '#e8780c');
+
+        // Relaxed upright horns
+        hornL.style.transform = 'rotate(-10deg) translateY(0px)';
+        hornR.style.transform = 'rotate(10deg) translateY(0px)';
+
+        // Eyebrows relax into soft, happy rounded arches
+        eyebrowLeft.style.transform = 'rotate(-10deg) translateY(-7px)';
+        eyebrowRight.style.transform = 'rotate(10deg) translateY(-7px)';
+        eyebrowLeft.style.backgroundColor = '#8c4800';
+        eyebrowRight.style.backgroundColor = '#8c4800';
+
+        // Gentle relaxed contented eye curve
+        eyelidLeft.style.height = '12%';
+        eyelidRight.style.height = '12%';
+        eyelidBottomLeft.style.height = '12%';
+        eyelidBottomRight.style.height = '12%';
+
+        pupilLeft.style.width = '11px';
+        pupilLeft.style.height = '11px';
+        pupilLeft.style.backgroundColor = '#183828';
+        pupilRight.style.width = '11px';
+        pupilRight.style.height = '11px';
+        pupilRight.style.backgroundColor = '#183828';
+
+        mouthFrame.classList.remove('border-rose-500/80', 'border-amber-300', 'shadow-[0_0_18px_rgba(244,63,94,0.45)]');
+        mouthFrame.classList.add('border-emerald-400', 'shadow-[0_0_20px_rgba(52,211,153,0.4)]');
+        inputCard.classList.remove('ring-rose-400', 'ring-amber-300');
+        inputCard.classList.add('ring-2', 'ring-emerald-400');
+
+        goButton.classList.remove('bg-[#eb4e13]', 'border-[#b93807]', 'bg-[#e8380d]', 'border-[#a82202]');
+        goButton.classList.add('bg-emerald-600', 'border-emerald-800');
+
+        // Gentle smile visible
+        happySmile.classList.add('border-b-2');
+        happySmile.style.borderColor = '#923e00';
+        happySmile.style.opacity = '1';
+
+        feedbackContainer.style.maxHeight = '50px';
+        feedbackContainer.style.opacity = '1';
+        feedbackLabel.textContent = 'Ahhh, perfect & strong! ✨';
+        feedbackLabel.className = 'text-emerald-100 font-semibold drop-shadow-sm';
+        strengthBar.style.width = '100%';
+        strengthBar.className = 'h-full bg-emerald-300 transition-all duration-300 rounded-full shadow-sm';
+
+      } else {
+        // Idle / Empty state
+        resetToIdleExpression();
+      }
+    }
+
+    function resetToIdleExpression() {
+      currentMood = 'idle';
+      monsterScene.classList.remove('mood-angry');
+      monsterChar.classList.remove('anim-rumble', 'anim-calm');
+
+      setMonsterColor('#f89a1c', '#e47d0d', '#e8780c');
+
+      hornL.style.transform = 'rotate(-12deg)';
+      hornR.style.transform = 'rotate(12deg)';
+
+      eyebrowLeft.style.transform = 'rotate(0deg) translateY(0px)';
+      eyebrowRight.style.transform = 'rotate(0deg) translateY(0px)';
+      eyebrowLeft.style.backgroundColor = '#b85002';
+      eyebrowRight.style.backgroundColor = '#b85002';
+
+      eyelidLeft.style.height = '0%';
+      eyelidRight.style.height = '0%';
+      eyelidBottomLeft.style.height = '0%';
+      eyelidBottomRight.style.height = '0%';
+
+      pupilLeft.style.width = '10px';
+      pupilLeft.style.height = '10px';
+      pupilLeft.style.backgroundColor = '#231f20';
+      pupilRight.style.width = '10px';
+      pupilRight.style.height = '10px';
+      pupilRight.style.backgroundColor = '#231f20';
+
+      mouthFrame.classList.remove('border-rose-500/80', 'border-emerald-400', 'border-amber-300', 'shadow-[0_0_18px_rgba(244,63,94,0.45)]', 'shadow-[0_0_20px_rgba(52,211,153,0.4)]');
+      mouthFrame.classList.add('border-transparent');
+      inputCard.classList.remove('ring-2', 'ring-rose-400', 'ring-amber-300', 'ring-emerald-400');
+
+      goButton.classList.remove('bg-emerald-600', 'border-emerald-800', 'bg-[#e8380d]', 'border-[#a82202]');
+      goButton.classList.add('bg-[#eb4e13]', 'border-[#b93807]');
+
+      happySmile.style.opacity = '0';
+
+      feedbackContainer.style.maxHeight = '0px';
+      feedbackContainer.style.opacity = '0';
+      strengthBar.style.width = '0%';
+    }
+
+    function setMonsterColor(bodyColor, strokeColor, mouthColor) {
+      monsterBodyEl.style.backgroundColor = bodyColor;
+      monsterHeadEl.style.backgroundColor = bodyColor;
+      pawL.style.backgroundColor = bodyColor;
+      pawR.style.backgroundColor = bodyColor;
+      eyelidLeft.style.backgroundColor = bodyColor;
+      eyelidRight.style.backgroundColor = bodyColor;
+      eyelidBottomLeft.style.backgroundColor = bodyColor;
+      eyelidBottomRight.style.backgroundColor = bodyColor;
+
+      hornPathL.setAttribute('fill', bodyColor);
+      hornPathL.setAttribute('stroke', strokeColor);
+      hornPathR.setAttribute('fill', bodyColor);
+      hornPathR.setAttribute('stroke', strokeColor);
+
+      hairTufts.forEach(t => t.style.backgroundColor = bodyColor);
+      pawKnuckles.forEach(k => k.style.backgroundColor = strokeColor);
+      mouthFrame.style.backgroundColor = mouthColor;
+    }
+
+    // 5. Password Focus & Live Input Reactions
+    passwordInput.addEventListener('focus', () => {
+      isPasswordFocused = true;
+      isCoveringEyes = true;
+      handsAssembly.classList.add('hands-covering');
+
+      // If user starts typing or has characters, lower paws into peeking typing mode
+      // so the angry furrowed brow / calm relaxed face is clearly visible!
+      if (passwordInput.value.length > 0) {
+        handsAssembly.classList.add('typing-active');
+      }
+
+      const mood = evaluatePassword(passwordInput.value);
+      applyMonsterMood(mood);
+    });
+
+    passwordInput.addEventListener('input', () => {
+      // Real-time evaluation on every keystroke
+      if (passwordInput.value.length > 0) {
+        handsAssembly.classList.add('typing-active');
+      } else {
+        handsAssembly.classList.remove('typing-active');
+      }
+
+      const mood = evaluatePassword(passwordInput.value);
+      applyMonsterMood(mood);
+
+      // Jiggle squish feedback on angry keystrokes
+      if (mood === 'weak') {
+        inputCard.classList.remove('anim-bounce');
+        void inputCard.offsetWidth;
+        inputCard.classList.add('anim-bounce');
+      }
+    });
+
+    passwordInput.addEventListener('blur', () => {
+      isPasswordFocused = false;
+      // Small timeout to allow peek button click to fire if user tapped peek
+      setTimeout(() => {
+        if (document.activeElement !== passwordInput && document.activeElement !== peekToggle) {
+          isCoveringEyes = false;
+          isPeeking = false;
+          handsAssembly.classList.remove('hands-covering', 'peeking', 'typing-active');
+          passwordInput.type = 'password';
+          resetPeekIcon();
+          pupilLeft.style.transform = `translate(0px, 0px)`;
+          pupilRight.style.transform = `translate(0px, 0px)`;
+
+          // If empty, reset to idle, otherwise keep subtle mood indication
+          if (!passwordInput.value) {
+            resetToIdleExpression();
+          }
+        }
+      }, 140);
+    });
+
+    // 6. Peek Button Toggle
+    peekToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!isCoveringEyes) {
+        passwordInput.focus();
+      }
+
+      isPeeking = !isPeeking;
+
+      if (isPeeking) {
+        passwordInput.type = 'text';
+        handsAssembly.classList.add('peeking');
+        handsAssembly.classList.remove('typing-active');
+        // Peeking pupil looks directly out with current mood size
+        pupilRight.style.transform = `translate(2px, 2px)`;
+        updatePeekIcon(true);
+      } else {
+        passwordInput.type = 'password';
+        handsAssembly.classList.remove('peeking');
+        if (passwordInput.value.length > 0) {
+          handsAssembly.classList.add('typing-active');
+        }
+        pupilRight.style.transform = `translate(0px, -2px)`;
+        updatePeekIcon(false);
+      }
+    });
+
+    function updatePeekIcon(isOpen) {
+      const icon = document.getElementById('peek-icon');
+      if (isOpen) {
+        icon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+      } else {
+        resetPeekIcon();
+      }
+    }
+
+    function resetPeekIcon() {
+      const icon = document.getElementById('peek-icon');
+      icon.innerHTML = `
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"></path>
+      `;
+    }
+
+    // 7. Natural Blinking Animation
+    function scheduleBlink() {
+      const nextTime = Math.random() * 2500 + 3500;
+      setTimeout(() => {
+        if (!isCoveringEyes && currentMood !== 'weak') {
+          const currentTopH = eyelidLeft.style.height;
+          eyelidLeft.style.height = '100%';
+          eyelidRight.style.height = '100%';
+          setTimeout(() => {
+            if (!isCoveringEyes && currentMood !== 'weak') {
+              eyelidLeft.style.height = currentTopH || '0%';
+              eyelidRight.style.height = currentTopH || '0%';
+            }
+          }, 140);
+        }
+        scheduleBlink();
+      }, nextTime);
+    }
+    scheduleBlink();
+
+    // 8. Submit feedback & squish bounce
+    function handleSubmit() {
+      const pwd = passwordInput.value;
+      const mood = evaluatePassword(pwd);
+
+      if (mood === 'weak') {
+        // Denied: intense angry shake
+        monsterChar.classList.remove('anim-bounce');
+        void monsterChar.offsetWidth;
+        monsterChar.classList.add('anim-bounce');
+        applyMonsterMood('weak');
+        return;
+      }
+
+      // Playful bounce on monster
+      monsterChar.classList.remove('anim-bounce');
+      void monsterChar.offsetWidth; // trigger reflow
+      monsterChar.classList.add('anim-bounce');
+
+      goButton.innerText = '...';
+      goButton.classList.add('opacity-90', 'scale-95');
+
+      setTimeout(() => {
+        applyMonsterMood('strong');
+        goButton.innerText = '✓';
+        goButton.classList.remove('bg-[#eb4e13]', 'border-[#b93807]');
+        goButton.classList.add('bg-emerald-600', 'border-emerald-800');
+
+        setTimeout(() => {
+          goButton.innerText = 'go';
+          goButton.classList.remove('opacity-90', 'scale-95');
+        }, 1500);
+      }, 500);
+    }
+  </script>
+</body></html>

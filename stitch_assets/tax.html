@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Questrial&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-lowest": "#ffffff", "on-surface": "#1b1c1c", "surface-container-high": "#eae7e7", "surface-bright": "#fcf9f8", "on-primary-fixed": "#2a1800", "surface-container-highest": "#e5e2e1", "outline": "#857461", "on-secondary": "#ffffff", "on-secondary-fixed": "#001f2b", "on-error-container": "#93000a", "primary-container": "#f9a61f", "on-tertiary-fixed-variant": "#842500", "surface-container": "#f0eded", "on-tertiary": "#ffffff", "tertiary-container": "#ff9f80", "tertiary": "#ad3300", "tertiary-fixed-dim": "#ffb59d", "primary-fixed": "#ffddb6", "secondary": "#006686", "on-secondary-fixed-variant": "#004d66", "surface-variant": "#e5e2e1", "tertiary-fixed": "#ffdbd0", "inverse-primary": "#ffb959", "on-surface-variant": "#524434", "on-tertiary-fixed": "#390b00", "error-container": "#ffdad6", "inverse-surface": "#303030", "on-primary-container": "#664000", "outline-variant": "#d8c3ad", "on-error": "#ffffff", "surface-tint": "#845400", "secondary-fixed": "#c0e8ff", "on-tertiary-container": "#872600", "primary": "#845400", "on-secondary-container": "#005773", "on-primary": "#ffffff", "on-primary-fixed-variant": "#643f00", "surface-container-low": "#f6f3f2", "secondary-fixed-dim": "#6fd2ff", "surface": "#fcf9f8", "background": "#fcf9f8", "primary-fixed-dim": "#ffb959", "error": "#ba1a1a", "surface-dim": "#dcd9d9", "inverse-on-surface": "#f3f0ef", "on-background": "#1b1c1c", "secondary-container": "#66d0fe" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "margin-desktop": "3rem", "space-md": "1rem", "gutter": "1rem", "space-xs": "0.25rem", "space-xl": "2rem", "gutter-desktop": "1.5rem" }, fontFamily: { "body-md": [ "Questrial" ], "headline-md": [ "Questrial" ], "label-sm": [ "Questrial" ], "display-lg-mobile": [ "Questrial" ], "body-lg": [ "Questrial" ], "label-lg": [ "Questrial" ], "headline-lg-mobile": [ "Questrial" ], "headline-lg": [ "Questrial" ], "label-md": [ "Questrial" ], "display-lg": [ "Questrial" ], "body-sm": [ "Questrial" ], "currency-display": [ "Questrial" ] }, fontSize: { "body-md": [ "16px", { lineHeight: "24px", fontWeight: "400" } ], "headline-md": [ "24px", { lineHeight: "32px", fontWeight: "400" } ], "label-sm": [ "12px", { lineHeight: "16px", fontWeight: "600" } ], "display-lg-mobile": [ "36px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "300" } ], "body-lg": [ "18px", { lineHeight: "28px", fontWeight: "400" } ], "label-lg": [ "16px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" } ], "headline-lg-mobile": [ "28px", { lineHeight: "36px", fontWeight: "400" } ], "headline-lg": [ "36px", { lineHeight: "44px", fontWeight: "400" } ], "label-md": [ "14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" } ], "display-lg": [ "56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "300" } ], "body-sm": [ "14px", { lineHeight: "20px", fontWeight: "400" } ], "currency-display": [ "40px", { lineHeight: "48px", fontWeight: "400" } ] } } } };</script></head><body class="bg-secondary-container font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center py-6 bg-secondary-container select-none"><div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center mb-8 shadow-[0_4px_0_0_#ad3300]"><span class="material-symbols-outlined text-on-primary-fixed text-2xl">savings</span></div><nav class="flex flex-col items-center gap-space-sm w-full px-2" data-active-classes="bg-primary-container text-on-primary-container shadow-[0_4px_0_0_#ad3300]"><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="dashboard" href="#" title="Dashboard"><span class="material-symbols-outlined text-2xl">home</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="income" href="#" title="Income"><span class="material-symbols-outlined text-2xl">payments</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="auto-save" href="#" title="Auto-Save"><span class="material-symbols-outlined text-2xl">autorenew</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="invest" href="#" title="Invest"><span class="material-symbols-outlined text-2xl">trending_up</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="tax" href="#" title="Tax"><span class="material-symbols-outlined text-2xl">receipt_long</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="goals" href="#" title="Goals"><span class="material-symbols-outlined text-2xl">flag</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="activity" href="#" title="Activity"><span class="material-symbols-outlined text-2xl">history</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="settings" href="#" title="Settings"><span class="material-symbols-outlined text-2xl">settings</span></a></nav></aside><div class="pl-20 min-h-screen bg-secondary-container"><header class="fixed top-0 left-20 right-0 h-16 bg-secondary-container z-40"><div class="h-16 w-full px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm uppercase tracking-wider text-surface-container-lowest opacity-90 px-space-sm py-space-xs rounded-full bg-secondary text-on-secondary">Hackathon Prototype — simulated data</span></div><div class="flex items-center gap-space-md"><div class="px-space-md py-1 rounded-full bg-surface-container-lowest text-on-secondary-container font-label-md text-label-md flex items-center gap-space-xs shadow-[0_3px_0_0_#d8c3ad]"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span>health: 78/100</span></div><div class="flex items-center gap-space-sm pl-space-sm py-1 pr-space-md rounded-full bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad]"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label-md text-label-md text-on-surface lowercase">rahul</span></div></div></div></header><main class="relative pt-16 w-full px-space-xl pb-space-xl bg-secondary-container"><div class="flex flex-col w-full">
+<style>
+    @keyframes mascotBob {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    @keyframes mascotBlink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.08); }
+    }
+    @keyframes hornWiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-8deg); }
+      75% { transform: rotate(8deg); }
+    }
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes pulseUrgent {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .animate-mascot { animation: mascotBob 4.2s ease-in-out infinite; }
+    .animate-blink { transform-origin: center; animation: mascotBlink 4.5s infinite; }
+    .group-mascot:hover .horn-left { transform-origin: bottom right; animation: hornWiggle 0.6s ease-in-out infinite; }
+    .group-mascot:hover .horn-right { transform-origin: bottom left; animation: hornWiggle 0.6s ease-in-out infinite reverse; }
+    .animate-urgent-badge { animation: pulseUrgent 2.2s infinite ease-in-out; }
+    .animate-coin { animation: floatBadge 3s ease-in-out infinite; }
+
+    .btn-chunky-orange {
+      background-color: #F4500C;
+      box-shadow: 0 5px 0 0 #D43E08;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+    .btn-chunky-orange:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 0 #D43E08;
+    }
+
+    .btn-chunky-white {
+      background-color: #FFFFFF;
+      box-shadow: 0 4px 0 0 #CFCFD8;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+    .btn-chunky-white:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 0 #CFCFD8;
+    }
+
+    .btn-chunky-blue {
+      background-color: #2A9FD6;
+      box-shadow: 0 4px 0 0 #1B7CA9;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+    .btn-chunky-blue:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 0 #1B7CA9;
+    }
+
+    .range-slider-flat::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 9999px;
+      background: #F4500C;
+      box-shadow: 0 3px 0 0 #D43E08;
+      cursor: pointer;
+      border: 3px solid #FFFFFF;
+      transition: transform 0.1s;
+    }
+    .range-slider-flat::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+  </style>
+<!-- Hero Header & Interactive Mascot Header Section -->
+<section class="relative w-full mb-space-xl pt-space-xs">
+<div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-space-lg">
+<!-- Headline & Subtitle -->
+<div class="flex flex-col max-w-2xl">
+<div class="inline-flex items-center gap-space-xs mb-space-xs self-start px-space-md py-1 rounded-full bg-surface-container-lowest shadow-[0_3px_0_0_#CFCFD8]">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface lowercase tracking-wide">quarterly advance tax mode</span>
+</div>
+<h1 class="font-display-lg text-display-lg tracking-tight text-on-secondary font-light lowercase leading-none">
+          tax copilot,
+        </h1>
+<p class="font-headline-md text-headline-md text-on-secondary opacity-95 lowercase mt-space-xs leading-snug">
+          relax, your quarterly advance tax is automatically set aside from daily gigs.
+        </p>
+</div>
+<!-- Mascot Card Peak Anchor -->
+<div class="group-mascot relative self-center lg:self-end flex items-end justify-center pr-space-md">
+<!-- Mascot Vector Illustration -->
+<div class="animate-mascot relative w-48 h-40 flex items-end justify-center select-none cursor-pointer">
+<svg class="w-full h-full overflow-visible drop-shadow-none" viewbox="0 0 220 180">
+<!-- Back Left Horn -->
+<polygon class="horn-left transition-transform" fill="#F78305" points="48,58 20,20 62,38"></polygon>
+<!-- Back Right Horn -->
+<polygon class="horn-right transition-transform" fill="#F78305" points="172,58 200,20 158,38"></polygon>
+<!-- Monster Fur Body: Friendly Chunky Orange -->
+<path d="M 28 140 C 24 85, 40 40, 110 40 C 180 40, 196 85, 192 140 C 190 170, 30 170, 28 140 Z" fill="#F9A61F"></path>
+<!-- Belly Patch (Lighter Tone) -->
+<path d="M 64 125 C 64 90, 80 82, 110 82 C 140 82, 156 90, 156 125 C 156 160, 64 160, 64 125 Z" fill="#ffddb6" opacity="0.9"></path>
+<!-- Glasses Frame (Copilot Theme) -->
+<g id="glasses">
+<!-- Left Rim -->
+<circle cx="85" cy="85" fill="#ffffff" r="22" stroke="#222222" stroke-width="4.5"></circle>
+<!-- Right Rim -->
+<circle cx="135" cy="85" fill="#ffffff" r="22" stroke="#222222" stroke-width="4.5"></circle>
+<!-- Bridge -->
+<path d="M 107 84 Q 110 79 113 84" fill="none" stroke="#222222" stroke-linecap="round" stroke-width="4.5"></path>
+<!-- Temple arms -->
+<path d="M 63 85 L 42 80" stroke="#222222" stroke-linecap="round" stroke-width="4.5"></path>
+<path d="M 157 85 L 178 80" stroke="#222222" stroke-linecap="round" stroke-width="4.5"></path>
+<!-- Blinking Pupils -->
+<g class="animate-blink">
+<circle cx="88" cy="85" fill="#222222" r="8"></circle>
+<circle cx="91" cy="81" fill="#ffffff" r="3"></circle>
+<circle cx="138" cy="85" fill="#222222" r="8"></circle>
+<circle cx="141" cy="81" fill="#ffffff" r="3"></circle>
+</g>
+</g>
+<!-- Rosy Friendly Cheeks -->
+<ellipse cx="62" cy="106" fill="#F4500C" opacity="0.75" rx="9" ry="5.5"></ellipse>
+<ellipse cx="158" cy="106" fill="#F4500C" opacity="0.75" rx="9" ry="5.5"></ellipse>
+<!-- Reassuring Smile with Tiny Fang -->
+<path d="M 94 112 Q 110 128 126 112" fill="none" stroke="#222222" stroke-linecap="round" stroke-width="4.5"></path>
+<polygon fill="#ffffff" points="118,114 124,114 121,120" stroke="#222222" stroke-width="1"></polygon>
+<!-- Cute Chunky Paws Resting/Tucking Card -->
+<!-- Left Paws -->
+<ellipse cx="48" cy="154" fill="#F78305" rx="14" ry="10"></ellipse>
+<!-- Right Hand Holding Mini Abacus / Calculator -->
+<g class="animate-coin" style="transform-origin: 165px 145px;">
+<rect fill="#ffffff" height="42" rx="7" stroke="#222222" stroke-width="3.5" width="34" x="150" y="125"></rect>
+<!-- Calculator Screen -->
+<rect fill="#55C1EF" height="9" rx="2" stroke="#222222" stroke-width="2" width="22" x="156" y="131"></rect>
+<!-- Mini Buttons -->
+<circle cx="160" cy="148" fill="#F4500C" r="2.2"></circle>
+<circle cx="167" cy="148" fill="#F9A61F" r="2.2"></circle>
+<circle cx="174" cy="148" fill="#222222" r="2.2"></circle>
+<circle cx="160" cy="157" fill="#222222" r="2.2"></circle>
+<circle cx="167" cy="157" fill="#222222" r="2.2"></circle>
+<circle cx="174" cy="157" fill="#F9A61F" r="2.2"></circle>
+</g>
+</svg>
+<!-- Speech bubble on mascot hover -->
+<div class="absolute -top-6 -left-12 bg-surface-container-lowest px-3 py-1.5 rounded-full shadow-[0_3px_0_0_#F78305] text-[12px] font-label-md text-on-surface whitespace-nowrap opacity-95 transition-all pointer-events-none flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-tertiary">verified_user</span>
+<span>relax, rahul! 0 penalties</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4 Top KPI Cards Grid -->
+<section class="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-lg mb-space-xl">
+<!-- KPI 1: Estimated Annual Income -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#CFCFD8] flex flex-col justify-between relative overflow-hidden transition-transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
+          annual gig projection
+        </span>
+<div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-xl">two_wheeler</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-normal">
+          ₹3,42,000
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          ~₹950/day across Zomato + Swiggy
+        </p>
+</div>
+<div class="mt-space-md pt-space-sm border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>360 active gig days</span>
+<span class="text-primary font-semibold">baseline locked</span>
+</div>
+</div>
+<!-- KPI 2: Reserved So Far -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#F78305] border-2 border-primary-container flex flex-col justify-between relative overflow-hidden transition-transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-semibold">
+          reserved so far (q2)
+        </span>
+<div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center text-on-primary-fixed shadow-[0_2px_0_0_#ad3300]">
+<span class="material-symbols-outlined text-xl">lock</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-normal">
+          ₹3,400
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          10% auto-earmarked daily vault
+        </p>
+</div>
+<div class="mt-space-md pt-space-sm border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1 text-tertiary">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+          active liquid escrow
+        </span>
+<span class="font-semibold text-on-surface">+₹95 yesterday</span>
+</div>
+</div>
+<!-- KPI 3: Recommended Additional -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#ba1a1a] border-2 border-error flex flex-col justify-between relative overflow-hidden transition-transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error font-semibold">
+          due by sep 15 (q2)
+        </span>
+<div class="w-9 h-9 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-xl">priority_high</span>
+</div>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-error tracking-tight font-normal">
+          ₹1,850
+        </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          gap to avoid Sec 234C interest penalty
+        </p>
+</div>
+<div class="mt-space-md pt-space-sm border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-error font-semibold">18 days remaining</span>
+<span class="text-on-surface font-semibold">₹103/day target</span>
+</div>
+</div>
+<!-- KPI 4: Tax Readiness Score -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#CFCFD8] flex flex-col justify-between relative overflow-hidden transition-transform hover:-translate-y-1">
+<div class="flex items-center justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">
+          tax readiness score
+        </span>
+<div class="w-9 h-9 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-xl">speed</span>
+</div>
+</div>
+<div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-normal">68</span>
+<span class="font-headline-md text-headline-md text-on-surface-variant">/100</span>
+<span class="ml-auto font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed">good pace</span>
+</div>
+<!-- Chunky flat progress bar -->
+<div class="w-full h-4 bg-surface-container rounded-full mt-space-sm p-0.5 overflow-hidden flex">
+<div class="h-full bg-primary-container rounded-full" style="width: 68%;"></div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm border-t-2 border-surface-container flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>safe zone: 75%+</span>
+<span class="text-secondary font-semibold">almost there!</span>
+</div>
+</div>
+</section>
+<!-- Urgent Advance-Tax Deadline Alert Banner Card -->
+<section class="w-full mb-space-xl">
+<div class="bg-surface-container-lowest rounded-3xl border-4 border-error p-space-lg md:p-space-xl shadow-[0_6px_0_0_#ba1a1a] flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-lg">
+<div class="flex flex-col md:flex-row items-start md:items-center gap-space-md">
+<!-- Urgency Badge Icon -->
+<div class="w-16 h-16 rounded-2xl bg-error-container text-on-error-container flex-shrink-0 flex items-center justify-center shadow-[0_3px_0_0_#ba1a1a]">
+<span class="material-symbols-outlined text-3xl animate-bounce">alarm</span>
+</div>
+<div class="flex flex-col">
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<span class="animate-urgent-badge px-3 py-1 rounded-full bg-error text-on-error font-label-sm text-label-sm font-semibold tracking-wide uppercase">
+              q2 advance tax deadline in 18 days (sep 15)
+            </span>
+<span class="px-3 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">
+              section 44ada applicable
+            </span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-normal lowercase">
+            pay 45% cumulative tax to avoid 1% monthly penalty (sec 234c)
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            under presumptive taxation, Rahul declares only 50% of ₹3.42L as profit (₹1.71L), keeping tax near ₹0 after 87A rebate, with only ₹5,250 minimum cushion recommended.
+          </p>
+</div>
+</div>
+<!-- Quick Action Pill Buttons -->
+<div class="flex flex-col sm:flex-row lg:flex-col items-stretch lg:items-end gap-space-sm flex-shrink-0">
+<button class="btn-chunky-orange px-space-lg py-3 rounded-full text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-space-xs text-center cursor-pointer select-none" id="reserveNowBtn">
+<span class="material-symbols-outlined text-xl">add_circle</span>
+<span>+ reserve ₹250 now</span>
+</button>
+<button class="btn-chunky-white px-space-md py-2.5 rounded-full text-on-surface font-label-md text-label-md flex items-center justify-center gap-1.5 border-2 border-surface-container-highest cursor-pointer" onclick="document.getElementById('taxBreakdownModal').classList.toggle('hidden')">
+<span class="material-symbols-outlined text-lg text-secondary">calculate</span>
+<span>view 44ada formula</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Section 44ADA Breakdown Modal / Drawer (Inline expandable) -->
+<div class="hidden w-full mb-space-xl bg-surface-container-low rounded-3xl p-space-lg border-2 border-outline-variant shadow-[0_4px_0_0_#CFCFD8]" id="taxBreakdownModal">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-lg">balance</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface lowercase">
+          how section 44ada saves gig workers ₹14,200/yr
+        </h3>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest text-on-surface flex items-center justify-center hover:bg-surface-container" onclick="document.getElementById('taxBreakdownModal').classList.add('hidden')">
+<span class="material-symbols-outlined text-base">close</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md text-on-surface">
+<div class="bg-surface-container-lowest p-space-md rounded-2xl border-2 border-surface-container">
+<div class="font-label-md text-label-md text-tertiary mb-1 font-semibold uppercase">standard filing without 44ada</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Requires accounting books, fuel receipts, phone bills, vehicle depreciation audit.</p>
+<ul class="text-body-sm font-body-sm space-y-1">
+<li class="flex justify-between"><span>Declared Income:</span> <b>₹3,42,000</b></li>
+<li class="flex justify-between"><span>Allowed Proof Deductions:</span> <b>- ₹48,000</b></li>
+<li class="flex justify-between text-tertiary"><span>Net Taxable Income:</span> <b>₹2,94,000</b></li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-2xl border-2 border-primary-container shadow-[0_3px_0_0_#f9a61f]">
+<div class="font-label-md text-label-md text-primary mb-1 font-semibold uppercase">with smart 44ada presumptive opt-in</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-2">Government presumes flat 50% profit without demanding a single receipt or CA stamp.</p>
+<ul class="text-body-sm font-body-sm space-y-1">
+<li class="flex justify-between"><span>Gross Receipts:</span> <b>₹3,42,000</b></li>
+<li class="flex justify-between"><span>Presumptive 50% Expense:</span> <b>- ₹1,71,000</b></li>
+<li class="flex justify-between text-secondary font-bold"><span>Final Net Taxable Income:</span> <b>₹1,71,000 (Tax = ₹0)</b></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Interactive Tax Simulator & Advance Tax Breakdown Grid -->
+<section class="w-full grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- Left Column: Interactive Tax Simulator / Calculator (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-3xl p-space-lg md:p-space-xl shadow-[0_5px_0_0_#CFCFD8] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-2xl">tune</span>
+<h2 class="font-headline-md text-headline-md text-on-surface lowercase">
+              live gig earnings tax simulator
+            </h2>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+            FY 2024-25
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg">
+          Slide your typical daily payout to calculate safe quarterly escrow and zero-penalty buffer.
+        </p>
+<!-- Slider Component -->
+<div class="bg-surface-container-low p-space-lg rounded-2xl mb-space-lg">
+<div class="flex justify-between items-baseline mb-space-xs">
+<span class="font-label-md text-label-md text-on-surface lowercase">daily gross earnings</span>
+<div class="font-headline-md text-headline-md text-primary font-bold">
+              ₹<span id="sliderValueDisplay">950</span><span class="text-body-sm font-normal text-on-surface-variant">/day</span>
+</div>
+</div>
+<input class="range-slider-flat w-full h-3 bg-surface-container-highest rounded-full appearance-none outline-none my-space-sm cursor-pointer" id="earningsSlider" max="3000" min="400" step="50" type="range" value="950"/>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>₹400 (part-time)</span>
+<span>₹1,500 (average)</span>
+<span>₹3,000+ (top captain)</span>
+</div>
+</div>
+<!-- Calculated Live Metrics Output -->
+<div class="grid grid-cols-3 gap-space-sm mb-space-md text-center">
+<div class="bg-surface-container rounded-2xl p-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase">projected annual</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold block mt-1" id="calcAnnual">₹3,42,000</span>
+</div>
+<div class="bg-surface-container rounded-2xl p-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase">44ada profit (50%)</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold block mt-1" id="calcDeemed">₹1,71,000</span>
+</div>
+<div class="bg-surface-container rounded-2xl p-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase">net tax liability</span>
+<span class="font-headline-md text-headline-md text-secondary font-semibold block mt-1" id="calcTaxDue">₹0</span>
+</div>
+</div>
+<!-- Dynamic Feedback Note -->
+<div class="p-space-md rounded-2xl bg-secondary-fixed text-on-secondary-fixed font-body-sm text-body-sm flex items-center gap-space-sm" id="rebateAlertBox">
+<span class="material-symbols-outlined text-secondary flex-shrink-0">check_circle</span>
+<span><b>Zero Income Tax!</b> Under New Regime Section 87A rebate, any taxable income under ₹7,00,000 has 100% tax rebate. You only reserve ₹25/day for municipal/advance compliances!</span>
+</div>
+</div>
+<div class="mt-space-lg pt-space-md border-t-2 border-surface-container flex flex-wrap items-center justify-between gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant">
+          Auto-adjust daily deduction based on this simulation?
+        </span>
+<button class="btn-chunky-orange px-space-md py-2 rounded-full text-on-primary font-label-md text-label-md flex items-center gap-1 cursor-pointer" id="applyRateBtn">
+<span>update daily rule</span>
+<span class="material-symbols-outlined text-sm">check</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Quarterly Schedule & Escrow Health (5 cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-3xl p-space-lg md:p-space-xl shadow-[0_5px_0_0_#CFCFD8] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-2xl">calendar_month</span>
+<h2 class="font-headline-md text-headline-md text-on-surface lowercase">
+              quarterly installment ladder
+            </h2>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-tertiary uppercase bg-tertiary-fixed px-2 py-0.5 rounded-full">
+            ITD compliance
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+          Advance tax schedule for gig professionals enrolled in automatic micro-escrow:
+        </p>
+<!-- Quarter Milestones List -->
+<div class="space-y-space-sm">
+<!-- Q1 -->
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-low opacity-80">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-xl text-primary-container">check_circle</span>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-semibold lowercase">q1: jun 15 (15% target)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">settled ₹1,550 on time</div>
+</div>
+</div>
+<span class="px-2 py-1 rounded-full bg-surface-container-highest font-label-sm text-label-sm text-on-surface-variant">paid</span>
+</div>
+<!-- Q2 CURRENT -->
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-lowest border-2 border-error shadow-[0_3px_0_0_#ba1a1a]">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-xl text-error animate-pulse">pending</span>
+<div>
+<div class="font-label-md text-label-md text-error font-bold lowercase">q2: sep 15 (45% cumulative)</div>
+<div class="font-body-sm text-body-sm text-on-surface font-semibold">₹3,400 of ₹5,250 collected</div>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-error text-on-error font-label-sm text-label-sm font-bold">18 days left</span>
+</div>
+<!-- Q3 -->
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-xl text-on-surface-variant">schedule</span>
+<div>
+<div class="font-label-md text-label-md text-on-surface lowercase">q3: dec 15 (75% cumulative)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">projected target: ₹7,800</div>
+</div>
+</div>
+<span class="px-2 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">scheduled</span>
+</div>
+<!-- Q4 -->
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-xl text-on-surface-variant">schedule</span>
+<div>
+<div class="font-label-md text-label-md text-on-surface lowercase">q4: mar 15 (100% final)</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">reconciliation &amp; ITR-4 filing</div>
+</div>
+</div>
+<span class="px-2 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">scheduled</span>
+</div>
+</div>
+</div>
+<!-- Quick Escrow Info Bar -->
+<div class="mt-space-md p-space-sm bg-secondary-fixed rounded-2xl flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">savings</span>
+<span class="font-label-sm text-label-sm text-on-secondary-fixed">escrow earn rate: 6.85% p.a.</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">+₹42 interest earned</span>
+</div>
+</div>
+</section>
+<!-- 3-Step Plain-Language Explainer Cards -->
+<section class="w-full mb-space-xl">
+<div class="text-center mb-space-lg">
+<div class="inline-flex items-center gap-2 px-space-md py-1 rounded-full bg-surface-container-lowest shadow-[0_3px_0_0_#CFCFD8] mb-space-xs">
+<span class="material-symbols-outlined text-primary text-base">psychology_alt</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold lowercase">how copilot works without confusing tax jargon</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-secondary font-normal lowercase">
+        3 steps to 100% tax freedom
+      </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Step 1 Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#CFCFD8] flex flex-col justify-between relative group hover:-translate-y-1 transition-transform">
+<div class="mb-space-md">
+<div class="w-12 h-12 rounded-2xl bg-primary-container text-on-primary-fixed flex items-center justify-center font-headline-md text-headline-md font-bold mb-space-md shadow-[0_3px_0_0_#ad3300]">
+            01
+          </div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-normal lowercase mb-space-xs">
+            proportional daily earmarking
+          </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            10% is auto-deducted <b>only on days you earn more than ₹950</b>. If rain or bike trouble prevents you from driving, ₹0 is deducted. No penalties, ever.
+          </p>
+</div>
+<div class="pt-space-sm border-t-2 border-surface-container flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-primary text-base">check</span>
+<span>flexes dynamically with gig cycles</span>
+</div>
+</div>
+<!-- Step 2 Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#F78305] border-2 border-primary-container flex flex-col justify-between relative group hover:-translate-y-1 transition-transform">
+<div class="mb-space-md">
+<div class="w-12 h-12 rounded-2xl bg-primary text-on-primary flex items-center justify-center font-headline-md text-headline-md font-bold mb-space-md shadow-[0_3px_0_0_#643f00]">
+            02
+          </div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-normal lowercase mb-space-xs">
+            section 44ada presumptive tax
+          </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Legally declare only 50% profit without maintaining heavy ledger books. This shields ₹1.71L of Rahul’s income completely tax-free under rebate rules.
+          </p>
+</div>
+<div class="pt-space-sm border-t-2 border-surface-container flex items-center gap-space-xs text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-base">shield</span>
+<span>saves you ₹14,200 in tax liability!</span>
+</div>
+</div>
+<!-- Step 3 Card -->
+<div class="bg-surface-container-lowest rounded-3xl p-space-lg shadow-[0_5px_0_0_#CFCFD8] flex flex-col justify-between relative group hover:-translate-y-1 transition-transform">
+<div class="mb-space-md">
+<div class="w-12 h-12 rounded-2xl bg-secondary text-on-secondary flex items-center justify-center font-headline-md text-headline-md font-bold mb-space-md shadow-[0_3px_0_0_#004d66]">
+            03
+          </div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-normal lowercase mb-space-xs">
+            controlled liquid escrow
+          </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Your reserved micro-amounts sit in an RBI-compliant high-yield liquid vault earning 6.85% daily interest until advance tax payment day arrives.
+          </p>
+</div>
+<div class="pt-space-sm border-t-2 border-surface-container flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-secondary text-base">lock_clock</span>
+<span>100% withdrawable anytime</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Mascot Encouragement & One-Tap Direct Tax Chalan Generator -->
+<section class="w-full bg-surface-container-lowest rounded-3xl p-space-lg md:p-space-xl shadow-[0_6px_0_0_#CFCFD8] mb-space-xl flex flex-col md:flex-row items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-md">
+<!-- Mini Mascot Thumbs-Up Avatar -->
+<div class="w-20 h-20 rounded-2xl bg-primary-fixed flex-shrink-0 flex items-center justify-center shadow-[0_4px_0_0_#ffb959]">
+<span class="material-symbols-outlined text-primary text-4xl">sentiment_very_satisfied</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface lowercase">
+          ready to file Q2 advance chalan (ITNS 280)?
+        </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+          Copilot generates your pre-filled 1-click UPI challan directly connected to NSDL / Income Tax e-Portal.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full md:w-auto">
+<button class="btn-chunky-blue w-full md:w-auto px-space-lg py-3.5 rounded-full text-on-secondary font-label-lg text-label-lg flex items-center justify-center gap-2 cursor-pointer select-none" id="downloadChallanBtn">
+<span class="material-symbols-outlined text-xl">download</span>
+<span>download prefilled ITNS-280</span>
+</button>
+</div>
+</section>
+<!-- Statutory Warm Disclaimer Footer Pill -->
+<footer class="w-full flex justify-center pb-space-lg">
+<div class="inline-flex flex-wrap items-center justify-center gap-2 px-space-lg py-2.5 rounded-full bg-primary-fixed text-on-primary-fixed shadow-[0_3px_0_0_#f9a61f] font-label-md text-label-md text-center">
+<span class="material-symbols-outlined text-lg text-primary">verified</span>
+<span class="font-semibold lowercase">statutory guidance · zero penalty assurance for Indian gig workers</span>
+<span class="text-on-primary-fixed-variant opacity-75 hidden sm:inline">|</span>
+<span class="opacity-90 hidden sm:inline">governed under section 44ada &amp; 87a income tax act, 1961</span>
+</div>
+</footer>
+<!-- Interactive Simulator Client Script -->
+<script>
+    (function() {
+      const slider = document.getElementById('earningsSlider');
+      const valDisplay = document.getElementById('sliderValueDisplay');
+      const calcAnnual = document.getElementById('calcAnnual');
+      const calcDeemed = document.getElementById('calcDeemed');
+      const calcTaxDue = document.getElementById('calcTaxDue');
+      const rebateBox = document.getElementById('rebateAlertBox');
+      const reserveBtn = document.getElementById('reserveNowBtn');
+      const applyRateBtn = document.getElementById('applyRateBtn');
+      const downloadBtn = document.getElementById('downloadChallanBtn');
+
+      function formatINR(val) {
+        return '₹' + Math.round(val).toLocaleString('en-IN');
+      }
+
+      function updateCalculations() {
+        const daily = parseInt(slider.value, 10);
+        valDisplay.textContent = daily.toLocaleString('en-IN');
+        
+        const annual = daily * 360;
+        const deemedProfit = annual * 0.5; // Section 44ADA 50%
+        
+        calcAnnual.textContent = formatINR(annual);
+        calcDeemed.textContent = formatINR(deemedProfit);
+
+        // Under Section 87A New Regime: taxable income up to 7,00,000 is 0 tax
+        if (deemedProfit <= 700000) {
+          calcTaxDue.textContent = '₹0';
+          calcTaxDue.className = 'font-headline-md text-headline-md text-secondary font-semibold block mt-1';
+          rebateBox.innerHTML = `
+            <span class="material-symbols-outlined text-secondary flex-shrink-0">check_circle</span>
+            <span><b>Zero Income Tax!</b> Under Section 44ADA + 87A rebate, profit of ${formatINR(deemedProfit)} is totally tax-free! Reserve just ₹250 for municipal and filing backup.</span>
+          `;
+          rebateBox.className = 'p-space-md rounded-2xl bg-secondary-fixed text-on-secondary-fixed font-body-sm text-body-sm flex items-center gap-space-sm';
+        } else {
+          // Approximate Slab > 7L
+          const taxableAbove7 = deemedProfit - 700000;
+          const tax = taxableAbove7 * 0.10 + 20000;
+          calcTaxDue.textContent = formatINR(tax);
+          calcTaxDue.className = 'font-headline-md text-headline-md text-error font-semibold block mt-1';
+          rebateBox.innerHTML = `
+            <span class="material-symbols-outlined text-error flex-shrink-0">warning</span>
+            <span><b>Turnover crosses standard slab!</b> Recommended quarterly advance tax is ${formatINR(tax * 0.45)}. Copilot will adjust your daily earmark to ${formatINR(tax / 360)}.</span>
+          `;
+          rebateBox.className = 'p-space-md rounded-2xl bg-error-container text-on-error-container font-body-sm text-body-sm flex items-center gap-space-sm';
+        }
+      }
+
+      slider.addEventListener('input', updateCalculations);
+
+      // Micro-interactions for tactile feel
+      reserveBtn.addEventListener('click', function() {
+        const originalText = reserveBtn.innerHTML;
+        reserveBtn.innerHTML = `<span class="material-symbols-outlined text-xl">check</span><span>₹250 added to vault!</span>`;
+        reserveBtn.style.backgroundColor = '#2A9FD6';
+        reserveBtn.style.boxShadow = '0 3px 0 0 #1B7CA9';
+        setTimeout(() => {
+          reserveBtn.innerHTML = originalText;
+          reserveBtn.style.backgroundColor = '';
+          reserveBtn.style.boxShadow = '';
+        }, 2000);
+      });
+
+      applyRateBtn.addEventListener('click', function() {
+        applyRateBtn.innerHTML = `<span>rule saved!</span> <span class="material-symbols-outlined text-sm">done_all</span>`;
+        setTimeout(() => {
+          applyRateBtn.innerHTML = `<span>update daily rule</span> <span class="material-symbols-outlined text-sm">check</span>`;
+        }, 2200);
+      });
+
+      downloadBtn.addEventListener('click', function() {
+        downloadBtn.innerHTML = `<span class="material-symbols-outlined text-xl animate-spin">autorenew</span><span>generating challan...</span>`;
+        setTimeout(() => {
+          downloadBtn.innerHTML = `<span class="material-symbols-outlined text-xl">file_download_done</span><span>challan ready (pdf)</span>`;
+        }, 1500);
+      });
+    })();
+  </script>
+</div></main></div></body></html>

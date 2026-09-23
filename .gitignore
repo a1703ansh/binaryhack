@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Environment
+.env
+.env.*
+!.env.example
+
+# Server uploads & runtime artifacts
+server/uploads/*
+!server/uploads/.gitkeep
+*.tsbuildinfo
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

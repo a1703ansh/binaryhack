@@ -6,13 +6,11 @@ import {
   Bike, 
   Sparkles, 
   Calendar, 
-  CheckCircle2, 
-  X,
-  ArrowRight
+  X
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useEarnWise } from '../context/EarnWiseContext';
-import { SavingsGoal } from '../types';
+import { type SavingsGoal } from '@earnwise/shared';
 
 export const GoalsView: React.FC = () => {
   const { goals, addGoal } = useEarnWise();

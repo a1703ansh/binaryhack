@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Questrial&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-lowest": "#ffffff", "on-surface": "#1b1c1c", "surface-container-high": "#eae7e7", "surface-bright": "#fcf9f8", "on-primary-fixed": "#2a1800", "surface-container-highest": "#e5e2e1", "outline": "#857461", "on-secondary": "#ffffff", "on-secondary-fixed": "#001f2b", "on-error-container": "#93000a", "primary-container": "#f9a61f", "on-tertiary-fixed-variant": "#842500", "surface-container": "#f0eded", "on-tertiary": "#ffffff", "tertiary-container": "#ff9f80", "tertiary": "#ad3300", "tertiary-fixed-dim": "#ffb59d", "primary-fixed": "#ffddb6", "secondary": "#006686", "on-secondary-fixed-variant": "#004d66", "surface-variant": "#e5e2e1", "tertiary-fixed": "#ffdbd0", "inverse-primary": "#ffb959", "on-surface-variant": "#524434", "on-tertiary-fixed": "#390b00", "error-container": "#ffdad6", "inverse-surface": "#303030", "on-primary-container": "#664000", "outline-variant": "#d8c3ad", "on-error": "#ffffff", "surface-tint": "#845400", "secondary-fixed": "#c0e8ff", "on-tertiary-container": "#872600", "primary": "#845400", "on-secondary-container": "#005773", "on-primary": "#ffffff", "on-primary-fixed-variant": "#643f00", "surface-container-low": "#f6f3f2", "secondary-fixed-dim": "#6fd2ff", "surface": "#fcf9f8", "background": "#fcf9f8", "primary-fixed-dim": "#ffb959", "error": "#ba1a1a", "surface-dim": "#dcd9d9", "inverse-on-surface": "#f3f0ef", "on-background": "#1b1c1c", "secondary-container": "#66d0fe" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "margin-desktop": "3rem", "space-md": "1rem", "gutter": "1rem", "space-xs": "0.25rem", "space-xl": "2rem", "gutter-desktop": "1.5rem" }, fontFamily: { "body-md": [ "Questrial" ], "headline-md": [ "Questrial" ], "label-sm": [ "Questrial" ], "display-lg-mobile": [ "Questrial" ], "body-lg": [ "Questrial" ], "label-lg": [ "Questrial" ], "headline-lg-mobile": [ "Questrial" ], "headline-lg": [ "Questrial" ], "label-md": [ "Questrial" ], "display-lg": [ "Questrial" ], "body-sm": [ "Questrial" ], "currency-display": [ "Questrial" ] }, fontSize: { "body-md": [ "16px", { lineHeight: "24px", fontWeight: "400" } ], "headline-md": [ "24px", { lineHeight: "32px", fontWeight: "400" } ], "label-sm": [ "12px", { lineHeight: "16px", fontWeight: "600" } ], "display-lg-mobile": [ "36px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "300" } ], "body-lg": [ "18px", { lineHeight: "28px", fontWeight: "400" } ], "label-lg": [ "16px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" } ], "headline-lg-mobile": [ "28px", { lineHeight: "36px", fontWeight: "400" } ], "headline-lg": [ "36px", { lineHeight: "44px", fontWeight: "400" } ], "label-md": [ "14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" } ], "display-lg": [ "56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "300" } ], "body-sm": [ "14px", { lineHeight: "20px", fontWeight: "400" } ], "currency-display": [ "40px", { lineHeight: "48px", fontWeight: "400" } ] } } } };</script></head><body class="bg-secondary-container font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center py-6 bg-secondary-container select-none"><div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center mb-8 shadow-[0_4px_0_0_#ad3300]"><span class="material-symbols-outlined text-on-primary-fixed text-2xl">savings</span></div><nav class="flex flex-col items-center gap-space-sm w-full px-2" data-active-classes="bg-primary-container text-on-primary-container shadow-[0_4px_0_0_#ad3300]"><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="dashboard" href="#" title="Dashboard"><span class="material-symbols-outlined text-2xl">home</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="income" href="#" title="Income"><span class="material-symbols-outlined text-2xl">payments</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="auto-save" href="#" title="Auto-Save"><span class="material-symbols-outlined text-2xl">autorenew</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="invest" href="#" title="Invest"><span class="material-symbols-outlined text-2xl">trending_up</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="tax" href="#" title="Tax"><span class="material-symbols-outlined text-2xl">receipt_long</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="goals" href="#" title="Goals"><span class="material-symbols-outlined text-2xl">flag</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="activity" href="#" title="Activity"><span class="material-symbols-outlined text-2xl">history</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="settings" href="#" title="Settings"><span class="material-symbols-outlined text-2xl">settings</span></a></nav></aside><div class="pl-20 min-h-screen bg-secondary-container"><header class="fixed top-0 left-20 right-0 h-16 bg-secondary-container z-40"><div class="h-16 w-full px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm uppercase tracking-wider text-surface-container-lowest opacity-90 px-space-sm py-space-xs rounded-full bg-secondary text-on-secondary">Hackathon Prototype — simulated data</span></div><div class="flex items-center gap-space-md"><div class="px-space-md py-1 rounded-full bg-surface-container-lowest text-on-secondary-container font-label-md text-label-md flex items-center gap-space-xs shadow-[0_3px_0_0_#d8c3ad]"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span>health: 78/100</span></div><div class="flex items-center gap-space-sm pl-space-sm py-1 pr-space-md rounded-full bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad]"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label-md text-label-md text-on-surface lowercase">rahul</span></div></div></div></header><main class="relative pt-16 w-full px-space-xl pb-space-xl bg-secondary-container"><div class="flex flex-col w-full">
+<div class="relative w-full pb-space-xl flex flex-col gap-space-lg">
+<!-- Top Hero Header Area -->
+<div class="flex flex-col gap-space-xs pt-space-sm">
+<div class="inline-flex items-center gap-space-xs self-start px-space-md py-1 rounded-full bg-surface-container-lowest text-on-secondary-container shadow-[0_4px_0_0_#005773]">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm lowercase tracking-wide">engine active · tier 3 calibrated</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-surface-container-lowest tracking-tight lowercase">
+        auto-save engine,
+      </h1>
+<p class="font-body-lg text-body-lg text-surface-container-lowest opacity-95 lowercase max-w-2xl">
+        real-time adaptive saving tuned for your daily gig earnings.
+      </p>
+</div>
+<!-- 4 Flat Hero KPI Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter-desktop">
+<!-- KPI 1: Today's Recommended -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_5px_0_0_#f9a61f] flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">today's recommended</span>
+<span class="material-symbols-outlined text-primary-container text-2xl" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="my-space-xs">
+<div class="font-currency-display text-currency-display text-primary lowercase tracking-tight">₹150</div>
+</div>
+<div class="pt-space-xs flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span>from ₹1,250 swiggy payout</span>
+</div>
+</div>
+<!-- KPI 2: Saved This Month -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_5px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">saved this month</span>
+<span class="material-symbols-outlined text-secondary text-2xl">savings</span>
+</div>
+<div class="my-space-xs">
+<div class="font-currency-display text-currency-display text-on-surface lowercase tracking-tight">₹5,240</div>
+</div>
+<div class="pt-space-xs font-body-sm text-body-sm text-on-surface-variant lowercase">
+          82% of monthly target reached
+        </div>
+</div>
+<!-- KPI 3: Monthly Target -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_5px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">monthly target</span>
+<span class="material-symbols-outlined text-outline text-2xl">flag</span>
+</div>
+<div class="my-space-xs">
+<div class="font-currency-display text-currency-display text-on-surface lowercase tracking-tight">₹6,500</div>
+</div>
+<div class="pt-space-xs font-body-sm text-body-sm text-on-surface-variant lowercase">
+          11 days remaining in cycle
+        </div>
+</div>
+<!-- KPI 4: Progress Velocity -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_5px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">progress velocity</span>
+<span class="material-symbols-outlined text-secondary text-2xl">speed</span>
+</div>
+<div class="my-space-xs">
+<div class="font-currency-display text-currency-display text-on-surface lowercase tracking-tight">80.6%</div>
+</div>
+<div class="w-full bg-surface-container-high h-3 rounded-full overflow-hidden p-0.5">
+<div class="bg-primary-container h-full rounded-full w-[80.6%] shadow-[0_2px_0_0_#ad3300]"></div>
+</div>
+</div>
+</div>
+<!-- Main Content Bento: Rationale + Mascot + Controls -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-stretch">
+<!-- Mascot Holding Central Algorithmic Card (7 cols) -->
+<div class="lg:col-span-7 flex flex-col">
+<!-- SVG Mascot Peeking Over Top -->
+<div class="flex justify-center -mb-6 z-10 pointer-events-none select-none">
+<svg fill="none" height="96" viewbox="0 0 220 96" width="220" xmlns="http://www.w3.org/2000/svg">
+<!-- Horns -->
+<path d="M54 48C42 24 30 18 20 22C16 36 28 54 44 60" fill="#ad3300" stroke="#842500" stroke-width="4"></path>
+<path d="M166 48C178 24 190 18 200 22C204 36 192 54 176 60" fill="#ad3300" stroke="#842500" stroke-width="4"></path>
+<!-- Head Curve -->
+<path d="M30 96C30 46 66 18 110 18C154 18 190 46 190 96H30Z" fill="#f9a61f"></path>
+<!-- Eyes Backing -->
+<ellipse cx="86" cy="56" fill="#ffffff" rx="18" ry="20"></ellipse>
+<ellipse cx="134" cy="56" fill="#ffffff" rx="18" ry="20"></ellipse>
+<!-- Pupils looking slightly down/curious -->
+<circle cx="88" cy="58" fill="#2a1800" r="9"></circle>
+<circle cx="132" cy="58" fill="#2a1800" r="9"></circle>
+<!-- Eye Catchlight -->
+<circle cx="84" cy="54" fill="#ffffff" r="3.5"></circle>
+<circle cx="128" cy="54" fill="#ffffff" r="3.5"></circle>
+<!-- Rosy Cheeks -->
+<ellipse cx="62" cy="74" fill="#ff9f80" rx="10" ry="6"></ellipse>
+<ellipse cx="158" cy="74" fill="#ff9f80" rx="10" ry="6"></ellipse>
+<!-- Wide Happy Smile -->
+<path d="M96 74C96 82 124 82 124 74" stroke="#664000" stroke-linecap="round" stroke-width="4"></path>
+<!-- Little Front Paws resting on top of card -->
+<rect fill="#ffddb6" height="14" rx="7" stroke="#f9a61f" stroke-width="3" width="28" x="42" y="82"></rect>
+<rect fill="#ffddb6" height="14" rx="7" stroke="#f9a61f" stroke-width="3" width="28" x="150" y="82"></rect>
+</svg>
+</div>
+<!-- The White Rationale Card -->
+<div class="bg-surface-container-lowest rounded-lg p-space-xl shadow-[0_6px_0_0_#f9a61f] flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-headline-md text-headline-md text-on-surface lowercase">algorithmic rationale</span>
+</div>
+<span class="px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md shadow-[0_3px_0_0_#004d66]">
+                98% confidence
+              </span>
+</div>
+<div class="bg-surface-container-low rounded-DEFAULT p-space-lg mb-space-md text-on-surface-variant font-body-lg text-body-lg leading-relaxed lowercase">
+              “earnwise allocated <span class="text-primary font-label-lg font-bold">₹150 (12%)</span> today. daily income of ₹1,250 falls in <span class="text-on-surface font-label-lg font-bold">tier 3</span> (strong day, 100–150% of your ₹950 baseline). account balance ₹8,800 is comfortably above your ₹5,000 reserve floor with zero high-severity bill alerts.”
+            </div>
+</div>
+<!-- Live Breakdown Pills -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+<div class="bg-surface-container rounded-DEFAULT p-space-sm flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">income detected</span>
+<span class="font-headline-md text-headline-md text-on-surface lowercase">₹1,250</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">swiggy partner payout</span>
+</div>
+<div class="bg-surface-container rounded-DEFAULT p-space-sm flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">reserve buffer</span>
+<span class="font-headline-md text-headline-md text-secondary lowercase">+₹3,800</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">over safe baseline</span>
+</div>
+<div class="bg-surface-container rounded-DEFAULT p-space-sm flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">suggested bucket</span>
+<span class="font-headline-md text-headline-md text-tertiary lowercase">emergency</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">high priority pool</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Worker Controls & Overrides (5 cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between gap-space-md">
+<div class="bg-surface-container-lowest rounded-lg p-space-xl shadow-[0_5px_0_0_#d8c3ad] flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-space-sm mb-space-sm">
+<span class="material-symbols-outlined text-secondary text-2xl">tune</span>
+<h2 class="font-headline-md text-headline-md text-on-surface lowercase">worker overrides</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase mb-space-lg">
+              full control over daily deductions with instant reversal.
+            </p>
+<div class="flex flex-col gap-space-md">
+<!-- Pause Today Toggle Box -->
+<div class="bg-surface-container-low rounded-DEFAULT p-space-md flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface lowercase">pause today</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">auto-deduction resumes in 24 hrs</span>
+</div>
+<button class="w-14 h-8 bg-surface-container-highest rounded-full p-1 transition-colors relative shadow-[0_3px_0_0_#857461]" id="pauseToggleBtn" onclick="togglePauseState(this)" type="button">
+<div class="w-6 h-6 rounded-full bg-surface-container-lowest shadow-sm transform transition-transform" id="pauseToggleKnob"></div>
+</button>
+</div>
+<!-- Skip Today Action Button -->
+<div class="bg-surface-container-low rounded-DEFAULT p-space-md flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface lowercase">skip today</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">keep 100% payout spendable</span>
+</div>
+<button class="px-space-md py-2.5 rounded-full bg-tertiary text-on-tertiary font-label-md text-label-md lowercase shadow-[0_5px_0_0_#872600] active:translate-y-1 active:shadow-[0_2px_0_0_#872600] transition-all" onclick="handleSkipClick(this)" type="button">
+                  skip
+                </button>
+</div>
+<!-- Undo Last Auto-Save -->
+<div class="bg-surface-container-low rounded-DEFAULT p-space-md flex items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface lowercase">undo last auto-save</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">refund ₹150 back to UPI instantly</span>
+</div>
+<button class="px-space-md py-2.5 rounded-full bg-surface-container-lowest text-on-surface font-label-md text-label-md lowercase shadow-[0_4px_0_0_#d8c3ad] active:translate-y-1 active:shadow-[0_2px_0_0_#d8c3ad] transition-all" onclick="handleUndoClick(this)" type="button">
+                  refund
+                </button>
+</div>
+</div>
+</div>
+<div class="mt-space-md p-space-sm rounded-DEFAULT bg-primary-fixed text-on-primary-fixed font-body-sm text-body-sm lowercase flex items-center gap-space-xs transition-opacity" id="statusToast">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>liquidity guardrail active &amp; verified</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dynamic Allocation Matrix (4 Tiers) -->
+<div class="flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-xs">
+<div>
+<h2 class="font-headline-md text-headline-md text-surface-container-lowest lowercase">dynamic allocation matrix</h2>
+<p class="font-body-sm text-body-sm text-surface-container-lowest opacity-90 lowercase">rules automatically adapt percentages based on your daily payout tier</p>
+</div>
+<span class="font-label-sm text-label-sm text-surface-container-lowest lowercase self-start sm:self-auto px-space-sm py-0.5 rounded-full bg-secondary shadow-[0_2px_0_0_#004d66]">
+          daily baseline: ₹950
+        </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter-desktop">
+<!-- Tier 1: Slump -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-lg text-label-lg text-on-surface lowercase">tier 1: slump</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">0%</span>
+</div>
+<div class="my-space-xs font-currency-display text-headline-lg text-on-surface lowercase tracking-tight">&lt; ₹570</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase pt-space-xs">
+            zero saving trigger. keeps every rupee for essential daily survival.
+          </p>
+</div>
+<!-- Tier 2: Lean -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-lg text-label-lg text-on-surface lowercase">tier 2: lean</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">5%</span>
+</div>
+<div class="my-space-xs font-currency-display text-headline-lg text-on-surface lowercase tracking-tight">₹570 – ₹950</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase pt-space-xs">
+            gentle micropenny saving without restricting meal or fuel costs.
+          </p>
+</div>
+<!-- Tier 3: Strong (ACTIVE TODAY) -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_6px_0_0_#ad3300] flex flex-col justify-between relative transform -translate-y-1">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="font-label-lg text-label-lg text-primary lowercase font-bold">tier 3: strong</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm shadow-[0_2px_0_0_#ad3300]">
+              active today
+            </span>
+</div>
+<div class="my-space-xs font-currency-display text-headline-lg text-primary lowercase tracking-tight">₹950 – ₹1,425</div>
+<div class="pt-space-xs flex items-center justify-between text-on-surface-variant font-body-sm text-body-sm lowercase">
+<span>allocates 10%–12%</span>
+<span class="font-label-md text-label-md text-primary font-bold">₹150 queued</span>
+</div>
+</div>
+<!-- Tier 4: Peak -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-lg text-label-lg text-on-surface lowercase">tier 4: peak</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">15%</span>
+</div>
+<div class="my-space-xs font-currency-display text-headline-lg text-on-surface lowercase tracking-tight">&gt; ₹1,425</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase pt-space-xs">
+            accelerated savings on marathon weekend festivals and surge hours.
+          </p>
+</div>
+</div>
+</div>
+<!-- Safety Guardrails & Floor Limits Card -->
+<div class="bg-surface-container-lowest rounded-lg p-space-xl shadow-[0_5px_0_0_#d8c3ad] flex flex-col gap-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-2xl">shield</span>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface lowercase">safety guardrails &amp; floor limits</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase">preventing overdrafts and preserving operational liquidity</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-1 rounded-full bg-primary-fixed text-on-primary-fixed self-start sm:self-auto shadow-[0_3px_0_0_#ffb959]">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+<span class="font-label-sm text-label-sm lowercase">zero-fee protection guarantee</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-desktop pt-space-xs">
+<!-- Guardrail 1: Minimum Reserve Floor Slider -->
+<div class="bg-surface-container-low rounded-DEFAULT p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">minimum reserve floor</span>
+<span class="font-label-lg text-label-lg text-primary lowercase font-bold" id="floorValueDisplay">₹5,000</span>
+</div>
+<div class="py-space-sm">
+<input class="w-full accent-primary-container h-2.5 bg-surface-container-highest rounded-full appearance-none cursor-pointer" id="reserveRange" max="10000" min="2000" oninput="handleFloorChange(this.value)" step="500" type="range" value="5000"/>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase">
+            if balance drops below this floor, all automatic transfers halt instantly.
+          </p>
+</div>
+<!-- Guardrail 2: Monthly Saving Cap -->
+<div class="bg-surface-container-low rounded-DEFAULT p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">monthly saving cap</span>
+<span class="font-label-lg text-label-lg text-on-surface lowercase font-bold">₹10,000</span>
+</div>
+<div class="py-space-sm flex items-center gap-space-sm">
+<div class="flex-1 bg-surface-container-highest h-2.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-[52.4%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">52%</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase">
+            ₹5,240 saved of ₹10,000 ceiling. won't over-lock cash flow.
+          </p>
+</div>
+<!-- Guardrail 3: Smart Liquidity Protection Status -->
+<div class="bg-surface-container-low rounded-DEFAULT p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">liquidity protection</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm">active</span>
+</div>
+<div class="flex items-center gap-space-sm py-space-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-[0_2px_0_0_#d8c3ad]">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface lowercase">all 3 checks cleared</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant lowercase">
+            monitors rent schedule, electricity bills, and fuel spending patterns.
+          </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function togglePauseState(btn) {
+    const knob = document.getElementById('pauseToggleKnob');
+    const toast = document.getElementById('statusToast');
+    const isPaused = knob.classList.toggle('translate-x-6');
+    if (isPaused) {
+      btn.classList.remove('bg-surface-container-highest');
+      btn.classList.add('bg-primary-container');
+      toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">pause_circle</span><span>engine paused for 24h · resuming automatically tomorrow</span>';
+    } else {
+      btn.classList.add('bg-surface-container-highest');
+      btn.classList.remove('bg-primary-container');
+      toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified_user</span><span>engine active · tier 3 calibrated &amp; ready</span>';
+    }
+  }
+
+  function handleSkipClick(btn) {
+    const toast = document.getElementById('statusToast');
+    btn.innerText = 'skipped';
+    btn.classList.add('opacity-70');
+    toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>₹150 deduction skipped for today · full ₹1,250 kept in UPI</span>';
+  }
+
+  function handleUndoClick(btn) {
+    const toast = document.getElementById('statusToast');
+    btn.innerText = 'refunded';
+    btn.classList.add('opacity-70');
+    toast.innerHTML = '<span class="material-symbols-outlined text-[18px]">currency_rupee</span><span>₹150 refund credited back to your linked UPI VPA instantly</span>';
+  }
+
+  function handleFloorChange(val) {
+    const display = document.getElementById('floorValueDisplay');
+    display.innerText = '₹' + Number(val).toLocaleString('en-IN');
+  }
+</script></main></div></body></html>

@@ -2,16 +2,7 @@ import React, { useState } from 'react';
 import { 
   TrendingUp, 
   Plus, 
-  Link2, 
-  Bike, 
-  ArrowUpRight, 
-  Calendar, 
-  Sparkles, 
-  HelpCircle,
-  Clock,
-  Layers,
-  Activity,
-  ArrowRight
+  Link2
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 import { IncomeConnectionModal } from '../components/IncomeConnectionModal';
@@ -28,7 +19,6 @@ export const IncomeView: React.FC<IncomeViewProps> = ({ onOpenPayoutModal }) => 
   } = useEarnWise();
 
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'all' | 'historical' | 'forecast'>('all');
 
   // Chart data: 14 days historical + 7 days forecast
   const chartItems = forecast.historicalChartData.slice(-21);

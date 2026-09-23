@@ -5,18 +5,13 @@ import {
   Calendar, 
   CheckCircle2, 
   Sparkles, 
-  HelpCircle, 
-  ShieldAlert,
-  Plus,
-  ArrowRight,
-  TrendingUp
+  Plus
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
-import { computeTaxStatus } from '../services/taxService';
+import { computeTaxStatus } from '@earnwise/shared';
 
 export const TaxView: React.FC = () => {
   const { 
-    taxProfile, 
     updateTaxReserve, 
     monthTaxReserved,
     monthIncome 
@@ -24,7 +19,8 @@ export const TaxView: React.FC = () => {
 
   const [topUpSuccess, setTopUpSuccess] = useState(false);
 
-  const status = computeTaxStatus(monthTaxReserved, monthIncome);
+  const status = computeTaxStatus(monthTaxReserved, monthIncome || 28500);
+  const monthlyRunRate = Math.round(status.estimatedAnnualIncome / 12);
 
   const handleTopUp = () => {
     updateTaxReserve(250);
@@ -62,7 +58,7 @@ export const TaxView: React.FC = () => {
           <div className="text-2xl font-black font-mono text-white mt-1">
             ₹{status.estimatedAnnualIncome.toLocaleString('en-IN')}
           </div>
-          <span className="text-[11px] text-slate-500">Based on ₹28,500/mo run-rate</span>
+          <span className="text-[11px] text-slate-500">Based on ₹{monthlyRunRate.toLocaleString('en-IN')}/mo live run-rate</span>
         </div>
 
         <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">

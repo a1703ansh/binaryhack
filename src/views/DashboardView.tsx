@@ -9,11 +9,9 @@ import {
   Sparkles, 
   ArrowUpRight, 
   Info, 
-  CheckCircle2, 
   ChevronRight,
   Zap,
-  Calendar,
-  Layers
+  Calendar
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 import { ExplainableModal } from '../components/ExplainableModal';
@@ -28,7 +26,6 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   setActiveView
 }) => {
   const {
-    userName,
     monthIncome,
     monthSaved,
     monthInvested,
@@ -38,10 +35,21 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     todayAction,
     forecast,
     safeSpending,
-    savingsSettings
+    savingsSettings,
+    transactions,
+    incomeSources
   } = useEarnWise();
 
   const [isExplainModalOpen, setIsExplainModalOpen] = useState(false);
+
+  // Live Week-at-a-Glance aggregates from the actual settlement stream (last 7 days)
+  const weekTx = transactions.slice(0, 7);
+  const weekIncome = weekTx.reduce((acc, t) => acc + t.amount, 0);
+  const weekSaved = weekTx.reduce((acc, t) => acc + (t.autoSavedAmount || 0), 0);
+  const weekInvested = weekTx.reduce((acc, t) => acc + (t.investRecommendedAmount || 0), 0);
+  const weekTax = weekTx.reduce((acc, t) => acc + (t.taxReservedAmount || 0), 0);
+
+  const connectedPlatformCount = incomeSources.filter(s => s.connected).length;
 
   // Take the last 14 days of historical data for the dashboard income trend
   const trendSlice = forecast.historicalChartData.filter(d => !d.isForecast).slice(-14);
@@ -183,7 +191,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               ₹{monthIncome.toLocaleString('en-IN')}
             </div>
             <div className="mt-1 text-[11px] text-emerald-400 flex items-center gap-1">
-              <span>3 gig platforms</span>
+              <span>{connectedPlatformCount} connected {connectedPlatformCount === 1 ? 'platform' : 'platforms'}</span>
             </div>
           </div>
 
@@ -246,78 +254,138 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Split Section: Today's Financial Action & Safe Discretionary Spend */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Today's Financial Action (Step 4 & Step 12) */}
-        <div className="lg:col-span-7 p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-emerald-400" />
-              <h3 className="text-base font-bold text-white">Today's Financial Action</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Today's Financial Action with Stitch Playful Mascot (Step 4 & Step 12) */}
+        <div className="lg:col-span-7 relative flex flex-col items-center">
+          {/* Peeking Mascot Head over the Card */}
+          <div className="relative w-full max-w-md h-28 flex justify-center items-end -mb-6 pointer-events-none z-10">
+            <div className="w-56 h-28 relative">
+              <svg className="w-full h-full drop-shadow-md" fill="none" viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg">
+                {/* Left Ear/Horn */}
+                <path d="M25 70 C10 40 40 10 75 32 C65 48 58 65 52 75 Z" fill="#ad3300" stroke="#872600" strokeLinejoin="round" strokeWidth="4" />
+                {/* Right Ear/Horn */}
+                <path d="M215 70 C230 40 200 10 165 32 C175 48 182 65 188 75 Z" fill="#ad3300" stroke="#872600" strokeLinejoin="round" strokeWidth="4" />
+                {/* Head Body */}
+                <ellipse cx="120" cy="130" fill="#f9a61f" rx="96" ry="86" stroke="#ad3300" strokeWidth="4" />
+                {/* Forehead Furrow */}
+                <path d="M96 52 C104 42 112 42 120 50 C128 42 136 42 144 52" fill="none" stroke="#ad3300" strokeLinecap="round" strokeWidth="6" />
+                {/* Left Eye */}
+                <circle cx="98" cy="82" fill="#ffffff" r="13" stroke="#ad3300" strokeWidth="3" />
+                <circle cx="101" cy="83" fill="#1b1c1c" r="4.5" />
+                <circle cx="102" cy="81.5" fill="#ffffff" r="1.5" />
+                {/* Right Eye */}
+                <circle cx="142" cy="82" fill="#ffffff" r="13" stroke="#ad3300" strokeWidth="3" />
+                <circle cx="139" cy="83" fill="#1b1c1c" r="4.5" />
+                <circle cx="140" cy="81.5" fill="#ffffff" r="1.5" />
+                {/* Cheeks */}
+                <ellipse cx="78" cy="98" fill="#ff9f80" opacity="0.6" rx="7" ry="4" />
+                <ellipse cx="162" cy="98" fill="#ff9f80" opacity="0.6" rx="7" ry="4" />
+              </svg>
             </div>
-            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
-              ₹{todayAction.payoutAmount.toLocaleString('en-IN')} payout received
-            </span>
           </div>
 
-          <div className="mt-4">
-            <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">
-              EarnWise Algorithmic Recommendations:
-            </p>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-3">
-              <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
-                <span className="text-[11px] text-slate-400">Save</span>
-                <div className="text-lg font-bold font-mono text-emerald-400 mt-0.5">
-                  ₹{todayAction.recommendedSave}
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
-                <span className="text-[11px] text-slate-400">Invest</span>
-                <div className="text-lg font-bold font-mono text-blue-400 mt-0.5">
-                  ₹{todayAction.recommendedInvest}
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
-                <span className="text-[11px] text-slate-400">Reserve Tax</span>
-                <div className="text-lg font-bold font-mono text-amber-400 mt-0.5">
-                  ₹{todayAction.recommendedTax}
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-950/80 border border-slate-800 text-center">
-                <span className="text-[11px] text-slate-400">Available</span>
-                <div className="text-lg font-bold font-mono text-white mt-0.5">
-                  ₹{todayAction.availableSpendable}
-                </div>
-              </div>
+          {/* Main Card with Thick Playful Borders & Paws Clasping the Top Edge */}
+          <div className="w-full p-6 sm:p-7 rounded-3xl bg-slate-900 border-4 border-[#ad3300] shadow-[0_8px_0_0_#872600] relative z-20">
+            {/* Left Clasping Mascot Paw */}
+            <div className="absolute -top-3.5 left-12 z-30 pointer-events-none">
+              <svg fill="none" height="26" viewBox="0 0 44 28" width="44">
+                <ellipse cx="22" cy="14" fill="#f9a61f" rx="20" ry="12" stroke="#ad3300" strokeWidth="3.5" />
+                <path d="M12 18 C16 22 28 22 32 18" stroke="#ad3300" strokeLinecap="round" strokeWidth="3" />
+              </svg>
             </div>
 
-            <div className="mt-4 p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/80 flex items-start gap-2.5">
-              <Info className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-              <div className="text-xs text-slate-300 leading-relaxed">
-                "{todayAction.reason}"
-              </div>
+            {/* Right Clasping Mascot Paw */}
+            <div className="absolute -top-3.5 right-12 z-30 pointer-events-none">
+              <svg fill="none" height="26" viewBox="0 0 44 28" width="44">
+                <ellipse cx="22" cy="14" fill="#f9a61f" rx="20" ry="12" stroke="#ad3300" strokeWidth="3.5" />
+                <path d="M12 18 C16 22 28 22 32 18" stroke="#ad3300" strokeLinecap="round" strokeWidth="3" />
+              </svg>
             </div>
 
-            <div className="mt-4 flex items-center justify-between pt-3 border-t border-slate-800">
-              <button
-                onClick={() => setIsExplainModalOpen(true)}
-                className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 transition-colors"
-              >
-                <span>View analysis breakdown</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+            {/* Card Content */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <span className="px-3 py-1 bg-amber-500/15 border border-amber-500/30 text-amber-300 font-bold text-xs uppercase tracking-wider rounded-full">
+                  Smart Payout Allocator
+                </span>
+              </div>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
+                ₹{todayAction.payoutAmount.toLocaleString('en-IN')} from Swiggy
+              </span>
+            </div>
 
-              <button
-                onClick={onOpenPayoutModal}
-                className="text-xs font-bold text-slate-300 hover:text-white bg-slate-800 hover:bg-slate-750 px-3 py-1.5 rounded-xl transition-colors"
-              >
-                Simulate another payout
-              </button>
+            <div className="mt-5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {/* Save Tile */}
+                <div className="p-3.5 rounded-2xl bg-emerald-950/40 border-2 border-emerald-500/60 shadow-[0_4px_0_0_#065f46] text-center flex flex-col justify-between">
+                  <span className="text-xs font-bold text-emerald-400">Save</span>
+                  <div className="text-xl font-black font-mono text-emerald-300 my-1">
+                    ₹{todayAction.recommendedSave}
+                  </div>
+                  <span className="text-[10px] text-emerald-400 bg-emerald-900/60 px-2 py-0.5 rounded-full font-semibold">
+                    12% Auto-Save
+                  </span>
+                </div>
+
+                {/* Invest Tile */}
+                <div className="p-3.5 rounded-2xl bg-blue-950/40 border-2 border-blue-500/60 shadow-[0_4px_0_0_#1e40af] text-center flex flex-col justify-between">
+                  <span className="text-xs font-bold text-blue-400">Invest</span>
+                  <div className="text-xl font-black font-mono text-blue-300 my-1">
+                    ₹{todayAction.recommendedInvest}
+                  </div>
+                  <span className="text-[10px] text-blue-400 bg-blue-900/60 px-2 py-0.5 rounded-full font-semibold">
+                    Nifty Index
+                  </span>
+                </div>
+
+                {/* Tax Reserve Tile */}
+                <div className="p-3.5 rounded-2xl bg-amber-950/40 border-2 border-amber-500/60 shadow-[0_4px_0_0_#92400e] text-center flex flex-col justify-between">
+                  <span className="text-xs font-bold text-amber-400">Tax Reserve</span>
+                  <div className="text-xl font-black font-mono text-amber-300 my-1">
+                    ₹{todayAction.recommendedTax}
+                  </div>
+                  <span className="text-[10px] text-amber-400 bg-amber-900/60 px-2 py-0.5 rounded-full font-semibold">
+                    10% Buffer
+                  </span>
+                </div>
+
+                {/* Spendable Tile */}
+                <div className="p-3.5 rounded-2xl bg-slate-950/60 border-2 border-slate-700 shadow-[0_4px_0_0_#334155] text-center flex flex-col justify-between">
+                  <span className="text-xs font-bold text-slate-300">Spendable</span>
+                  <div className="text-xl font-black font-mono text-white my-1">
+                    ₹{todayAction.availableSpendable}
+                  </div>
+                  <span className="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded-full font-semibold">
+                    Safe Floor
+                  </span>
+                </div>
+              </div>
+
+              {/* Explainable Mascot Speech Bubble */}
+              <div className="mt-5 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-start gap-3 shadow-inner">
+                <Sparkles className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-slate-300 leading-relaxed font-medium">
+                  "{todayAction.reason}"
+                </div>
+              </div>
+
+              <div className="mt-5 flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-800">
+                <button
+                  onClick={() => setIsExplainModalOpen(true)}
+                  className="text-xs font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1.5 transition-colors"
+                >
+                  <span>View Explainable Audit Log</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
+
+                <button
+                  onClick={onOpenPayoutModal}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-full font-bold text-xs bg-[#e84e12] hover:bg-[#ff5714] text-white shadow-[0_4px_0_0_#872600] active:translate-y-0.5 active:shadow-[0_2px_0_0_#872600] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-current" />
+                  <span>Simulate Another Payout</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -351,23 +419,25 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="grid grid-cols-4 gap-2 text-center text-xs">
               <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400">Income</span>
-                <div className="font-mono font-bold text-white">₹7,850</div>
+                <div className="font-mono font-bold text-white">₹{weekIncome.toLocaleString('en-IN')}</div>
               </div>
               <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400">Saved</span>
-                <div className="font-mono font-bold text-emerald-400">₹620</div>
+                <div className="font-mono font-bold text-emerald-400">₹{weekSaved.toLocaleString('en-IN')}</div>
               </div>
               <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400">Invested</span>
-                <div className="font-mono font-bold text-blue-400">₹300</div>
+                <div className="font-mono font-bold text-blue-400">₹{weekInvested.toLocaleString('en-IN')}</div>
               </div>
               <div className="p-2 rounded-xl bg-slate-950 border border-slate-800">
                 <span className="text-[10px] text-slate-400">Tax Res</span>
-                <div className="font-mono font-bold text-amber-400">₹410</div>
+                <div className="font-mono font-bold text-amber-400">₹{weekTax.toLocaleString('en-IN')}</div>
               </div>
             </div>
             <p className="text-[11px] text-slate-400 mt-2.5 italic">
-              "You had a stronger earning week, so EarnWise increased your savings without violating your minimum balance."
+              "{forecast.trendPercentage >= 0
+                ? `You had a stronger earning week (+${forecast.trendPercentage}%), so EarnWise increased your savings without violating your minimum balance.`
+                : `Earnings dipped ${Math.abs(forecast.trendPercentage)}% this week, so EarnWise kept auto-save gentle to protect your cash flow.`}"
             </p>
           </div>
         </div>

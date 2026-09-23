@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Questrial&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-lowest": "#ffffff", "on-surface": "#1b1c1c", "surface-container-high": "#eae7e7", "surface-bright": "#fcf9f8", "on-primary-fixed": "#2a1800", "surface-container-highest": "#e5e2e1", "outline": "#857461", "on-secondary": "#ffffff", "on-secondary-fixed": "#001f2b", "on-error-container": "#93000a", "primary-container": "#f9a61f", "on-tertiary-fixed-variant": "#842500", "surface-container": "#f0eded", "on-tertiary": "#ffffff", "tertiary-container": "#ff9f80", "tertiary": "#ad3300", "tertiary-fixed-dim": "#ffb59d", "primary-fixed": "#ffddb6", "secondary": "#006686", "on-secondary-fixed-variant": "#004d66", "surface-variant": "#e5e2e1", "tertiary-fixed": "#ffdbd0", "inverse-primary": "#ffb959", "on-surface-variant": "#524434", "on-tertiary-fixed": "#390b00", "error-container": "#ffdad6", "inverse-surface": "#303030", "on-primary-container": "#664000", "outline-variant": "#d8c3ad", "on-error": "#ffffff", "surface-tint": "#845400", "secondary-fixed": "#c0e8ff", "on-tertiary-container": "#872600", "primary": "#845400", "on-secondary-container": "#005773", "on-primary": "#ffffff", "on-primary-fixed-variant": "#643f00", "surface-container-low": "#f6f3f2", "secondary-fixed-dim": "#6fd2ff", "surface": "#fcf9f8", "background": "#fcf9f8", "primary-fixed-dim": "#ffb959", "error": "#ba1a1a", "surface-dim": "#dcd9d9", "inverse-on-surface": "#f3f0ef", "on-background": "#1b1c1c", "secondary-container": "#66d0fe" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "margin": "1.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "margin-desktop": "3rem", "space-md": "1rem", "gutter": "1rem", "space-xs": "0.25rem", "space-xl": "2rem", "gutter-desktop": "1.5rem" }, fontFamily: { "body-md": [ "Questrial" ], "headline-md": [ "Questrial" ], "label-sm": [ "Questrial" ], "display-lg-mobile": [ "Questrial" ], "body-lg": [ "Questrial" ], "label-lg": [ "Questrial" ], "headline-lg-mobile": [ "Questrial" ], "headline-lg": [ "Questrial" ], "label-md": [ "Questrial" ], "display-lg": [ "Questrial" ], "body-sm": [ "Questrial" ], "currency-display": [ "Questrial" ] }, fontSize: { "body-md": [ "16px", { lineHeight: "24px", fontWeight: "400" } ], "headline-md": [ "24px", { lineHeight: "32px", fontWeight: "400" } ], "label-sm": [ "12px", { lineHeight: "16px", fontWeight: "600" } ], "display-lg-mobile": [ "36px", { lineHeight: "44px", letterSpacing: "-0.01em", fontWeight: "300" } ], "body-lg": [ "18px", { lineHeight: "28px", fontWeight: "400" } ], "label-lg": [ "16px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" } ], "headline-lg-mobile": [ "28px", { lineHeight: "36px", fontWeight: "400" } ], "headline-lg": [ "36px", { lineHeight: "44px", fontWeight: "400" } ], "label-md": [ "14px", { lineHeight: "18px", letterSpacing: "0.02em", fontWeight: "600" } ], "display-lg": [ "56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "300" } ], "body-sm": [ "14px", { lineHeight: "20px", fontWeight: "400" } ], "currency-display": [ "40px", { lineHeight: "48px", fontWeight: "400" } ] } } } };</script></head><body class="bg-secondary-container font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-20 z-50 flex flex-col items-center py-6 bg-secondary-container select-none"><div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center mb-8 shadow-[0_4px_0_0_#ad3300]"><span class="material-symbols-outlined text-on-primary-fixed text-2xl">savings</span></div><nav class="flex flex-col items-center gap-space-sm w-full px-2" data-active-classes="bg-primary-container text-on-primary-container shadow-[0_4px_0_0_#ad3300]"><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="dashboard" href="#" title="Dashboard"><span class="material-symbols-outlined text-2xl">home</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="income" href="#" title="Income"><span class="material-symbols-outlined text-2xl">payments</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="auto-save" href="#" title="Auto-Save"><span class="material-symbols-outlined text-2xl">autorenew</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="invest" href="#" title="Invest"><span class="material-symbols-outlined text-2xl">trending_up</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="tax" href="#" title="Tax"><span class="material-symbols-outlined text-2xl">receipt_long</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="goals" href="#" title="Goals"><span class="material-symbols-outlined text-2xl">flag</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="activity" href="#" title="Activity"><span class="material-symbols-outlined text-2xl">history</span></a><a class="w-12 h-12 rounded-full flex items-center justify-center text-on-secondary-fixed transition-transform active:translate-y-1 hover:bg-secondary-fixed hover:text-on-secondary-fixed" data-path="settings" href="#" title="Settings"><span class="material-symbols-outlined text-2xl">settings</span></a></nav></aside><div class="pl-20 min-h-screen bg-secondary-container"><header class="fixed top-0 left-20 right-0 h-16 bg-secondary-container z-40"><div class="h-16 w-full px-space-xl flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="font-label-sm text-label-sm uppercase tracking-wider text-surface-container-lowest opacity-90 px-space-sm py-space-xs rounded-full bg-secondary text-on-secondary">Hackathon Prototype — simulated data</span></div><div class="flex items-center gap-space-md"><div class="px-space-md py-1 rounded-full bg-surface-container-lowest text-on-secondary-container font-label-md text-label-md flex items-center gap-space-xs shadow-[0_3px_0_0_#d8c3ad]"><span class="w-2 h-2 rounded-full bg-primary-container"></span><span>health: 78/100</span></div><div class="flex items-center gap-space-sm pl-space-sm py-1 pr-space-md rounded-full bg-surface-container-lowest shadow-[0_3px_0_0_#d8c3ad]"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="font-label-md text-label-md text-on-surface lowercase">rahul</span></div></div></div></header><main class="relative pt-16 w-full px-space-xl pb-space-xl bg-secondary-container"><div class="flex flex-col w-full">
+<div class="w-full max-w-6xl mx-auto flex flex-col gap-space-xl">
+<!-- Top Visual Intro & Big Typographic Headline -->
+<div class="flex flex-col items-start gap-space-xs">
+<div class="flex items-center gap-space-sm px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-label-sm text-label-sm lowercase tracking-wider">automated portfolio · zero lock-in</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-surface-container-lowest font-light tracking-tight leading-none select-none">
+        invest advisor,
+      </h1>
+<p class="font-headline-md text-headline-md text-surface-container-lowest opacity-95 lowercase max-w-2xl font-normal">
+        grow your gig savings into safe, long-term wealth
+      </p>
+</div>
+<!-- Upper Row: Behavioral Profile Status & Next Batch -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<div class="md:col-span-2 bg-surface-container-lowest rounded-lg p-space-lg shadow-[0_5px_0_0_#d8c3ad] flex flex-col justify-between">
+<div class="flex flex-wrap items-center justify-between gap-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md text-on-surface lowercase">investor profile</span>
+</div>
+<span class="px-space-md py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md">
+            balanced &amp; safe
+          </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="bg-surface-container-low rounded p-space-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase block">monthly target pace</span>
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight mt-1 block">₹2,100</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 block">~₹70/day micro-sip average</span>
+</div>
+<div class="bg-surface-container-low rounded p-space-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase block">scheduled today</span>
+<span class="font-currency-display text-currency-display text-tertiary tracking-tight mt-1 block">₹100</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 block">from today's ₹1,250 gig payout</span>
+</div>
+</div>
+</div>
+<div class="bg-primary-fixed rounded-lg p-space-lg shadow-[0_5px_0_0_#f9a61f] flex flex-col justify-between text-on-primary-fixed">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md lowercase opacity-90">portfolio health</span>
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<span class="font-display-lg text-display-lg tracking-tight font-light leading-none block">94%</span>
+<p class="font-body-sm text-body-sm mt-space-xs text-on-primary-fixed-variant">
+            liquid cushion active • protected against instant emergency pullouts
+          </p>
+</div>
+</div>
+</div>
+<!-- Core Mascot Allocation Canvas -->
+<div class="relative w-full pt-20">
+<!-- Vector Mascot: Round Warm Orange Monster Peeking & Holding Card with paws -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 flex flex-col items-center justify-end pointer-events-none z-10">
+<svg class="w-64 h-32 overflow-visible" viewbox="0 0 240 130">
+<!-- Horns -->
+<polygon fill="#F78305" points="45,45 28,15 62,32"></polygon>
+<polygon fill="#F78305" points="195,45 212,15 178,32"></polygon>
+<!-- Head / Body Dome -->
+<path d="M 20 130 C 20 20, 220 20, 220 130 Z" fill="#F9A61F"></path>
+<!-- Inner Cheek Glows -->
+<circle cx="58" cy="98" fill="#F78305" opacity="0.6" r="14"></circle>
+<circle cx="182" cy="98" fill="#F78305" opacity="0.6" r="14"></circle>
+<!-- Huge Happy White Eyes -->
+<circle cx="82" cy="74" fill="#ffffff" r="22"></circle>
+<circle cx="158" cy="74" fill="#ffffff" r="22"></circle>
+<!-- Big friendly pupils with specular reflection -->
+<circle cx="86" cy="72" fill="#1b1c1c" r="12"></circle>
+<circle cx="162" cy="72" fill="#1b1c1c" r="12"></circle>
+<circle cx="89" cy="67" fill="#ffffff" r="4.5"></circle>
+<circle cx="165" cy="67" fill="#ffffff" r="4.5"></circle>
+<!-- Cute wide smile -->
+<path d="M 104 100 Q 120 120 136 100" fill="none" stroke="#664000" stroke-linecap="round" stroke-width="5"></path>
+<path d="M 112 108 Q 120 120 128 108" fill="#ad3300"></path>
+</svg>
+</div>
+<!-- Mascot Card Frame (Held by Monster Paws) -->
+<div class="relative bg-surface-container-lowest rounded-lg p-space-xl shadow-[0_5px_0_0_#d8c3ad] z-20">
+<!-- SVG Vector Paws Gripping the Top Rim -->
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 w-72 flex justify-between px-6 pointer-events-none z-30">
+<svg class="w-16 h-8 drop-shadow-sm" viewbox="0 0 70 36">
+<path d="M 5 36 C 5 12, 65 12, 65 36 Z" fill="#F78305"></path>
+<circle cx="20" cy="24" fill="#F9A61F" r="6"></circle>
+<circle cx="35" cy="20" fill="#F9A61F" r="6"></circle>
+<circle cx="50" cy="24" fill="#F9A61F" r="6"></circle>
+</svg>
+<svg class="w-16 h-8 drop-shadow-sm" viewbox="0 0 70 36">
+<path d="M 5 36 C 5 12, 65 12, 65 36 Z" fill="#F78305"></path>
+<circle cx="20" cy="24" fill="#F9A61F" r="6"></circle>
+<circle cx="35" cy="20" fill="#F9A61F" r="6"></circle>
+<circle cx="50" cy="24" fill="#F9A61F" r="6"></circle>
+</svg>
+</div>
+<div class="flex flex-col gap-space-lg">
+<!-- Allocation Header -->
+<div class="flex flex-wrap items-center justify-between gap-space-md pt-2">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block">smart auto-split</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface lowercase">tailored allocation</h2>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block lowercase">total transaction</span>
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight" id="allocation-total-display">₹100</span>
+</div>
+</div>
+<!-- Chunky 4-Segment Allocation Multi-Bar -->
+<div class="w-full flex flex-col gap-space-xs">
+<div class="w-full h-8 rounded-full overflow-hidden flex bg-surface-container p-1 gap-1">
+<div class="h-full rounded-full bg-secondary-fixed-dim transition-all duration-300" id="bar-liquid" style="width: 40%;" title="40% Liquid Mutual Fund"></div>
+<div class="h-full rounded-full bg-secondary transition-all duration-300" id="bar-nifty" style="width: 30%;" title="30% Nifty Index Fund"></div>
+<div class="h-full rounded-full bg-primary-container transition-all duration-300" id="bar-rd" style="width: 20%;" title="20% Flexi Recurring Deposit"></div>
+<div class="h-full rounded-full bg-inverse-primary transition-all duration-300" id="bar-gold" style="width: 10%;" title="10% Digital Gold"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm pt-2">
+<div class="flex items-center gap-space-xs">
+<span class="w-3.5 h-3.5 rounded-full bg-secondary-fixed-dim shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface lowercase truncate">40% liquid cash</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="alloc-cash">₹40</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3.5 h-3.5 rounded-full bg-secondary shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface lowercase truncate">30% nifty index</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="alloc-nifty">₹30</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3.5 h-3.5 rounded-full bg-primary-container shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface lowercase truncate">20% flexi rd</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="alloc-rd">₹20</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-3.5 h-3.5 rounded-full bg-inverse-primary shrink-0"></span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface lowercase truncate">10% 24k gold</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="alloc-gold">₹10</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Action Row: Preset Chips & Physical CTA -->
+<div class="flex flex-wrap items-center justify-between gap-space-md pt-space-sm">
+<div class="flex flex-wrap items-center gap-space-xs" id="quick-chip-container">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-space-xs lowercase">test sum:</span>
+<button class="chip-btn px-space-md py-2 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md shadow-[0_3px_0_0_#ad3300] active:translate-y-1" data-value="100">
+                ₹100
+              </button>
+<button class="chip-btn px-space-md py-2 rounded-full bg-surface-container text-on-surface font-label-md text-label-md shadow-[0_3px_0_0_#d8c3ad] active:translate-y-1" data-value="250">
+                ₹250
+              </button>
+<button class="chip-btn px-space-md py-2 rounded-full bg-surface-container text-on-surface font-label-md text-label-md shadow-[0_3px_0_0_#d8c3ad] active:translate-y-1" data-value="500">
+                ₹500
+              </button>
+<button class="chip-btn px-space-md py-2 rounded-full bg-surface-container text-on-surface font-label-md text-label-md shadow-[0_3px_0_0_#d8c3ad] active:translate-y-1" data-value="1000">
+                ₹1,000
+              </button>
+</div>
+<button class="w-full sm:w-auto px-space-xl py-3 rounded-full bg-tertiary text-on-tertiary font-label-lg text-label-lg lowercase flex items-center justify-center gap-space-sm shadow-[0_5px_0_0_#872600] active:translate-y-1 active:shadow-[0_2px_0_0_#872600] transition-transform" id="approve-btn">
+<span class="material-symbols-outlined text-xl">task_alt</span>
+<span>approve plan</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 4 Flat Asset-Class Cards Grid -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-surface-container-lowest lowercase font-normal">
+          where every rupee travels
+        </h3>
+<span class="font-label-sm text-label-sm text-surface-container-lowest opacity-80 lowercase">
+          direct sebi registered routes
+        </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- 1. Liquid Mutual Fund -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-2xl">water_drop</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface lowercase pt-2">liquid mutual fund</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              cash equivalent buffer, 1-day instant redemption to bank account.
+            </p>
+</div>
+<div class="pt-space-xs">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">historical</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">~6.8% p.a.</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">min order</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">₹50</span>
+</div>
+</div>
+</div>
+<!-- 2. Nifty 50 Index Fund -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">show_chart</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface lowercase pt-2">nifty 50 index</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              india's top 50 giants. ultra low expense ratio &amp; passive compounding.
+            </p>
+</div>
+<div class="pt-space-xs">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">historical</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">~12.4% p.a.</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">min order</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">₹100</span>
+</div>
+</div>
+</div>
+<!-- 3. Flexible Recurring Deposit -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">account_balance</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface lowercase pt-2">flexi liquid deposit</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              zero volatility, dicgc insured up to 5 lakhs, no penalty on withdrawal.
+            </p>
+</div>
+<div class="pt-space-xs">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">guaranteed</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">7.1% fixed</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">min order</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">₹100</span>
+</div>
+</div>
+</div>
+<!-- 4. 24K Digital Gold -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-[0_4px_0_0_#d8c3ad] flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="w-10 h-10 rounded-full bg-inverse-primary text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">diamond</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface lowercase pt-2">24k digital gold</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              inflation shield stored in secure brinks vaults. 99.99% certified purity.
+            </p>
+</div>
+<div class="pt-space-xs">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">risk profile</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">hedge asset</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">min order</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">₹10</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- What-If Projection Simulator Section -->
+<div class="bg-surface-container-lowest rounded-lg p-space-xl shadow-[0_5px_0_0_#d8c3ad] flex flex-col gap-space-lg mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider block">wealth simulator</span>
+<h3 class="font-headline-md text-headline-md text-on-surface lowercase">what if you saved daily?</h3>
+</div>
+<div class="bg-surface-container-low px-space-md py-1 rounded-full flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant lowercase">model assumption:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">~9.6% blended return</span>
+</div>
+</div>
+<!-- Simulator Slider Control -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-space-lg rounded">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface lowercase" for="daily-slider">
+            daily micro-contribution
+          </label>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight" id="slider-val-display">₹100</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">/ day</span>
+</div>
+</div>
+<input class="w-full h-3 bg-surface-container-highest rounded-full appearance-none cursor-pointer accent-tertiary" id="daily-slider" max="500" min="50" step="25" type="range" value="100"/>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>₹50/day</span>
+<span>₹250/day</span>
+<span>₹500/day</span>
+</div>
+</div>
+<!-- Projection Horizon Comparison Cards & Chunky Stacked Visualizer -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- 1 Year -->
+<div class="bg-surface-container rounded p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">1 year horizon</span>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">calendar_today</span>
+</div>
+<div class="my-space-md">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight block" id="p1-total">₹38,420</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-1 block" id="p1-invested">₹36,500 invested</span>
+</div>
+<!-- Stacked Bar (Bottom: Invested, Top: Gain) -->
+<div class="w-full h-3 rounded-full bg-surface-container-highest flex overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim" id="p1-bar-base" style="width: 95%;"></div>
+<div class="h-full bg-primary-container" id="p1-bar-gain" style="width: 5%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-sm text-label-sm">
+<span class="text-on-surface-variant lowercase">gains</span>
+<span class="text-tertiary font-semibold" id="p1-gain">+₹1,920</span>
+</div>
+</div>
+<!-- 3 Years -->
+<div class="bg-surface-container rounded p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">3 years horizon</span>
+<span class="material-symbols-outlined text-on-surface-variant text-lg">timeline</span>
+</div>
+<div class="my-space-md">
+<span class="font-currency-display text-currency-display text-on-surface tracking-tight block" id="p3-total">₹1,27,150</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-1 block" id="p3-invested">₹1,09,500 invested</span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-container-highest flex overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim" id="p3-bar-base" style="width: 86%;"></div>
+<div class="h-full bg-primary-container" id="p3-bar-gain" style="width: 14%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-sm text-label-sm">
+<span class="text-on-surface-variant lowercase">gains</span>
+<span class="text-tertiary font-semibold" id="p3-gain">+₹17,650</span>
+</div>
+</div>
+<!-- 5 Years -->
+<div class="bg-surface-container rounded p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant lowercase">5 years horizon</span>
+<span class="material-symbols-outlined text-primary text-lg">rocket_launch</span>
+</div>
+<div class="my-space-md">
+<span class="font-currency-display text-currency-display text-tertiary tracking-tight block" id="p5-total">₹2,36,890</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase mt-1 block" id="p5-invested">₹1,82,500 invested</span>
+</div>
+<div class="w-full h-3 rounded-full bg-surface-container-highest flex overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim" id="p5-bar-base" style="width: 77%;"></div>
+<div class="h-full bg-primary-container" id="p5-bar-gain" style="width: 23%;"></div>
+</div>
+<div class="flex justify-between items-center mt-2 font-label-sm text-label-sm">
+<span class="text-on-surface-variant lowercase">gains</span>
+<span class="text-tertiary font-semibold" id="p5-gain">+₹54,390</span>
+</div>
+</div>
+</div>
+<!-- Quick Safety Disclaimers -->
+<div class="flex items-center gap-space-sm pt-2">
+<span class="material-symbols-outlined text-on-surface-variant text-base">shield_with_heart</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant lowercase">
+          zero lock-in for liquid and index segments. instant automated pause anytime if gig income dips.
+        </span>
+</div>
+</div>
+</div>
+<script>
+    (function initAdvisorScreen() {
+      // 1. Allocation Quick Chips Handlers
+      const chipButtons = document.querySelectorAll('.chip-btn');
+      const totalDisplay = document.getElementById('allocation-total-display');
+      const allocCash = document.getElementById('alloc-cash');
+      const allocNifty = document.getElementById('alloc-nifty');
+      const allocRd = document.getElementById('alloc-rd');
+      const allocGold = document.getElementById('alloc-gold');
+
+      function updateSplitValues(amount) {
+        totalDisplay.textContent = '₹' + amount.toLocaleString('en-IN');
+        allocCash.textContent = '₹' + Math.round(amount * 0.40).toLocaleString('en-IN');
+        allocNifty.textContent = '₹' + Math.round(amount * 0.30).toLocaleString('en-IN');
+        allocRd.textContent = '₹' + Math.round(amount * 0.20).toLocaleString('en-IN');
+        allocGold.textContent = '₹' + Math.round(amount * 0.10).toLocaleString('en-IN');
+      }
+
+      chipButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          chipButtons.forEach(b => {
+            b.className = 'chip-btn px-space-md py-2 rounded-full bg-surface-container text-on-surface font-label-md text-label-md shadow-[0_3px_0_0_#d8c3ad] active:translate-y-1';
+          });
+          this.className = 'chip-btn px-space-md py-2 rounded-full bg-primary-container text-on-primary-fixed font-label-md text-label-md shadow-[0_3px_0_0_#ad3300] active:translate-y-1';
+          const val = parseInt(this.getAttribute('data-value'), 10);
+          updateSplitValues(val);
+        });
+      });
+
+      // 2. Interactive Projection Simulator
+      const slider = document.getElementById('daily-slider');
+      const sliderValDisplay = document.getElementById('slider-val-display');
+
+      const p1Total = document.getElementById('p1-total');
+      const p1Invested = document.getElementById('p1-invested');
+      const p1Gain = document.getElementById('p1-gain');
+      const p1Base = document.getElementById('p1-bar-base');
+      const p1GainBar = document.getElementById('p1-bar-gain');
+
+      const p3Total = document.getElementById('p3-total');
+      const p3Invested = document.getElementById('p3-invested');
+      const p3Gain = document.getElementById('p3-gain');
+      const p3Base = document.getElementById('p3-bar-base');
+      const p3GainBar = document.getElementById('p3-bar-gain');
+
+      const p5Total = document.getElementById('p5-total');
+      const p5Invested = document.getElementById('p5-invested');
+      const p5Gain = document.getElementById('p5-gain');
+      const p5Base = document.getElementById('p5-bar-base');
+      const p5GainBar = document.getElementById('p5-bar-gain');
+
+      function calculateCompoundMonthly(dailyAmt, years, annualRate) {
+        const monthlyDeposit = dailyAmt * 30.416; // avg days/month
+        const months = years * 12;
+        const monthlyRate = annualRate / 12;
+        let futureValue = 0;
+        for (let i = 0; i < months; i++) {
+          futureValue = (futureValue + monthlyDeposit) * (1 + monthlyRate);
+        }
+        const totalInvested = dailyAmt * (years * 365);
+        const gain = Math.max(0, futureValue - totalInvested);
+        return {
+          total: Math.round(futureValue),
+          invested: Math.round(totalInvested),
+          gain: Math.round(gain)
+        };
+      }
+
+      function updateSimulation() {
+        const daily = parseInt(slider.value, 10);
+        sliderValDisplay.textContent = '₹' + daily.toLocaleString('en-IN');
+
+        const rate = 0.096; // 9.6% blended
+
+        const y1 = calculateCompoundMonthly(daily, 1, rate);
+        const y3 = calculateCompoundMonthly(daily, 3, rate);
+        const y5 = calculateCompoundMonthly(daily, 5, rate);
+
+        p1Total.textContent = '₹' + y1.total.toLocaleString('en-IN');
+        p1Invested.textContent = '₹' + y1.invested.toLocaleString('en-IN') + ' invested';
+        p1Gain.textContent = '+₹' + y1.gain.toLocaleString('en-IN');
+        const p1Ratio = (y1.invested / y1.total) * 100;
+        p1Base.style.width = p1Ratio + '%';
+        p1GainBar.style.width = (100 - p1Ratio) + '%';
+
+        p3Total.textContent = '₹' + y3.total.toLocaleString('en-IN');
+        p3Invested.textContent = '₹' + y3.invested.toLocaleString('en-IN') + ' invested';
+        p3Gain.textContent = '+₹' + y3.gain.toLocaleString('en-IN');
+        const p3Ratio = (y3.invested / y3.total) * 100;
+        p3Base.style.width = p3Ratio + '%';
+        p3GainBar.style.width = (100 - p3Ratio) + '%';
+
+        p5Total.textContent = '₹' + y5.total.toLocaleString('en-IN');
+        p5Invested.textContent = '₹' + y5.invested.toLocaleString('en-IN') + ' invested';
+        p5Gain.textContent = '+₹' + y5.gain.toLocaleString('en-IN');
+        const p5Ratio = (y5.invested / y5.total) * 100;
+        p5Base.style.width = p5Ratio + '%';
+        p5GainBar.style.width = (100 - p5Ratio) + '%';
+      }
+
+      slider.addEventListener('input', updateSimulation);
+
+      // 3. CTA Feedback
+      const approveBtn = document.getElementById('approve-btn');
+      approveBtn.addEventListener('click', function() {
+        const origContent = this.innerHTML;
+        this.innerHTML = '<span class="material-symbols-outlined text-xl">check_circle</span><span>plan activated!</span>';
+        this.classList.remove('bg-tertiary');
+        this.classList.add('bg-secondary');
+        setTimeout(() => {
+          this.innerHTML = origContent;
+          this.classList.remove('bg-secondary');
+          this.classList.add('bg-tertiary');
+        }, 2500);
+      });
+    })();
+  </script>
+</div></main></div></body></html>

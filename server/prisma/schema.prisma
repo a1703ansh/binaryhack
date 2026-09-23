@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// User & Auth
+// ---------------------------------------------------------------------------
+
+model User {
+  id              String     @id @default(cuid())
+  email           String     @unique
+  name            String
+  passwordHash    String
+  occupation      String     @default("Delivery Partner")
+  createdAt       DateTime   @default(now())
+
+  settings          SavingsSettings?
+  taxProfile        TaxProfile?
+  investmentProfile InvestmentProfile?
+  incomeSources     IncomeSource[]
+  transactions      Transaction[]
+  expenses          Expense[]
+  goals             SavingsGoal[]
+  ledgerAccounts    LedgerAccount[]
+  ledgerEntries     LedgerEntry[]
+  payoutRuns        PayoutRun[]
+  logs              AutomationLog[]
+  chats             ChatMessage[]
+}
+
+model SavingsSettings {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  minimumBalance       Int      @default(5000)
+  monthlySavingsTarget Int      @default(5000)
+  emergencyFundTarget  Int      @default(25000)
+  autoSaveActive       Boolean  @default(true)
+  pausedToday          Boolean  @default(false)
+  skipToday            Boolean  @default(false)
+  maxMonthlyCap        Int      @default(8000)
+  updatedAt            DateTime @updatedAt
+}
+
+model TaxProfile {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  estimatedAnnualIncome  Int      @default(342000)
+  taxAlreadyReserved     Int      @default(0)
+  mockTaxRate            Int      @default(10)
+  quarterlyDueDate       String   @default("March 15, 2027")
+  quarterlyDaysRemaining Int      @default(24)
+  readinessPercentage    Int      @default(0)
+  updatedAt              DateTime @updatedAt
+}
+
+model InvestmentProfile {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  riskLevel             String   @default("Balanced")
+  score                 Int      @default(68)
+  savingConsistency     Int      @default(84)
+  incomeVolatility      String   @default("Moderate")
+  emergencyFundProgress Int      @default(42)
+  withdrawalFrequency   String   @default("Low")
+  goalHorizonMonths     Int      @default(18)
+  explanation           String
+  updatedAt             DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Income Intelligence
+// ---------------------------------------------------------------------------
+
+model IncomeSource {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  type            String   @default("Gig Platform")
+  connected       Boolean  @default(true)
+  monthlyTotal    Int      @default(0)
+  lastPayoutDate  DateTime?
+  payoutFrequency String   @default("Daily / Weekly")
+  color           String   @default("#64748B")
+  createdAt       DateTime @default(now())
+}
+
+model Transaction {
+  id                     String   @id @default(cuid())
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  source                 String
+  amount                 Int
+  date                   DateTime @default(now())
+  description            String
+  status                 String   @default("Received")
+  autoSavedAmount        Int?
+  taxReservedAmount      Int?
+  investRecommendedAmount Int?
+  spendableAmount        Int?
+  kind                   String   @default("payout") // payout | import | connect
+  createdAt              DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Expenses
+// ---------------------------------------------------------------------------
+
+model Expense {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date         DateTime @default(now())
+  amount       Int
+  category     String
+  note         String
+  receiptStatus String   @default("manual") // verified | pending_review | manual
+  receiptPath  String?
+  receiptMime  String?
+  createdAt    DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Savings Goals
+// ---------------------------------------------------------------------------
+
+model SavingsGoal {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name          String
+  targetAmount  Int
+  currentAmount Int      @default(0)
+  deadline      String?
+  priority      String   @default("Medium")
+  category      String   @default("General") // Emergency | Vehicle | Festival | Family | General
+  icon          String   @default("Target")
+  createdAt     DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Simulated Ledger (double-entry style)
+// ---------------------------------------------------------------------------
+
+enum AccountType {
+  SPENDABLE
+  EMERGENCY
+  VEHICLE
+  TAX
+  INVESTED
+}
+
+enum EntryKind {
+  CREDIT
+  DEBIT
+}
+
+model LedgerAccount {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      AccountType
+  balance   Int         @default(0)
+  updatedAt DateTime    @updatedAt
+  entries   LedgerEntry[]
+
+  @@unique([userId, type])
+}
+
+model LedgerEntry {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accountId   String
+  account     LedgerAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  amount      Int
+  kind        EntryKind
+  description String
+  payoutRunId String?
+  payoutRun   PayoutRun? @relation(fields: [payoutRunId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+}
+
+model PayoutRun {
+  id                    String   @id @default(cuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  source                String
+  amount                Int
+  saveAmount            Int
+  taxReserveAmount      Int
+  investRecommendAmount Int
+  spendableAmount       Int
+  avgDailyIncome        Int
+  ratio                 Float
+  tier                  String
+  reason                String
+  explanationDetails    String   @default("{}") // JSON of explanation details
+  createdAt             DateTime @default(now())
+  entries               LedgerEntry[]
+  logs                  AutomationLog[]
+}
+
+enum LogType {
+  AUTO_SAVE
+  TAX_RESERVE
+  INVESTMENT_RECOMMENDATION
+  SYSTEM_ALERT
+}
+
+model AutomationLog {
+  id                  String   @id @default(cuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type                LogType
+  title               String
+  amount              Int
+  reason              String
+  canUndo             Boolean  @default(false)
+  undone              Boolean  @default(false)
+  payoutRunId         String?
+  payoutRun           PayoutRun? @relation(fields: [payoutRunId], references: [id], onDelete: SetNull)
+  payoutAmount        Int?
+  spendableRemaining  Int?
+  createdAt           DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// Assistant Chat
+// ---------------------------------------------------------------------------
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sender    String   // user | assistant
+  text      String
+  chips     String?
+  createdAt DateTime @default(now())
+}

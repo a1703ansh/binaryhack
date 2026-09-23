@@ -1,27 +1,23 @@
 import React, { useState } from 'react';
 import { 
   LineChart as LineChartIcon, 
-  ShieldAlert, 
   Sparkles, 
   CheckCircle2, 
   AlertCircle, 
   Calculator, 
   ArrowRight,
-  PieChart as PieChartIcon,
-  HelpCircle,
-  TrendingUp,
-  Layers
+  PieChart as PieChartIcon
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useEarnWise } from '../context/EarnWiseContext';
-import { INITIAL_INVESTMENT_CATEGORIES } from '../services/investmentService';
-import { simulateGrowth } from '../services/simulatorService';
+import { INITIAL_INVESTMENT_CATEGORIES, generateAllocation, simulateGrowth } from '@earnwise/shared';
 
 export const InvestView: React.FC = () => {
   const { 
     investmentProfile, 
     approveInvestmentPlan,
-    monthInvested 
+    monthInvested,
+    monthSpendable 
   } = useEarnWise();
 
   // What-If Simulator Inputs (Step 16)
@@ -30,11 +26,22 @@ export const InvestView: React.FC = () => {
   const [annualRate, setAnnualRate] = useState<number>(0.10);
   const [isPlanApproved, setIsPlanApproved] = useState(false);
 
+  // Deployable surplus: capped by actual spendable balance so approvals stay consistent
+  const maxDeployable = Math.max(0, monthSpendable - 5000); // keep ₹5,000 floor protected
+  const deployAmount = Math.min(1000, Math.max(0, maxDeployable));
+  const quickAmounts = [100, 250, 500, 1000].filter(a => a <= Math.max(1000, maxDeployable));
+  const [customDeploy, setCustomDeploy] = useState<number | null>(null);
+  const effectiveDeploy = customDeploy ?? deployAmount;
+
+  // Live 40/30/20/10 split computed from the deployable amount
+  const allocation = generateAllocation(effectiveDeploy);
+
   // Compute what-if projection
   const simulation = simulateGrowth(monthlyContribution, durationYears, annualRate);
 
   const handleApprovePlan = () => {
-    approveInvestmentPlan(1000);
+    approveInvestmentPlan(effectiveDeploy);
+    setCustomDeploy(null);
     setIsPlanApproved(true);
     try {
       confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
@@ -83,15 +90,15 @@ export const InvestView: React.FC = () => {
           <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-xs space-y-1 self-start sm:self-center">
             <div className="text-slate-400 flex items-center justify-between gap-4">
               <span>Savings Consistency:</span>
-              <strong className="text-emerald-400 font-mono">84%</strong>
+              <strong className="text-emerald-400 font-mono">{investmentProfile.factors.savingConsistency}%</strong>
             </div>
             <div className="text-slate-400 flex items-center justify-between gap-4">
               <span>Income Volatility:</span>
-              <strong className="text-amber-400 font-mono">Moderate</strong>
+              <strong className="text-amber-400 font-mono">{investmentProfile.factors.incomeVolatility}</strong>
             </div>
             <div className="text-slate-400 flex items-center justify-between gap-4">
               <span>Withdrawal Risk:</span>
-              <strong className="text-slate-200 font-mono">Low</strong>
+              <strong className="text-slate-200 font-mono">{investmentProfile.factors.withdrawalFrequency}</strong>
             </div>
           </div>
         </div>
@@ -117,9 +124,35 @@ export const InvestView: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-slate-400">Available to Deploy:</span>
-            <span className="text-lg font-mono font-bold text-emerald-400">₹1,000</span>
+          <div className="flex flex-col items-end gap-1.5">
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-slate-400">Available to Deploy:</span>
+              <span className="text-lg font-mono font-bold text-emerald-400">₹{effectiveDeploy.toLocaleString('en-IN')}</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              {quickAmounts.map(val => (
+                <button
+                  key={val}
+                  type="button"
+                  onClick={() => setCustomDeploy(val)}
+                  className={`text-[10px] px-2 py-0.5 rounded font-mono border transition-all ${
+                    effectiveDeploy === val
+                      ? 'bg-emerald-500 text-slate-950 border-emerald-400 font-bold'
+                      : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-600'
+                  }`}
+                >
+                  ₹{val}
+                </button>
+              ))}
+              <input
+                type="number"
+                min={100}
+                max={Math.max(1000, maxDeployable)}
+                value={effectiveDeploy}
+                onChange={e => setCustomDeploy(Math.max(0, Number(e.target.value)))}
+                className="w-20 px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-200 font-mono text-[10px] focus:outline-none focus:border-emerald-500"
+              />
+            </div>
           </div>
         </div>
 
@@ -148,28 +181,28 @@ export const InvestView: React.FC = () => {
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                   Liquid Fund
                 </span>
-                <strong className="text-emerald-400">₹400</strong>
+                <strong className="text-emerald-400">₹{allocation.liquidFund.toLocaleString('en-IN')}</strong>
               </div>
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-slate-300">
                   <span className="w-2.5 h-2.5 rounded-full bg-blue-500" />
                   Index Fund
                 </span>
-                <strong className="text-blue-400">₹300</strong>
+                <strong className="text-blue-400">₹{allocation.indexFund.toLocaleString('en-IN')}</strong>
               </div>
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-slate-300">
                   <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
                   Flexi RD
                 </span>
-                <strong className="text-purple-400">₹200</strong>
+                <strong className="text-purple-400">₹{allocation.recurringDeposit.toLocaleString('en-IN')}</strong>
               </div>
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-slate-300">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                   Digital Gold
                 </span>
-                <strong className="text-amber-400">₹100</strong>
+                <strong className="text-amber-400">₹{allocation.digitalGold.toLocaleString('en-IN')}</strong>
               </div>
             </div>
           </div>
@@ -194,9 +227,10 @@ export const InvestView: React.FC = () => {
             ) : (
               <button
                 onClick={handleApprovePlan}
-                className="w-full py-3 rounded-2xl font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
+                disabled={effectiveDeploy <= 0}
+                className="w-full py-3 rounded-2xl font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <span>Approve Plan (Simulated Execution)</span>
+                <span>Approve ₹{effectiveDeploy.toLocaleString('en-IN')} Plan (Simulated Execution)</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             )}

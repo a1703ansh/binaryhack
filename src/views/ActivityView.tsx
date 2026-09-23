@@ -4,15 +4,12 @@ import {
   PiggyBank, 
   ReceiptIndianRupee, 
   LineChart, 
-  AlertCircle, 
   RotateCcw, 
-  Info,
-  CheckCircle2,
-  Filter
+  Info
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 import { ExplainableModal } from '../components/ExplainableModal';
-import { AutomationLog } from '../types';
+import { type AutomationLog } from '@earnwise/shared';
 
 export const ActivityView: React.FC = () => {
   const { activityLogs, undoAutoSave } = useEarnWise();

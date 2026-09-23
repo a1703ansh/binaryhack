@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { 
   PiggyBank, 
-  ShieldCheck, 
   PauseCircle, 
   PlayCircle, 
   RotateCcw, 
   FastForward, 
   Sparkles, 
   CheckCircle2, 
-  AlertTriangle,
-  Sliders,
-  Info
+  Sliders
 } from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 
@@ -30,9 +27,11 @@ export const AutoSaveView: React.FC = () => {
   const [targetInput, setTargetInput] = useState(savingsSettings.monthlySavingsTarget);
   const [savedSuccessMsg, setSavedSuccessMsg] = useState(false);
 
-  // Exact Step 8 numbers:
-  // Saved this month: ₹3,240, Target: ₹5,000, Progress: 64.8%
-  const progressPercent = ((3240 / savingsSettings.monthlySavingsTarget) * 100).toFixed(1);
+  // Live progress: monthSaved flows from the decision engine on every simulated payout
+  const progressPercent = Math.min(100, ((monthSaved / Math.max(1, savingsSettings.monthlySavingsTarget)) * 100)).toFixed(1);
+
+  // Count micro-deductions this month from the auto-save audit trail
+  const microDeductionCount = activityLogs.filter(l => l.type === 'auto-save' && !l.undone).length;
 
   const lastSaveLog = activityLogs.find(l => l.type === 'auto-save' && l.canUndo && !l.undone);
 
@@ -82,17 +81,17 @@ export const AutoSaveView: React.FC = () => {
           <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
             <span className="text-xs text-slate-400">Today's Recommended Saving</span>
             <div className="text-2xl font-black font-mono text-emerald-400 mt-1">
-              ₹180
+              ₹{todayAction.recommendedSave.toLocaleString('en-IN')}
             </div>
-            <span className="text-[11px] text-slate-500">Based on recent earning surge</span>
+            <span className="text-[11px] text-slate-500">On today's ₹{todayAction.payoutAmount.toLocaleString('en-IN')} payout</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
             <span className="text-xs text-slate-400">Saved This Month</span>
             <div className="text-2xl font-black font-mono text-white mt-1">
-              ₹3,240
+              ₹{monthSaved.toLocaleString('en-IN')}
             </div>
-            <span className="text-[11px] text-slate-500">Across 22 micro-deductions</span>
+            <span className="text-[11px] text-slate-500">Across {microDeductionCount} micro-deductions</span>
           </div>
 
           <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
@@ -122,7 +121,7 @@ export const AutoSaveView: React.FC = () => {
           <Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
           <div className="text-xs text-slate-200 leading-relaxed">
             <strong className="text-emerald-400 block mb-0.5">Explainable Automation Rationale:</strong>
-            "Today's income is higher than your normal daily average, so EarnWise increased your saving amount while protecting your minimum balance."
+            "{todayAction.reason}"
           </div>
         </div>
       </div>

@@ -3,12 +3,8 @@ import {
   X, 
   Sparkles, 
   ShieldCheck, 
-  HelpCircle, 
-  CheckCircle2, 
   TrendingUp, 
-  PiggyBank, 
-  ReceiptIndianRupee,
-  Scale
+  ReceiptIndianRupee
 } from 'lucide-react';
 
 interface ExplainableModalProps {

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { EarnWiseProvider } from './context/EarnWiseContext';
+import { EarnWiseProvider, useEarnWise } from './context/EarnWiseContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthPage } from './pages/AuthPage';
 import { TopNavbar } from './components/TopNavbar';
 import { Sidebar } from './components/Sidebar';
 import { BottomNav } from './components/BottomNav';
@@ -147,8 +149,34 @@ export const AppContent: React.FC = () => {
 
 export default function App() {
   return (
-    <EarnWiseProvider>
-      <AppContent />
-    </EarnWiseProvider>
+    <AuthProvider>
+      <EarnWiseProvider>
+        <Root />
+      </EarnWiseProvider>
+    </AuthProvider>
   );
+}
+
+const SplashScreen: React.FC = () => (
+  <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+    <div className="flex flex-col items-center gap-3">
+      <div className="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center text-slate-950 shadow-xl shadow-emerald-500/25">
+        <Zap className="w-6 h-6 fill-current" />
+      </div>
+      <div className="w-40 h-1 rounded-full bg-slate-800 overflow-hidden">
+        <div className="h-full w-1/2 bg-emerald-400 rounded-full animate-pulse" />
+      </div>
+    </div>
+  </div>
+);
+
+function Root() {
+  const { user, loading } = useAuth();
+  const { ready } = useEarnWise();
+
+  if (loading) return <SplashScreen />;
+  if (!user) return <AuthPage />;
+  if (!ready) return <SplashScreen />;
+
+  return <AppContent />;
 }
