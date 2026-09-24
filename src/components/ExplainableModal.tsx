@@ -1,11 +1,6 @@
 import React from 'react';
-import { 
-  X, 
-  Sparkles, 
-  ShieldCheck, 
-  TrendingUp, 
-  ReceiptIndianRupee
-} from 'lucide-react';
+import { Currency } from '../lib/currency';
+import { MaterialIcon } from './ui';
 
 interface ExplainableModalProps {
   isOpen: boolean;
@@ -24,6 +19,17 @@ interface ExplainableModalProps {
   };
 }
 
+/* =========================================================
+   Explainable breakdown — "Flat Mascot Playful" restyle.
+   Amounts are echoed as-is; nothing is recalculated here.
+   ========================================================= */
+
+const AUDITS = [
+  { key: 'incomeComparison', icon: 'trending_up', title: 'Income signal', tone: 'text-ocean' },
+  { key: 'guardrailStatus', icon: 'shield', title: 'Minimum balance guard', tone: 'text-secondary-deep' },
+  { key: 'taxStatus', icon: 'account_balance', title: 'Tax provisioning', tone: 'text-berry' },
+] as const;
+
 export const ExplainableModal: React.FC<ExplainableModalProps> = ({
   isOpen,
   onClose,
@@ -37,100 +43,108 @@ export const ExplainableModal: React.FC<ExplainableModalProps> = ({
 }) => {
   if (!isOpen) return null;
 
+  const fallbacks: Record<(typeof AUDITS)[number]['key'], string> = {
+    incomeComparison: 'Analyzed against your 30-day moving average.',
+    guardrailStatus: 'Guaranteed minimum ₹5,000 balance remains completely intact.',
+    taxStatus: '10% proportional reserve earmarked for the quarterly advance tax schedule.'
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-      <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-emerald-400" />
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/55 backdrop-blur-sm overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Algorithmic Decision Breakdown"
+    >
+      <div className="relative w-full max-w-lg bg-surface rounded-card shadow-[0_8px_0_0_#d8c3ad] p-5 sm:p-6">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-3 pb-4 border-b border-bevel-neutral">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-on shadow-[0_3px_0_0_#ad3300]">
+              <MaterialIcon name="auto_awesome" className="text-xl" filled />
+            </div>
             <div>
-              <h2 className="text-base font-bold text-white">Algorithmic Decision Breakdown</h2>
-              <p className="text-xs text-slate-400">100% Explainable Zero-Effort Automation</p>
+              <h2 className="font-questrial text-lg text-ink leading-tight">Algorithmic Decision Breakdown</h2>
+              <p className="font-ui text-[11px] text-ink-subtle">100% explainable zero-effort automation</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-white">
-            <X className="w-5 h-5" />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="p-1.5 rounded-full text-ink-subtle hover:bg-surface-high hover:text-ink transition-colors cursor-pointer"
+          >
+            <MaterialIcon name="close" className="text-xl" />
           </button>
         </div>
 
-        <div className="mt-4 space-y-4 text-xs text-slate-300">
-          {/* Main Plain-English Rationale */}
-          <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
-            <div className="font-bold text-emerald-300 text-sm mb-1">
-              Why did EarnWise save ₹{saveAmount}?
+        <div className="mt-4 space-y-4">
+          {/* Plain-English rationale */}
+          <div className="p-4 rounded-card bg-primary-fixed">
+            <div className="font-questrial text-base text-primary-on mb-1">
+              Why did EarnWise save <Currency value={saveAmount} />?
             </div>
-            <p className="text-slate-200 leading-relaxed">
-              "{reason}"
-            </p>
+            <p className="font-questrial text-sm text-primary-deep leading-relaxed">&ldquo;{reason}&rdquo;</p>
           </div>
 
-          {/* Allocation Breakdown */}
+          {/* Allocation breakdown */}
           <div>
-            <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
-              Payout Mathematics (Total: ₹{payoutAmount.toLocaleString('en-IN')})
+            <div className="font-ui text-[11px] font-semibold text-ink-subtle uppercase tracking-wider mb-2">
+              Payout mathematics (total <Currency value={payoutAmount} />)
             </div>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between">
-                <span className="text-slate-400">Emergency Auto-Save:</span>
-                <span className="font-bold font-mono text-emerald-400">₹{saveAmount}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="p-2.5 rounded-btn bg-surface-low flex items-center justify-between gap-2 shadow-[0_2px_0_0_#d8c3ad]">
+                <span className="font-ui text-[11px] text-ink-muted">Emergency auto-save</span>
+                <span className="font-currency tabular-nums text-sm font-bold text-secondary-deep">
+                  <Currency value={saveAmount} />
+                </span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between">
-                <span className="text-slate-400">Advance Tax (10%):</span>
-                <span className="font-bold font-mono text-amber-400">₹{taxAmount}</span>
+              <div className="p-2.5 rounded-btn bg-surface-low flex items-center justify-between gap-2 shadow-[0_2px_0_0_#d8c3ad]">
+                <span className="font-ui text-[11px] text-ink-muted">Advance tax (10%)</span>
+                <span className="font-currency tabular-nums text-sm font-bold text-berry">
+                  <Currency value={taxAmount} />
+                </span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between">
-                <span className="text-slate-400">Micro-Investment:</span>
-                <span className="font-bold font-mono text-blue-400">₹{investAmount}</span>
+              <div className="p-2.5 rounded-btn bg-surface-low flex items-center justify-between gap-2 shadow-[0_2px_0_0_#d8c3ad]">
+                <span className="font-ui text-[11px] text-ink-muted">Micro-investment</span>
+                <span className="font-currency tabular-nums text-sm font-bold text-ocean">
+                  <Currency value={investAmount} />
+                </span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-between">
-                <span className="text-slate-400">Available to Spend:</span>
-                <span className="font-bold font-mono text-white">₹{spendableAmount}</span>
+              <div className="p-2.5 rounded-btn bg-surface-low flex items-center justify-between gap-2 shadow-[0_2px_0_0_#d8c3ad]">
+                <span className="font-ui text-[11px] text-ink-muted">Available to spend</span>
+                <span className="font-currency tabular-nums text-sm font-bold text-ink">
+                  <Currency value={spendableAmount} />
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Verification Checks */}
-          <div className="space-y-2 pt-2 border-t border-slate-800">
-            <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-              Guardrail & Intelligence Audits
+          {/* Guardrail & intelligence audits */}
+          <div className="space-y-2 pt-3 border-t border-bevel-neutral">
+            <div className="font-ui text-[11px] font-semibold text-ink-subtle uppercase tracking-wider">
+              Guardrail &amp; intelligence audits
             </div>
 
-            <div className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-950/70 border border-slate-800/80">
-              <TrendingUp className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-slate-200">Income Signal:</strong>
-                <p className="text-slate-400 text-[11px] mt-0.5">
-                  {details?.incomeComparison || `Analyzed against 30-day moving average.`}
-                </p>
+            {AUDITS.map(({ key, icon, title, tone }) => (
+              <div key={key} className="flex items-start gap-2.5 p-2.5 rounded-btn bg-surface-container">
+                <MaterialIcon name={icon} className={`text-lg shrink-0 mt-0.5 ${tone}`} />
+                <div>
+                  <strong className="font-ui text-xs text-ink">{title}:</strong>
+                  <p className="font-questrial text-[12px] text-ink-muted mt-0.5 leading-snug">
+                    {details?.[key] || fallbacks[key]}
+                  </p>
+                </div>
               </div>
-            </div>
-
-            <div className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-950/70 border border-slate-800/80">
-              <ShieldCheck className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-slate-200">Minimum Balance Guard:</strong>
-                <p className="text-slate-400 text-[11px] mt-0.5">
-                  {details?.guardrailStatus || "Guaranteed minimum ₹5,000 balance remains completely intact."}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-950/70 border border-slate-800/80">
-              <ReceiptIndianRupee className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-slate-200">Tax Provisioning:</strong>
-                <p className="text-slate-400 text-[11px] mt-0.5">
-                  {details?.taxStatus || "10% proportional reserve earmarked for quarterly advance tax schedule."}
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <button
+            type="button"
             onClick={onClose}
-            className="w-full mt-3 py-2.5 rounded-xl font-semibold bg-slate-800 hover:bg-slate-750 text-slate-200 transition-colors"
+            className="w-full py-3 rounded-full font-ui font-semibold text-sm bg-surface-container text-ink-muted border-2 border-bevel-neutral shadow-[0_4px_0_0_#d8c3ad] hover:bg-surface-high active:translate-y-1 active:shadow-[0_1px_0_0_#d8c3ad] transition-all cursor-pointer"
           >
-            Close Breakdown
+            Close breakdown
           </button>
         </div>
       </div>

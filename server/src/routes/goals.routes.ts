@@ -30,6 +30,29 @@ router.post('/', validateBody(goalSchema), asyncHandler(async (req, res) => {
   res.status(201).json(goal);
 }));
 
+// Partial update — every field optional, and no field carries a default here so a
+// patch never silently resets values it did not send (unlike goalSchema.partial()).
+const goalUpdateSchema = z
+  .object({
+    name: z.string().trim().min(2).optional(),
+    targetAmount: z.number().int().positive().optional(),
+    currentAmount: z.number().int().min(0).optional(),
+    deadline: z.string().trim().optional(),
+    priority: z.enum(['High', 'Medium', 'Low']).optional(),
+    category: z.enum(['Emergency', 'Vehicle', 'Festival', 'Family', 'General']).optional(),
+    icon: z.string().optional()
+  })
+  .refine((body) => Object.keys(body).length > 0, { message: 'No fields to update' });
+
+router.patch('/:id', validateBody(goalUpdateSchema), asyncHandler(async (req, res) => {
+  const userId = (req as AuthedRequest).userId;
+  const { id } = req.params as { id: string };
+  const existing = await prisma.savingsGoal.findFirst({ where: { id, userId } });
+  if (!existing) throw notFound('Goal not found');
+  const goal = await prisma.savingsGoal.update({ where: { id }, data: req.body });
+  res.json(goal);
+}));
+
 router.delete('/:id', asyncHandler(async (req, res) => {
   const userId = (req as AuthedRequest).userId;
   const { id } = req.params as { id: string };

@@ -66,6 +66,8 @@ export interface EarnWiseContextType {
   // Goals
   goals: SavingsGoal[];
   addGoal: (goal: Omit<SavingsGoal, 'id'>) => void;
+  updateGoal: (goalId: string, patch: Partial<Omit<SavingsGoal, 'id' | 'createdAt'>>) => Promise<void>;
+  deleteGoal: (goalId: string) => Promise<void>;
 
   // Investment
   investmentProfile: InvestmentProfile;
@@ -235,6 +237,16 @@ export const EarnWiseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     await refreshDashboard();
   }, [refreshDashboard]);
 
+  const updateGoal = useCallback(async (goalId: string, patch: Partial<Omit<SavingsGoal, 'id' | 'createdAt'>>) => {
+    await api.patch(`/goals/${goalId}`, patch);
+    await refreshDashboard();
+  }, [refreshDashboard]);
+
+  const deleteGoal = useCallback(async (goalId: string) => {
+    await api.del(`/goals/${goalId}`);
+    await refreshDashboard();
+  }, [refreshDashboard]);
+
   const approveInvestmentPlan = useCallback(async (amount: number) => {
     if (amount <= 0) return;
     await api.post('/invest/approve', { amount });
@@ -298,6 +310,8 @@ export const EarnWiseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       undoAutoSave,
       goals: d.goals,
       addGoal,
+      updateGoal,
+      deleteGoal,
       investmentProfile: d.investmentProfile,
       pendingInvestPool: 0,
       approveInvestmentPlan,
@@ -317,9 +331,9 @@ export const EarnWiseProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [
     dashboard, isDemoMode, setDemoMode, resetToDemoBenchmark, addIncomeSource,
     simulatePlatformConnection, importIncomeTransactions, updateSavingsSettings,
-    togglePauseAutoSave, skipTodayAutoSave, undoAutoSave, addGoal, approveInvestmentPlan,
-    updateTaxReserve, addExpense, sendAssistantMessage, isSimulatingPayout, simulateNewPayout,
-    refreshDashboard
+    togglePauseAutoSave, skipTodayAutoSave, undoAutoSave, addGoal, updateGoal, deleteGoal,
+    approveInvestmentPlan, updateTaxReserve, addExpense, sendAssistantMessage,
+    isSimulatingPayout, simulateNewPayout, refreshDashboard
   ]);
 
   return <EarnWiseContext.Provider value={value}>{children}</EarnWiseContext.Provider>;

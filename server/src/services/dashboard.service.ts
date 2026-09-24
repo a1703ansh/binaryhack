@@ -210,7 +210,8 @@ export async function buildDashboard(userId: string): Promise<DashboardPayload> 
       deadline: g.deadline ?? '',
       priority: g.priority,
       category: g.category,
-      icon: g.icon
+      icon: g.icon,
+      createdAt: g.createdAt.toISOString()
     })),
     settings: {
       minimumBalance: settings.minimumBalance,

@@ -67,6 +67,8 @@ export interface SavingsGoal {
   priority: 'High' | 'Medium' | 'Low';
   category: 'Emergency' | 'Vehicle' | 'Festival' | 'Family' | 'General';
   icon: string;
+  /** ISO timestamp the goal was created — used to derive on-track pace. */
+  createdAt?: string;
 }
 
 export type RiskProfileLevel = 'Conservative' | 'Balanced' | 'Growth';

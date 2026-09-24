@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@300;400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
+    <!-- Material Symbols (design system icon set) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
     <!-- Tailwind CDN with custom config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -17,6 +19,79 @@
           extend: {
             // Custom shades & utilities the app depends on (not in default Tailwind)
             colors: {
+              // ===== "Flat Mascot Playful" design tokens (from /design/stitch + DESIGN_SYSTEM.md) =====
+              // Brand accents (specified in design system)
+              primary: {
+                DEFAULT: '#f9a61f',   // amber accent (design: primary-container / md primary)
+                deep: '#845400',      // design: primary (amber ink / hover text)
+                deeper: '#643f00',    // design: on-primary-fixed-variant
+                dark: '#ad3300',      // amber bevel (design: tertiary)
+                on: '#2a1800',        // text on amber (design: on-primary-fixed)
+                ondeep: '#664000',    // text on deep amber (design: on-primary-container)
+                fixed: '#ffddb6',     // amber tint (design: primary-fixed)
+                dim: '#ffb959',       // gold/amber bar (design: primary-fixed-dim)
+              },
+              secondary: {
+                DEFAULT: '#10b981',   // brand green (md secondary; existing brand-500)
+                deep: '#059669',
+                darkest: '#065f46',
+                on: '#052e1d',
+              },
+              // Design surface (M3-ish) scale — flat saturated fills
+              surface: {
+                DEFAULT: '#ffffff',
+                bright: '#fcf9f8',
+                low: '#f6f3f2',
+                container: '#f0eded',
+                high: '#eae7e7',
+                highest: '#e5e2e1',
+                dim: '#dcd9d9',
+              },
+              // Semantic text ("ink") tones
+              ink: {
+                DEFAULT: '#1b1c1c',   // design: on-surface (primary text)
+                muted: '#524434',     // design: on-surface-variant
+                subtle: '#857461',    // design: outline
+                faint: '#d8c3ad',     // design: outline-variant
+                onamber: '#664000',   // design: on-primary-container
+              },
+              // Light-blue "ocean" family (design: secondary-container scale) — page/rail background
+              ocean: {
+                DEFAULT: '#006686',
+                light: '#66d0fe',
+                dim: '#6fd2ff',
+                faint: '#c0e8ff',
+                on: '#ffffff',
+                ondeep: '#005773',
+                bevel: '#004d66',
+              },
+              // Orange-red "berry" family (design: tertiary scale) — CTAs, save tiles
+              berry: {
+                DEFAULT: '#ad3300',
+                light: '#ff9f80',
+                on: '#ffffff',
+                ondeep: '#872600',
+                fixed: '#ffdbd0',
+                dim: '#ffb59d',
+                bevel: '#842500',
+              },
+              // Status colors (from HTML error scale)
+              danger: {
+                DEFAULT: '#ba1a1a',
+                light: '#ffdad6',
+                on: '#ffffff',
+                ondeep: '#93000a',
+              },
+              // Signature 2D bevel shadows (md bevel #D43E08 + per-hue HTML bevels)
+              bevel: {
+                DEFAULT: '#D43E08',
+                amber: '#ad3300',
+                green: '#065f46',
+                blue: '#006686',
+                neutral: '#d8c3ad',
+                white: '#CFCFD8',
+              },
+              // ===== Legacy aliases (still referenced across the app — kept so nothing breaks) =====
               monster: {
                 body: '#f89a1c',
                 bodyAngry: '#e84e12',
@@ -61,29 +136,61 @@
               }
             },
             fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+              // design md: Questrial for playful headings/body, PJS for UI text, JetBrains Mono for numerals
+              sans: ['"Questrial"', 'system-ui', 'sans-serif'],
+              ui: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
               mono: ['"JetBrains Mono"', 'monospace'],
+              currency: ['"JetBrains Mono"', 'monospace'],
               questrial: ['"Questrial"', 'sans-serif'],
               montserrat: ['"Montserrat"', 'sans-serif'],
             },
             screens: {
               xs: '420px', // used by TopNavbar's hidden xs:inline responsive labels
             },
+            borderRadius: {
+              // semantic radius (design: 28-32px cards, HTML button/input radius)
+              card: '2rem',      // 32px cards
+              cardlg: '3rem',    // 48px hero panel / dashboard payout card
+              cardmd: '24px',    // 24px panels (tax screen)
+              btn: '1rem',       // 16px buttons & inputs
+              input: '1rem',
+            },
             keyframes: {
               'spin-reverse': {
                 from: { transform: 'rotate(360deg)' },
                 to: { transform: 'rotate(0deg)' },
               },
+              'float': {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-8px)' },
+              },
+              'wiggle': {
+                '0%, 100%': { transform: 'rotate(-3deg)' },
+                '50%': { transform: 'rotate(3deg)' },
+              },
+              'pulse-urgent': {
+                '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+                '50%': { transform: 'scale(1.06)', opacity: '0.85' },
+              },
+              'badge-float': {
+                '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                '50%': { transform: 'translateY(-4px) scale(1.05)' },
+              },
             },
             animation: {
               reverse: 'spin-reverse 1s linear infinite', // used by PayoutSimulatorModal's counter-rotating ring
+              'float': 'float 3s ease-in-out infinite',
+              'float-slow': 'float 5s ease-in-out infinite',
+              'wiggle-slow': 'wiggle 2.5s ease-in-out infinite',
+              'pulse-urgent': 'pulse-urgent 1s ease-in-out infinite',
+              'badge-float': 'badge-float 2.8s ease-in-out infinite',
             }
           }
         }
       }
     </script>
   </head>
-  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-brand-500 selection:text-white">
+  <body class="bg-ocean-light text-ink antialiased selection:bg-primary selection:text-primary-on">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

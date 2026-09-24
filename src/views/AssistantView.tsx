@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Bot, 
-  Send, 
-  Sparkles, 
-  User
-} from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
+import { MaterialIcon } from '../components/ui';
+
+/* =========================================================
+   Financial AI Copilot — "Flat Mascot Playful" restyle.
+   Sending, chips and scroll behaviour are unchanged.
+   ========================================================= */
 
 export const AssistantView: React.FC = () => {
   const { chatMessages, sendAssistantMessage } = useEarnWise();
@@ -34,88 +34,93 @@ export const AssistantView: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">
-            <Bot className="w-4 h-4" />
-            <span>EarnWise Assistant</span>
+          <div className="flex items-center gap-2 font-ui text-[11px] font-semibold text-ocean uppercase tracking-wider mb-1">
+            <MaterialIcon name="smart_toy" className="text-base" filled />
+            <span>EarnWise assistant</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Financial AI Copilot</h1>
-          <p className="text-xs text-slate-400">
-            Grounded in your live financial state: questions on cash flow, safe spending, and auto-save rationale
+          <h1 className="font-questrial text-3xl text-surface lowercase tracking-tight">financial copilot</h1>
+          <p className="font-questrial text-sm text-surface/95 max-w-xl">
+            grounded in your live financial state — cash flow, safe spending and auto-save rationale
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold self-start sm:self-auto">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Grounded State Engine</span>
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface text-secondary-deep font-ui text-[11px] font-semibold shadow-[0_3px_0_0_#d8c3ad] self-start sm:self-auto">
+          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+          <span>Grounded state engine</span>
         </div>
       </div>
 
-      {/* Chat Container */}
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-xl flex flex-col h-[520px] overflow-hidden">
-        {/* Messages Feed */}
+      {/* Chat container */}
+      <div className="bg-surface rounded-card shadow-[0_6px_0_0_#006686] flex flex-col h-[520px] overflow-hidden">
+        {/* Messages feed */}
         <div className="flex-1 p-5 overflow-y-auto space-y-4">
-          {chatMessages.map(msg => (
-            <div
-              key={msg.id}
-              className={`flex items-start gap-3 ${
-                msg.sender === 'user' ? 'flex-row-reverse' : ''
-              }`}
-            >
-              <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-bold ${
-                msg.sender === 'user' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-              }`}>
-                {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
-              </div>
+          {chatMessages.map(msg => {
+            const isUser = msg.sender === 'user';
+            return (
+              <div key={msg.id} className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
+                <div
+                  className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${
+                    isUser
+                      ? 'bg-ocean text-white shadow-[0_3px_0_0_#006686]'
+                      : 'bg-primary text-primary-on shadow-[0_3px_0_0_#ad3300]'
+                  }`}
+                  aria-hidden="true"
+                >
+                  <MaterialIcon name={isUser ? 'person' : 'smart_toy'} className="text-lg" filled={!isUser} />
+                </div>
 
-              <div className={`max-w-[80%] rounded-2xl p-4 text-xs leading-relaxed ${
-                msg.sender === 'user'
-                  ? 'bg-blue-600 text-white font-medium rounded-tr-none'
-                  : 'bg-slate-950 border border-slate-800 text-slate-200 rounded-tl-none'
-              }`}>
-                <p>{msg.text}</p>
-                <span className="text-[10px] opacity-60 mt-1 block font-mono">
-                  {msg.timestamp}
-                </span>
+                <div
+                  className={`max-w-[80%] rounded-card p-4 font-questrial text-sm leading-relaxed ${
+                    isUser
+                      ? 'bg-ocean text-white rounded-tr-md'
+                      : 'bg-surface-container text-ink rounded-tl-md'
+                  }`}
+                >
+                  <p>{msg.text}</p>
+                  <span className={`font-currency text-[10px] mt-1 block ${isUser ? 'text-white/70' : 'text-ink-subtle'}`}>
+                    {msg.timestamp}
+                  </span>
 
-                {/* Chips for quick questions if provided */}
-                {msg.chips && msg.sender === 'assistant' && (
-                  <div className="mt-3 pt-3 border-t border-slate-800/80 flex flex-wrap gap-1.5">
-                    {msg.chips.map(chip => (
-                      <button
-                        key={chip}
-                        onClick={() => handleSend(chip)}
-                        className="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-slate-900 hover:bg-slate-850 text-emerald-400 border border-slate-700 hover:border-emerald-500/50 transition-colors"
-                      >
-                        {chip}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                  {/* Follow-up chips */}
+                  {msg.chips && msg.sender === 'assistant' && (
+                    <div className="mt-3 pt-3 border-t border-bevel-neutral flex flex-wrap gap-1.5">
+                      {msg.chips.map(chip => (
+                        <button
+                          key={chip}
+                          type="button"
+                          onClick={() => handleSend(chip)}
+                          className="px-2.5 py-1 rounded-full font-ui text-[11px] font-semibold bg-surface text-primary-deep shadow-[0_2px_0_0_#d8c3ad] hover:brightness-105 cursor-pointer"
+                        >
+                          {chip}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
           <div ref={chatEndRef} />
         </div>
 
-        {/* Quick Questions Row */}
-        <div className="p-3 bg-slate-950/60 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto whitespace-nowrap">
-          <Sparkles className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-          <span className="text-[11px] text-slate-400 font-semibold mr-1">Demo Prompts:</span>
+        {/* Demo prompts */}
+        <div className="p-3 bg-surface-low border-t border-bevel-neutral flex items-center gap-2 overflow-x-auto whitespace-nowrap">
+          <MaterialIcon name="auto_awesome" className="text-base text-primary-deep shrink-0" />
+          <span className="font-ui text-[11px] text-ink-subtle font-semibold mr-1">Demo prompts:</span>
           {defaultChips.map(chip => (
             <button
               key={chip}
+              type="button"
               onClick={() => handleSend(chip)}
-              className="text-[11px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-750 transition-colors border border-slate-700 flex-shrink-0"
+              className="font-ui text-[11px] px-2.5 py-1 rounded-full bg-surface text-ink-muted border-2 border-bevel-neutral hover:bg-surface-high transition-colors shrink-0 cursor-pointer"
             >
               {chip}
             </button>
           ))}
         </div>
 
-        {/* Input Bar */}
-        <div className="p-4 bg-slate-950 border-t border-slate-800">
+        {/* Input bar */}
+        <div className="p-4 bg-surface-low border-t border-bevel-neutral">
           <form
             onSubmit={e => {
               e.preventDefault();
@@ -123,19 +128,24 @@ export const AssistantView: React.FC = () => {
             }}
             className="flex items-center gap-2"
           >
+            <label htmlFor="assistant-input" className="sr-only">
+              Ask the EarnWise copilot
+            </label>
             <input
+              id="assistant-input"
               type="text"
               value={inputText}
               onChange={e => setInputText(e.target.value)}
-              placeholder="Ask anything about your safe spending, today's saving, or taxes..."
-              className="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
+              placeholder="Ask anything about your safe spending, today's saving, or taxes…"
+              className="flex-1 px-4 py-2.5 rounded-input bg-surface border-2 border-bevel-neutral font-ui text-sm text-ink placeholder:text-ink-faint focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20"
             />
             <button
               type="submit"
-              className="p-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition-all disabled:opacity-50"
+              aria-label="Send message"
               disabled={!inputText.trim()}
+              className="w-11 h-11 rounded-full bg-primary text-primary-on shadow-[0_4px_0_0_#ad3300] hover:brightness-105 active:translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer"
             >
-              <Send className="w-4 h-4" />
+              <MaterialIcon name="send" className="text-lg" filled />
             </button>
           </form>
         </div>

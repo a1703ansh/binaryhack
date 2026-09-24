@@ -18,6 +18,10 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Brief presentation delay after a successful login/register so the login screen
+// can flash the "happy" mascot before the app shell mounts (redirect is unchanged).
+const SUCCESS_CELEBRATION_MS = 600;
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,12 +47,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = useCallback(async (email: string, password: string) => {
     const res = await api.post<{ user: AuthUser }>('/auth/login', { email, password });
-    setUser(res.user);
+    window.setTimeout(() => setUser(res.user), SUCCESS_CELEBRATION_MS);
   }, []);
 
   const register = useCallback(async (name: string, email: string, password: string, occupation = 'Delivery Partner') => {
     const res = await api.post<{ user: AuthUser }>('/auth/register', { name, email, password, occupation });
-    setUser(res.user);
+    window.setTimeout(() => setUser(res.user), SUCCESS_CELEBRATION_MS);
   }, []);
 
   const logout = useCallback(async () => {

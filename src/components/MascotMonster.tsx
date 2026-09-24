@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-export type MonsterMood = 'calm' | 'angry' | 'happy' | 'surprised';
+export type MonsterMood = 'calm' | 'angry' | 'happy' | 'surprised' | 'thinking';
 
 interface MascotMonsterProps {
   mood?: MonsterMood;
@@ -10,7 +10,8 @@ interface MascotMonsterProps {
   isBouncing?: boolean;
   onMonsterClick?: () => void;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
+  celebrate?: boolean;
 }
 
 export const MascotMonster: React.FC<MascotMonsterProps> = ({
@@ -22,6 +23,7 @@ export const MascotMonster: React.FC<MascotMonsterProps> = ({
   onMonsterClick,
   className = '',
   size = 'md',
+  celebrate = false,
 }) => {
   const monsterRef = useRef<HTMLDivElement>(null);
   const [pupilOffset, setPupilOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -76,28 +78,65 @@ export const MascotMonster: React.FC<MascotMonsterProps> = ({
   }, [inputCharCount, isCoveringEyes]);
 
   const isAngry = mood === 'angry';
+  const isThinking = mood === 'thinking';
 
-  // Sizing styles
-  const sizeScales = {
-    sm: 'scale-75 -mb-4',
-    md: 'scale-100',
-    lg: 'scale-110',
+  // Thinking mood: pupils drift upward
+  const pupilShift = isThinking
+    ? { x: -3, y: -6 }
+    : { x: pupilOffset.x, y: pupilOffset.y };
+
+  // Dimensions & scale for accurate DOM layout boxes without layout distortion
+  const sizeConfig = {
+    xs: { width: 98, height: 70, scale: 0.35 },
+    sm: { width: 140, height: 100, scale: 0.5 },
+    md: { width: 210, height: 150, scale: 0.75 },
+    lg: { width: 280, height: 200, scale: 1.0 },
   };
+
+  const currentSize = sizeConfig[size] || sizeConfig.md;
 
   return (
     <div
       ref={monsterRef}
       onClick={onMonsterClick}
-      className={`relative select-none flex flex-col items-center justify-end ${sizeScales[size]} ${
-        isAngry ? 'anim-rumble' : 'anim-calm'
-      } ${isBouncing ? 'anim-bounce' : ''} ${className}`}
-      style={{ width: '280px', height: '200px' }}
+      className={`relative select-none inline-flex items-end justify-center shrink-0 ${className}`}
+      style={{ width: `${currentSize.width}px`, height: `${currentSize.height}px` }}
     >
-      {/* Steam particles when angry */}
-      {isAngry && (
-        <div className="absolute -top-6 w-full flex justify-between px-6 pointer-events-none z-30">
-          <div className="w-4 h-4 rounded-full bg-slate-300/80 blur-[1px] steam-bubble-1" />
-          <div className="w-5 h-5 rounded-full bg-slate-300/70 blur-[1px] steam-bubble-2" />
+      <div
+        className={`relative flex flex-col items-center justify-end ${
+          isAngry ? 'anim-rumble' : 'anim-calm'
+        } ${isBouncing ? 'anim-bounce' : ''}`}
+        style={{
+          width: '280px',
+          height: '200px',
+          transform: `scale(${currentSize.scale})`,
+          transformOrigin: 'bottom center',
+          // Consumed by the keyframes in index.css so the breathing/bounce
+          // animations compose with the size scale instead of replacing it.
+          ['--mscale' as string]: String(currentSize.scale),
+        }}
+      >
+        {/* Steam particles when angry */}
+        {isAngry && (
+          <div className="absolute -top-6 w-full flex justify-between px-6 pointer-events-none z-30">
+            <div className="w-4 h-4 rounded-full bg-slate-300/80 blur-[1px] steam-bubble-1" />
+            <div className="w-5 h-5 rounded-full bg-slate-300/70 blur-[1px] steam-bubble-2" />
+          </div>
+        )}
+
+      {/* Thinking bubble */}
+      {isThinking && (
+        <div className="absolute -top-8 right-6 flex items-center gap-1.5 px-3 py-1 bg-surface rounded-full shadow-[0_3px_0_0_#d8c3ad] mascot-badge-float z-30">
+          <span className="text-lg leading-none font-questrial text-primary-deep font-semibold tracking-widest">⋯</span>
+          <span className="text-[11px] font-ui font-semibold text-ink-muted">crunching…</span>
+        </div>
+      )}
+
+      {/* Success celebration bubble */}
+      {celebrate && (
+        <div className="absolute -top-9 right-2 flex items-center gap-1.5 px-3 py-1 bg-secondary text-white rounded-full shadow-[0_3px_0_0_#065f46] celebrate-pop z-30">
+          <span className="material-symbols-outlined text-sm leading-none" aria-hidden="true">check_circle</span>
+          <span className="text-[11px] font-ui font-semibold">success!</span>
         </div>
       )}
 
@@ -165,7 +204,7 @@ export const MascotMonster: React.FC<MascotMonsterProps> = ({
             <div
               className="w-3 h-3 bg-slate-950 rounded-full transition-transform duration-75 relative pointer-events-none"
               style={{
-                transform: `translate(${pupilOffset.x}px, ${pupilOffset.y}px)`,
+                transform: `translate(${pupilShift.x}px, ${pupilShift.y}px)`,
               }}
             >
               {/* Pupil light reflection */}
@@ -188,7 +227,7 @@ export const MascotMonster: React.FC<MascotMonsterProps> = ({
             <div
               className="w-3 h-3 bg-slate-950 rounded-full transition-transform duration-75 relative pointer-events-none"
               style={{
-                transform: `translate(${pupilOffset.x}px, ${pupilOffset.y}px)`,
+                transform: `translate(${pupilShift.x}px, ${pupilShift.y}px)`,
               }}
             >
               {/* Pupil light reflection */}
@@ -212,6 +251,11 @@ export const MascotMonster: React.FC<MascotMonsterProps> = ({
               <div className="w-2 h-3 bg-white rounded-t-sm" />
               <div className="w-2 h-3 bg-white rounded-t-sm" />
               <div className="w-2 h-3 bg-white rounded-t-sm" />
+            </div>
+          ) : isThinking ? (
+            /* Thinking: puckered "hmm" lips */
+            <div className="w-10 h-5 bg-[#872600] rounded-full border border-[#521600] flex items-center justify-center">
+              <span className="text-[10px] leading-none font-bold tracking-widest text-white">⋯</span>
             </div>
           ) : (
             /* Happy Calm Smile with Tongue */
@@ -255,5 +299,7 @@ export const MascotMonster: React.FC<MascotMonsterProps> = ({
         </div>
       </div>
     </div>
+  </div>
   );
 };
+

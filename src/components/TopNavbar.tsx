@@ -1,15 +1,8 @@
 import React from 'react';
-import { 
-  PlusCircle, 
-  RotateCcw, 
-  ShieldCheck, 
-  AlertCircle,
-  Menu,
-  LogOut,
-  Smile
-} from 'lucide-react';
+
 import { useEarnWise } from '../context/EarnWiseContext';
 import { useAuth } from '../context/AuthContext';
+import { Badge, Button, MaterialIcon } from './ui';
 
 interface TopNavbarProps {
   onOpenPayoutModal: () => void;
@@ -17,15 +10,8 @@ interface TopNavbarProps {
   activeView: string;
 }
 
-export const TopNavbar: React.FC<TopNavbarProps> = ({
-  onOpenPayoutModal,
-  onOpenMobileMenu
-}) => {
-  const { 
-    userName, 
-    financialHealth, 
-    resetToDemoBenchmark 
-  } = useEarnWise();
+export const TopNavbar: React.FC<TopNavbarProps> = ({ onOpenPayoutModal, onOpenMobileMenu }) => {
+  const { userName, financialHealth, resetToDemoBenchmark } = useEarnWise();
   const { logout } = useAuth();
 
   // Time-aware greeting instead of a hardcoded "Good morning"
@@ -33,13 +19,13 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
   return (
-    <header className="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 font-questrial">
+    <header className="sticky top-0 z-30 bg-ocean-light font-questrial">
       {/* Statutory Prototype Disclaimer Banner */}
-      <div className="bg-slate-950/80 px-4 py-1.5 border-b border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between overflow-x-auto whitespace-nowrap">
+      <div className="bg-ocean-bevel px-4 py-1.5 font-ui text-[11px] text-white/90 flex items-center justify-between overflow-x-auto whitespace-nowrap">
         <div className="flex items-center gap-1.5 mx-auto">
-          <AlertCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+          <MaterialIcon name="info" className="text-base text-primary shrink-0" filled />
           <span>
-            <strong className="text-slate-300">Hackathon Prototype:</strong> Uses simulated financial data & integrations. Does not execute real UPI, banking, or tax filings.
+            <strong className="text-white">Hackathon Prototype:</strong> Uses simulated financial data &amp; integrations. Does not execute real UPI, banking, or tax filings.
           </span>
         </div>
       </div>
@@ -47,73 +33,78 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Left Side: Mobile Menu + Greeting */}
         <div className="flex items-center gap-3">
-          <button 
+          <button
             onClick={onOpenMobileMenu}
-            className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+            className="md:hidden p-2 rounded-lg text-ink-muted hover:text-ink hover:bg-surface cursor-pointer"
             aria-label="Open navigation menu"
           >
-            <Menu className="w-5 h-5" />
+            <MaterialIcon name="menu" className="text-2xl" />
           </button>
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+              <h1 className="text-base sm:text-lg font-medium text-ink tracking-tight">
                 {greeting}, {userName}
               </h1>
-              <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
-                Delivery Partner
-              </span>
+              <Badge variant="gray">Delivery Partner</Badge>
             </div>
-            <p className="text-xs text-slate-400 hidden sm:block">
+            <p className="text-xs text-ink-muted hidden sm:block">
               Zero-effort adaptive savings & tax planning active
             </p>
           </div>
         </div>
 
-        {/* Right Side: Health Score + Demo Mode + Mascot Avatar + Payout Action */}
+        {/* Right Side: Health Score + Demo Mode + Payout Action */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Prototype Data Chip */}
+          <Badge variant="green" className="hidden md:inline-flex">
+            Hackathon Prototype · simulated data
+          </Badge>
+
           {/* Financial Health Pill */}
-          <div 
+          <div
             title="Composite Financial Health: Not a credit score"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/90 border border-slate-700 text-xs font-semibold text-slate-200 shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface font-ui text-xs font-semibold text-ink shadow-[0_3px_0_0_#d8c3ad]"
           >
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span className="hidden xs:inline text-slate-400 font-normal">Health:</span>
-            <span className="text-emerald-400 font-bold font-mono">{financialHealth.overall}</span>
-            <span className="text-slate-500 text-[10px]">/ 100</span>
+            <MaterialIcon name="shield" className="text-base text-secondary" filled />
+            <span className="hidden xs:inline text-ink-muted font-normal">Health:</span>
+            <span className="text-secondary font-currency tabular-nums">{financialHealth.overall}</span>
+            <span className="text-ink-faint text-[10px]">/ 100</span>
           </div>
 
           {/* Reset Demo Benchmark Button */}
           <button
             onClick={resetToDemoBenchmark}
             title="Reset to Benchmark State for Judges"
-            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 transition-colors cursor-pointer"
+            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-medium text-ink-muted hover:text-ink hover:bg-surface border border-bevel-neutral transition-colors cursor-pointer"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+            <MaterialIcon name="refresh" className="text-base" />
             <span>Reset Demo</span>
           </button>
 
           {/* Simulate New Payout Primary Action with 3D Bevel */}
-          <button
-            onClick={onOpenPayoutModal}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-[#e84e12] hover:bg-[#ff5714] text-white shadow-[0_4px_0_0_#872600] active:translate-y-0.5 active:shadow-[0_2px_0_0_#872600] transition-all cursor-pointer"
-          >
-            <PlusCircle className="w-4 h-4" />
+          <Button variant="danger" size="md" onClick={onOpenPayoutModal}>
+            <MaterialIcon name="add" className="text-lg" filled />
             <span className="hidden xs:inline">+ New Payout</span>
             <span className="xs:hidden">+ Payout</span>
-          </button>
+          </Button>
 
-          {/* Mascot Profile & Logout Button */}
-          <button
-            onClick={logout}
-            title="Sign out & Switch Account"
-            className="flex items-center justify-center p-2 rounded-full bg-slate-800 hover:bg-rose-950/40 text-slate-400 hover:text-rose-400 border border-slate-700 hover:border-rose-500/40 transition-colors cursor-pointer"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
+          {/* User Chip + Logout */}
+          <div className="flex items-center gap-1.5 pl-1.5 pr-1 py-1 rounded-full bg-surface shadow-[0_3px_0_0_#d8c3ad]">
+            <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-primary-on font-bold text-xs font-ui">
+              {(userName || 'R')[0]}
+            </div>
+            <span className="hidden sm:inline text-xs font-semibold text-ink pr-1">{userName}</span>
+            <button
+              onClick={logout}
+              title="Sign out & Switch Account"
+              className="flex items-center justify-center w-7 h-7 rounded-full text-ink-muted hover:text-danger hover:bg-danger-light transition-colors cursor-pointer"
+            >
+              <MaterialIcon name="logout" className="text-base" />
+            </button>
+          </div>
         </div>
       </div>
     </header>
   );
 };
-

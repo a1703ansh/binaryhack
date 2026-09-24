@@ -14,6 +14,6 @@ export const env = {
   databaseUrl: required('DATABASE_URL'),
   jwtSecret: required('JWT_SECRET'),
   groqApiKey: process.env.GROQ_API_KEY ?? '',
-  groqModel: process.env.GROQ_MODEL ?? 'llama-3.3-70b-versatile',
+  groqModel: process.env.GROQ_MODEL ?? 'qwen/qwen3.8-27b',
   isProd: process.env.NODE_ENV === 'production'
 };

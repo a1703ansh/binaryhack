@@ -5,6 +5,10 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import type { NextFunction, Request, Response } from 'express';
 
+import { existsSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import { env } from './env.js';
 import { AppError } from './lib/errors.js';
 import { uploadsDir } from './lib/upload.js';
@@ -55,6 +59,15 @@ app.use('/api/autosave', autosaveRoutes);
 app.use('/api/logs', logsRoutes);
 app.use('/api/assistant', assistantRoutes);
 app.use('/api/demo', demoRoutes);
+
+// SPA static + fallback (production: serve built client dist from the monorepo root)
+const clientDist = resolve(dirname(fileURLToPath(import.meta.url)), '../../dist');
+if (existsSync(clientDist)) {
+  app.use(express.static(clientDist));
+  app.get(/^(?!\/api|\/uploads).*/, (_req, res) => {
+    res.sendFile(resolve(clientDist, 'index.html'));
+  });
+}
 
 app.use((_req, _res, next) => next(new AppError(404, 'Not found')));
 

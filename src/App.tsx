@@ -16,7 +16,8 @@ import { ActivityView } from './views/ActivityView';
 import { ExpensesView } from './views/ExpensesView';
 import { AssistantView } from './views/AssistantView';
 import { SettingsView } from './views/SettingsView';
-import { X, Zap } from 'lucide-react';
+import { X } from 'lucide-react';
+import { MaterialIcon } from './components/ui';
 
 export const AppContent: React.FC = () => {
   const [activeView, setActiveView] = useState<string>('dashboard');
@@ -61,7 +62,7 @@ export const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased">
+    <div className="min-h-screen bg-ocean-light text-ink flex flex-col antialiased">
       {/* Top Navbar */}
       <TopNavbar
         activeView={activeView}
@@ -75,17 +76,17 @@ export const AppContent: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden bg-slate-950/80 backdrop-blur-sm">
-            <div className="w-72 h-full bg-slate-900 border-r border-slate-800 p-5 flex flex-col justify-between">
+          <div className="fixed inset-0 z-50 md:hidden bg-slate-950/60 backdrop-blur-sm">
+            <div className="w-72 h-full bg-surface border-r border-bevel-neutral p-5 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div className="flex items-center justify-between pb-4 border-b border-bevel-neutral">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-black">
-                      <Zap className="w-4 h-4 fill-current" />
+                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-primary-on font-black shadow-[0_3px_0_0_#ad3300]">
+                      <MaterialIcon name="bolt" className="text-lg" filled />
                     </div>
-                    <span className="font-extrabold text-base text-white">EarnWise</span>
+                    <span className="font-extrabold text-base text-ink">EarnWise</span>
                   </div>
-                  <button onClick={() => setIsMobileMenuOpen(false)} className="p-1 text-slate-400">
+                  <button onClick={() => setIsMobileMenuOpen(false)} className="p-1 text-ink-muted cursor-pointer" aria-label="Close menu">
                     <X className="w-5 h-5" />
                   </button>
                 </div>
@@ -109,10 +110,10 @@ export const AppContent: React.FC = () => {
                         setActiveView(item.id);
                         setIsMobileMenuOpen(false);
                       }}
-                      className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold ${
-                        activeView === item.id 
-                          ? 'bg-emerald-500 text-slate-950' 
-                          : 'text-slate-300 hover:bg-slate-800'
+                      className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold cursor-pointer ${
+                        activeView === item.id
+                          ? 'bg-primary text-primary-on shadow-[0_3px_0_0_#ad3300]'
+                          : 'text-ink-muted hover:bg-surface-high hover:text-ink'
                       }`}
                     >
                       {item.label}
@@ -121,7 +122,7 @@ export const AppContent: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 text-[10px] text-slate-500">
+              <div className="pt-4 border-t border-bevel-neutral text-[10px] text-ink-faint">
                 EarnWise • Hackathon Prototype
               </div>
             </div>
@@ -161,7 +162,7 @@ const SplashScreen: React.FC = () => (
   <div className="min-h-screen bg-slate-950 flex items-center justify-center">
     <div className="flex flex-col items-center gap-3">
       <div className="w-12 h-12 rounded-2xl bg-emerald-500 flex items-center justify-center text-slate-950 shadow-xl shadow-emerald-500/25">
-        <Zap className="w-6 h-6 fill-current" />
+        <MaterialIcon name="bolt" className="text-2xl" filled />
       </div>
       <div className="w-40 h-1 rounded-full bg-slate-800 overflow-hidden">
         <div className="h-full w-1/2 bg-emerald-400 rounded-full animate-pulse" />

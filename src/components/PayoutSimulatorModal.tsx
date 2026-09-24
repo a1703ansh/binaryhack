@@ -1,27 +1,34 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Sparkles, 
-  CheckCircle2, 
-  ArrowRight, 
-  Info, 
-  PiggyBank, 
-  ReceiptIndianRupee, 
-  LineChart, 
-  Wallet,
-  Zap,
-  RotateCcw
-} from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useEarnWise } from '../context/EarnWiseContext';
 import { type Platform, type DecisionResult } from '@earnwise/shared';
 import { MascotMonster } from './MascotMonster';
+import { Currency } from '../lib/currency';
+import { MaterialIcon } from './ui';
 
 interface PayoutSimulatorModalProps {
   isOpen: boolean;
   onClose: () => void;
   onViewActivity?: () => void;
 }
+
+/* =========================================================
+   Payout Simulator — "Flat Mascot Playful" restyle.
+   All calculation logic is untouched and lives in the engine:
+   this markup only *echoes* decision.saveAmount /
+   investRecommendAmount / taxReserveAmount / spendableAmount.
+   No arithmetic is performed here.
+   ========================================================= */
+
+/** Amount presets shown as labelled chips (same values the app already offered). */
+const AMOUNT_PRESETS: { value: number; label: string }[] = [
+  { value: 650, label: 'Lean Day' },
+  { value: 950, label: 'Baseline' },
+  { value: 1250, label: 'Strong Day' },
+  { value: 2100, label: 'Peak Surges' },
+];
+
+const SOURCES: Platform[] = ['Swiggy', 'Uber', 'Zomato', 'Rapido', 'Freelancing'];
 
 export const PayoutSimulatorModal: React.FC<PayoutSimulatorModalProps> = ({
   isOpen,
@@ -82,44 +89,62 @@ export const PayoutSimulatorModal: React.FC<PayoutSimulatorModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md overflow-y-auto font-questrial">
-      <div className="relative w-full max-w-lg bg-slate-900 border-4 border-[#ad3300] rounded-3xl shadow-[0_10px_0_0_#872600] p-6 overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/55 backdrop-blur-sm overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Smart Payout Simulator"
+    >
+      <div className="relative w-full max-w-xl bg-surface rounded-card border-t-8 border-b-8 border-primary shadow-[0_10px_0_0_#ad3300] p-5 sm:p-6">
+        {/* ── Header ─────────────────────────────────────────── */}
+        <div className="flex items-start justify-between gap-3 pb-4 border-b border-bevel-neutral">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
-              <Zap className="w-5 h-5 fill-current" />
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-on shadow-[0_3px_0_0_#ad3300]">
+              <MaterialIcon name="bolt" className="text-xl" filled />
             </div>
             <div>
-              <h2 className="text-base font-bold text-white">Smart Payout Simulator</h2>
-              <p className="text-xs text-slate-400">Autonomous decision engine with playful mascot</p>
+              <h2 className="font-questrial text-lg text-ink leading-tight">Smart Payout Simulator</h2>
+              <p className="font-ui text-[11px] text-ink-subtle">
+                watch how earnwise protects your cash flow before deducting a single rupee
+              </p>
             </div>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            aria-label="Close"
+            className="p-1.5 rounded-full text-ink-subtle hover:bg-surface-high hover:text-ink transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <MaterialIcon name="close" className="text-xl" />
           </button>
         </div>
 
-        {/* Content */}
+        {/* ── Input state ────────────────────────────────────── */}
         {!isProcessing && !decision && (
-          <div className="mt-5 space-y-4">
+          <div className="mt-5 space-y-5">
             <div>
-              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
-                Income Source
+              <span className="font-ui text-[11px] font-bold uppercase tracking-wider text-primary-deep">
+                Step 1 — Input payout amount
+              </span>
+              <h3 className="font-questrial text-xl text-ink">Simulate today&apos;s earnings</h3>
+            </div>
+
+            {/* Income source */}
+            <div>
+              <label className="block font-ui text-[11px] font-bold uppercase tracking-wider text-ink-muted mb-1.5">
+                Income source
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {(['Swiggy', 'Uber', 'Zomato', 'Rapido', 'Freelancing'] as Platform[]).map(p => (
+                {SOURCES.map(p => (
                   <button
                     key={p}
                     type="button"
                     onClick={() => setSource(p)}
-                    className={`px-3 py-2 rounded-xl text-xs font-bold border-2 transition-all cursor-pointer ${
+                    aria-pressed={source === p}
+                    className={`px-3 py-2 rounded-btn font-ui text-xs font-semibold border-2 transition-all cursor-pointer ${
                       source === p
-                        ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-[0_2px_0_0_#ad3300]'
-                        : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:border-slate-600'
+                        ? 'bg-primary-fixed border-primary text-primary-deep shadow-[0_2px_0_0_#f9a61f]'
+                        : 'bg-surface-low border-bevel-neutral text-ink-muted hover:bg-surface-high'
                     }`}
                   >
                     {p}
@@ -128,185 +153,272 @@ export const PayoutSimulatorModal: React.FC<PayoutSimulatorModalProps> = ({
               </div>
             </div>
 
+            {/* Amount presets + custom */}
             <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-300 uppercase tracking-wider">
-                  Payout Amount (₹)
-                </label>
-                <div className="flex gap-1.5">
-                  {[650, 950, 1250, 2100].map(val => (
-                    <button
-                      key={val}
-                      type="button"
-                      onClick={() => setAmount(val)}
-                      className={`text-[11px] px-2.5 py-0.5 rounded-full font-mono border ${
-                        amount === val
-                          ? 'bg-amber-500 text-slate-950 border-amber-400 font-bold shadow-[0_2px_0_0_#ad3300]'
-                          : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-750'
-                      }`}
-                    >
-                      ₹{val}
-                    </button>
-                  ))}
+              <label className="block font-ui text-[11px] font-bold uppercase tracking-wider text-ink-muted mb-1.5">
+                Payout amount (₹)
+              </label>
+              <div className="flex flex-wrap items-center gap-2">
+                {AMOUNT_PRESETS.map(preset => (
+                  <button
+                    key={preset.value}
+                    type="button"
+                    onClick={() => setAmount(preset.value)}
+                    aria-pressed={amount === preset.value}
+                    className={`flex flex-col items-center px-3 py-1.5 rounded-full font-currency tabular-nums border-2 transition-all cursor-pointer ${
+                      amount === preset.value
+                        ? 'bg-primary text-primary-on border-primary shadow-[0_3px_0_0_#ad3300]'
+                        : 'bg-surface-low text-ink-muted border-bevel-neutral hover:bg-surface-high'
+                    }`}
+                  >
+                    <span className="text-xs font-semibold">
+                      <Currency value={preset.value} />
+                    </span>
+                    <span className="text-[10px] opacity-75">{preset.label}</span>
+                  </button>
+                ))}
+
+                <div className="relative flex items-center bg-surface rounded-full pl-3 pr-3 py-1.5 shadow-[0_3px_0_0_#d8c3ad] border-2 border-bevel-neutral">
+                  <span className="font-currency text-sm text-ink-subtle font-bold mr-1">₹</span>
+                  <input
+                    type="number"
+                    min={1}
+                    value={amount}
+                    onChange={e => setAmount(Math.max(0, Number(e.target.value)))}
+                    aria-label="Custom payout amount"
+                    placeholder="Other"
+                    className="w-20 bg-transparent font-currency tabular-nums text-sm text-ink focus:outline-none"
+                  />
                 </div>
-              </div>
-              <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-lg">₹</span>
-                <input
-                  type="number"
-                  min={1}
-                  value={amount}
-                  onChange={e => setAmount(Math.max(0, Number(e.target.value)))}
-                  className={`w-full pl-8 pr-4 py-2.5 rounded-xl bg-slate-950 border-2 text-white font-mono text-base font-semibold focus:outline-none focus:border-amber-500 ${
-                    amount > 0 ? 'border-slate-700' : 'border-rose-500/60'
-                  }`}
-                  placeholder="Enter payout amount"
-                />
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300 space-y-1.5">
-              <div className="flex items-center gap-1.5 font-bold text-amber-400">
-                <Info className="w-4 h-4" />
-                <span>Autonomous Decision Flow:</span>
+            {/* Mascot explainability bubble */}
+            <div className="bg-surface-container rounded-card p-4 flex items-start gap-3">
+              <div className="w-11 h-11 shrink-0 rounded-full bg-primary flex items-center justify-center text-primary-on shadow-[0_3px_0_0_#ad3300]">
+                <MaterialIcon name="smart_toy" className="text-xl" filled />
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                EarnWise compares this payout against your 30-day baseline (₹{forecast.averageDailyIncome.toLocaleString('en-IN')}), locks your ₹{savingsSettings.minimumBalance.toLocaleString('en-IN')} minimum cash floor, provisions 10% taxes, and routes safe surplus into savings and investments.
-              </p>
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className="font-ui text-xs font-bold text-ink">Mascot Explainability Guard</span>
+                  <span className="px-2 py-0.5 rounded-full bg-ocean-faint text-ocean-ondeep font-ui text-[10px] font-semibold">
+                    Safe-to-spend active
+                  </span>
+                </div>
+                <p className="font-questrial text-sm text-ink-muted leading-relaxed">
+                  EarnWise compares this payout against your 30-day baseline (
+                  <Currency value={forecast.averageDailyIncome} className="font-currency" />
+                  ), locks your <Currency value={savingsSettings.minimumBalance} className="font-currency" /> minimum
+                  cash floor, provisions 10% taxes, and routes safe surplus into savings and investments.
+                </p>
+              </div>
             </div>
 
             <button
+              type="button"
               onClick={handleStartSimulation}
-              className="w-full py-3.5 rounded-full font-bold text-sm bg-[#e84e12] hover:bg-[#ff5714] text-white shadow-[0_5px_0_0_#872600] active:translate-y-1 active:shadow-[0_2px_0_0_#872600] transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-full font-ui font-bold text-sm bg-berry text-white shadow-[0_5px_0_0_#842500] hover:brightness-105 active:translate-y-1 active:shadow-[0_2px_0_0_#842500] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Zap className="w-4 h-4 fill-current" />
-              <span>Process Payout & Run Decision Engine</span>
+              <MaterialIcon name="bolt" className="text-lg" filled />
+              <span>Process payout &amp; run decision engine</span>
             </button>
           </div>
         )}
 
-        {/* Processing Animation with Reactive Mascot */}
+        {/* ── Processing state: 8-step transparent machine logic ── */}
         {isProcessing && (
-          <div className="py-6 flex flex-col items-center justify-center space-y-4">
-            <MascotMonster
-              mood={stepIndex > 4 ? 'happy' : 'surprised'}
-              isBouncing={true}
-              size="sm"
-            />
-
-            <div className="text-center space-y-2 max-w-sm">
-              <h3 className="text-sm font-bold text-white transition-all">
-                {sequenceSteps[stepIndex]}
-              </h3>
-              <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700">
-                <div 
-                  className="bg-amber-400 h-2 transition-all duration-300 rounded-full"
-                  style={{ width: `${((stepIndex + 1) / sequenceSteps.length) * 100}%` }}
-                />
-              </div>
-              <p className="text-[11px] text-slate-400 font-mono">
+          <div className="mt-5 space-y-4">
+            <div className="flex flex-col items-center text-center gap-2">
+              <MascotMonster mood={stepIndex > 4 ? 'happy' : 'surprised'} isBouncing size="sm" />
+              <span className="font-ui text-[11px] font-bold uppercase tracking-wider text-primary-deep">
+                Step 2 — Transparent machine logic
+              </span>
+              <p className="font-questrial text-sm text-ink min-h-[1.5rem]">{sequenceSteps[stepIndex]}</p>
+              <p className="font-currency tabular-nums text-[11px] text-ink-subtle">
                 Step {stepIndex + 1} of {sequenceSteps.length}
               </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {sequenceSteps.map((step, i) => {
+                const isDone = i < stepIndex;
+                const isActive = i === stepIndex;
+                return (
+                  <div
+                    key={step}
+                    className={`p-2.5 rounded-btn flex items-center gap-2.5 shadow-[0_2px_0_0_#d8c3ad] ${
+                      isActive ? 'bg-primary-fixed' : 'bg-surface-low'
+                    }`}
+                  >
+                    <div
+                      className={`w-7 h-7 shrink-0 rounded-full flex items-center justify-center ${
+                        isDone
+                          ? 'bg-primary text-primary-on'
+                          : isActive
+                            ? 'bg-berry text-white'
+                            : 'bg-surface-high text-ink-faint'
+                      }`}
+                    >
+                      <MaterialIcon name={isDone ? 'check' : isActive ? 'autorenew' : 'schedule'} className="text-sm" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-ui text-[11px] text-ink truncate">
+                        <span className="font-currency tabular-nums">{i + 1}.</span> {step.replace(/\.\.\.$/, '')}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
 
-        {/* Simulation Output Result */}
+        {/* ── Result state: output allocation tray ─────────────── */}
         {decision && !isProcessing && (
-          <div className="mt-4 space-y-4">
-            <div className="flex items-center justify-between p-3 rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/30">
+          <div className="mt-5 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-btn bg-secondary/15 border-2 border-secondary">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span className="text-xs font-bold text-emerald-300">
-                  Decision Engine Execution Complete
+                <MaterialIcon name="check_circle" className="text-xl text-secondary-deep" filled />
+                <span className="font-ui text-xs font-bold text-secondary-deep">
+                  Decision engine execution complete
                 </span>
               </div>
-              <span className="text-xs font-mono font-bold text-white">
-                Payout: ₹{decision.payoutAmount.toLocaleString('en-IN')}
+              <span className="font-currency tabular-nums text-xs font-bold text-ink">
+                Payout: <Currency value={decision.payoutAmount} />
               </span>
             </div>
 
-            {/* Results Grid with 3D Bevels */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-              <div className="p-3 rounded-2xl bg-emerald-950/40 border-2 border-emerald-500/50 shadow-[0_3px_0_0_#065f46] text-center">
-                <div className="flex items-center justify-center gap-1 text-[11px] text-emerald-400 mb-1 font-bold">
-                  <PiggyBank className="w-3.5 h-3.5" />
-                  <span>Auto-Saved</span>
+            <div className="flex items-center justify-between">
+              <span className="font-ui text-[11px] font-bold uppercase tracking-wider text-primary-deep">
+                Step 3 — Output allocation tray
+              </span>
+              <span className="flex items-center gap-1 font-ui text-[11px] text-secondary-deep">
+                <MaterialIcon name="verified_user" className="text-sm" />
+                Zero-loss split
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Auto-Save */}
+              <div className="bg-primary text-primary-on rounded-card p-4 flex flex-col justify-between shadow-[0_6px_0_0_#ad3300]">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-currency text-[11px] uppercase tracking-wider opacity-80">Auto-Save</span>
+                    <MaterialIcon name="savings" className="text-xl" />
+                  </div>
+                  <div className="font-currency tabular-nums text-2xl leading-tight">
+                    <Currency value={decision.saveAmount} />
+                  </div>
                 </div>
-                <div className="text-lg font-bold font-mono text-emerald-300">
-                  ₹{decision.saveAmount.toLocaleString('en-IN')}
+                <div className="mt-3 pt-2 border-t border-primary-on/20">
+                  <p className="font-ui text-[11px] font-semibold">Locked into savings pot</p>
+                  <p className="font-ui text-[11px] opacity-80">Feeds the goal waterfall</p>
                 </div>
-                <div className="text-[10px] text-slate-400">Emergency fund</div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-blue-950/40 border-2 border-blue-500/50 shadow-[0_3px_0_0_#1e40af] text-center">
-                <div className="flex items-center justify-center gap-1 text-[11px] text-blue-400 mb-1 font-bold">
-                  <LineChart className="w-3.5 h-3.5" />
-                  <span>Invest</span>
+              {/* Micro-Invest */}
+              <div className="bg-ocean text-white rounded-card p-4 flex flex-col justify-between shadow-[0_6px_0_0_#006686]">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-currency text-[11px] uppercase tracking-wider opacity-80">Micro-Invest</span>
+                    <MaterialIcon name="trending_up" className="text-xl" />
+                  </div>
+                  <div className="font-currency tabular-nums text-2xl leading-tight">
+                    <Currency value={decision.investRecommendAmount} />
+                  </div>
                 </div>
-                <div className="text-lg font-bold font-mono text-blue-300">
-                  ₹{decision.investRecommendAmount.toLocaleString('en-IN')}
+                <div className="mt-3 pt-2 border-t border-white/20">
+                  <p className="font-ui text-[11px] font-semibold">Index + gold fraction</p>
+                  <p className="font-ui text-[11px] opacity-80">Automated daily slice</p>
                 </div>
-                <div className="text-[10px] text-slate-400">Liquid / Index</div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-amber-950/40 border-2 border-amber-500/50 shadow-[0_3px_0_0_#92400e] text-center">
-                <div className="flex items-center justify-center gap-1 text-[11px] text-amber-400 mb-1 font-bold">
-                  <ReceiptIndianRupee className="w-3.5 h-3.5" />
-                  <span>Tax Reserve</span>
+              {/* Tax Reserve */}
+              <div className="bg-berry text-white rounded-card p-4 flex flex-col justify-between shadow-[0_6px_0_0_#842500]">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-currency text-[11px] uppercase tracking-wider opacity-80">Tax Reserve</span>
+                    <MaterialIcon name="account_balance" className="text-xl" />
+                  </div>
+                  <div className="font-currency tabular-nums text-2xl leading-tight">
+                    <Currency value={decision.taxReserveAmount} />
+                  </div>
                 </div>
-                <div className="text-lg font-bold font-mono text-amber-300">
-                  ₹{decision.taxReserveAmount.toLocaleString('en-IN')}
+                <div className="mt-3 pt-2 border-t border-white/20">
+                  <p className="font-ui text-[11px] font-semibold">Advance tax compliance</p>
+                  <p className="font-ui text-[11px] opacity-80">Held aside, not spendable</p>
                 </div>
-                <div className="text-[10px] text-slate-400">Advance tax</div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-slate-950 border-2 border-slate-700 shadow-[0_3px_0_0_#334155] text-center">
-                <div className="flex items-center justify-center gap-1 text-[11px] text-slate-300 mb-1 font-bold">
-                  <Wallet className="w-3.5 h-3.5" />
-                  <span>Spendable</span>
+              {/* Spendable Now */}
+              <div className="bg-surface-container text-ink rounded-card p-4 flex flex-col justify-between shadow-[0_6px_0_0_#d8c3ad]">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-currency text-[11px] uppercase tracking-wider text-ink-subtle">
+                      Spendable Now
+                    </span>
+                    <MaterialIcon name="account_balance_wallet" className="text-xl text-primary-deep" />
+                  </div>
+                  <div className="font-currency tabular-nums text-2xl leading-tight">
+                    <Currency value={decision.spendableAmount} />
+                  </div>
                 </div>
-                <div className="text-lg font-bold font-mono text-white">
-                  ₹{decision.spendableAmount.toLocaleString('en-IN')}
+                <div className="mt-3 pt-2 border-t border-bevel-neutral">
+                  <p className="font-ui text-[11px] font-semibold text-primary-deep">Guilt-free instantly</p>
+                  <p className="font-ui text-[11px] text-ink-muted">Stays above your floor</p>
                 </div>
-                <div className="text-[10px] text-slate-400">Available now</div>
               </div>
             </div>
 
-            {/* Explainable Rationale */}
-            <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Explainable Decision Rationale:</span>
+            {/* Zero-loss equation — echoes engine outputs, computes nothing */}
+            <div className="px-4 py-3 rounded-btn bg-surface-low flex flex-wrap items-center gap-x-2 gap-y-1 font-currency tabular-nums text-[11px] text-ink-muted shadow-[0_3px_0_0_#d8c3ad]">
+              <MaterialIcon name="calculate" className="text-base text-primary-deep" />
+              <span className="font-ui">Zero-loss equation:</span>
+              <span className="text-ink font-semibold">
+                <Currency value={decision.saveAmount} /> + <Currency value={decision.investRecommendAmount} /> +{' '}
+                <Currency value={decision.taxReserveAmount} /> + <Currency value={decision.spendableAmount} /> ={' '}
+                <Currency value={decision.payoutAmount} />
+              </span>
+            </div>
+
+            {/* Explainable rationale */}
+            <div className="p-4 rounded-card bg-surface-container space-y-2">
+              <div className="flex items-center gap-1.5 font-ui text-xs font-bold text-primary-deep">
+                <MaterialIcon name="auto_awesome" className="text-base" />
+                <span>Explainable decision rationale</span>
               </div>
-              <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                "{decision.reason}"
-              </p>
-              
-              <div className="pt-2 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
-                <div>• <strong className="text-slate-300">Guardrail:</strong> {decision.explanationDetails.guardrailStatus}</div>
-                <div>• <strong className="text-slate-300">Tax Provision:</strong> {decision.explanationDetails.taxStatus}</div>
+              <p className="font-questrial text-sm text-ink leading-relaxed">&ldquo;{decision.reason}&rdquo;</p>
+
+              <div className="pt-2 border-t border-bevel-neutral font-ui text-[11px] text-ink-muted space-y-1">
+                <div>
+                  • <strong className="text-ink">Guardrail:</strong> {decision.explanationDetails.guardrailStatus}
+                </div>
+                <div>
+                  • <strong className="text-ink">Tax provision:</strong> {decision.explanationDetails.taxStatus}
+                </div>
               </div>
             </div>
 
-            {/* Tactile Actions */}
-            <div className="flex gap-2.5 pt-2">
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row gap-2.5">
               <button
+                type="button"
                 onClick={handleReset}
-                className="flex-1 py-2.5 rounded-full text-xs font-bold bg-slate-800 hover:bg-slate-750 text-slate-300 border border-slate-700 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 py-3 rounded-full font-ui text-xs font-bold bg-surface-container text-ink-muted border-2 border-bevel-neutral shadow-[0_4px_0_0_#d8c3ad] hover:bg-surface-high active:translate-y-1 active:shadow-[0_1px_0_0_#d8c3ad] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Try Another Amount</span>
+                <MaterialIcon name="refresh" className="text-base" />
+                <span>Try another amount</span>
               </button>
               <button
+                type="button"
                 onClick={() => {
                   onClose();
                   if (onViewActivity) onViewActivity();
                 }}
-                className="flex-1 py-2.5 rounded-full text-xs font-bold bg-[#e84e12] hover:bg-[#ff5714] text-white shadow-[0_4px_0_0_#872600] active:translate-y-0.5 active:shadow-[0_2px_0_0_#872600] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 py-3 rounded-full font-ui text-xs font-bold bg-berry text-white shadow-[0_4px_0_0_#842500] hover:brightness-105 active:translate-y-1 active:shadow-[0_1px_0_0_#842500] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <span>Done & View Activity</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Done &amp; view activity</span>
+                <MaterialIcon name="arrow_forward" className="text-base" />
               </button>
             </div>
           </div>

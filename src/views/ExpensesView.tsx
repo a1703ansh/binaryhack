@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
-import { 
-  Receipt, 
-  Plus, 
-  Upload, 
-  CheckCircle2, 
-  Download, 
-  Fuel, 
-  Wrench, 
-  Utensils, 
-  Smartphone, 
-  Home, 
-  CreditCard, 
-  Sparkles
-} from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 import { type ExpenseCategory } from '@earnwise/shared';
 import { api } from '../api/client';
+import { Currency } from '../lib/currency';
+import { Button, Input, MaterialIcon, Modal } from '../components/ui';
+
+/* =========================================================
+   Expenses as behavioural signals — "Flat Mascot Playful"
+   restyle. Create / scan / import / export logic is unchanged.
+   ========================================================= */
+
+const CATEGORIES: { label: ExpenseCategory; icon: string }[] = [
+  { label: 'Fuel', icon: 'local_gas_station' },
+  { label: 'Vehicle Maintenance', icon: 'build' },
+  { label: 'Food', icon: 'restaurant' },
+  { label: 'Phone/Data', icon: 'smartphone' },
+  { label: 'Rent', icon: 'home' },
+  { label: 'EMI/Repayment', icon: 'credit_card' },
+  { label: 'Other', icon: 'receipt_long' },
+];
+
+const CATEGORY_ICON: Record<ExpenseCategory, string> = CATEGORIES.reduce(
+  (acc, c) => ({ ...acc, [c.label]: c.icon }),
+  {} as Record<ExpenseCategory, string>
+);
 
 export const ExpensesView: React.FC = () => {
   const { expenses, addExpense, safeSpending, refresh } = useEarnWise();
@@ -26,16 +34,6 @@ export const ExpensesView: React.FC = () => {
   const [isReceiptScanning, setIsReceiptScanning] = useState(false);
   const [detectedReceipt, setDetectedReceipt] = useState<{ category: ExpenseCategory; amount: number } | null>(null);
   const [importSummary, setImportSummary] = useState<string | null>(null);
-
-  const categories: { label: ExpenseCategory; icon: any; color: string }[] = [
-    { label: 'Fuel', icon: Fuel, color: '#EF4444' },
-    { label: 'Vehicle Maintenance', icon: Wrench, color: '#F97316' },
-    { label: 'Food', icon: Utensils, color: '#EAB308' },
-    { label: 'Phone/Data', icon: Smartphone, color: '#3B82F6' },
-    { label: 'Rent', icon: Home, color: '#8B5CF6' },
-    { label: 'EMI/Repayment', icon: CreditCard, color: '#F43F5E' },
-    { label: 'Other', icon: Receipt, color: '#64748B' }
-  ];
 
   const handleCreateExpense = (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,162 +106,152 @@ export const ExpensesView: React.FC = () => {
   const totalExpense = expenses.reduce((acc, e) => acc + e.amount, 0);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="space-y-6 max-w-6xl mx-auto pb-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-semibold text-rose-400 uppercase tracking-wider mb-1">
-            <Receipt className="w-4 h-4" />
-            <span>Operational Activity</span>
+          <div className="flex items-center gap-2 font-ui text-[11px] font-semibold text-berry uppercase tracking-wider mb-1">
+            <MaterialIcon name="receipt_long" className="text-base" />
+            <span>Operational activity</span>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Expenses & Behavioral Data</h1>
-          <p className="text-xs text-slate-400">
-            Repositioned as behavioral signals informing your safe-to-spend buffer & minimum balance guardrails
+          <h1 className="font-questrial text-3xl text-surface lowercase tracking-tight">expenses &amp; behaviour</h1>
+          <p className="font-questrial text-sm text-surface/95 max-w-xl">
+            expenses as behavioural signals that inform your safe-to-spend buffer and minimum balance guardrails
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleExportCSV}
-            className="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Export CSV</span>
-          </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={handleExportCSV} className="rounded-full">
+            <MaterialIcon name="download" className="text-base" />
+            <span className="font-ui">Export CSV</span>
+          </Button>
 
-          <label className="px-3 py-2 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors cursor-pointer">
-            <Upload className="w-3.5 h-3.5" />
+          <label className="px-3 py-1.5 rounded-full font-ui text-xs font-semibold text-ink-muted border-2 border-bevel-neutral hover:bg-surface-high transition-colors cursor-pointer inline-flex items-center gap-1.5">
+            <MaterialIcon name="upload" className="text-base" />
             <span>Import CSV</span>
             <input type="file" accept=".csv" onChange={handleImportCSV} className="hidden" />
           </label>
 
-          <button
-            onClick={() => setIsAddModalOpen(true)}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center gap-1.5 shadow-md shadow-emerald-500/20 transition-all"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Expense</span>
-          </button>
+          <Button variant="primary" size="sm" onClick={() => setIsAddModalOpen(true)} className="rounded-full">
+            <MaterialIcon name="add_circle" className="text-lg" filled />
+            <span className="font-ui">Add expense</span>
+          </Button>
         </div>
       </div>
 
-      {/* Behavioral Signal Context Card */}
-      <div className="p-5 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Behavioural signal context */}
+      <div className="bg-surface rounded-card p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_6px_0_0_#006686]">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-5 h-5" />
+          <div className="w-11 h-11 rounded-full bg-berry-fixed text-berry-ondeep flex items-center justify-center shrink-0">
+            <MaterialIcon name="insights" className="text-xl" filled />
           </div>
-          <div className="text-xs text-slate-300">
-            <strong className="text-white text-sm block">How Expenses Power Zero-Effort Finance:</strong>
-            <p className="text-slate-400 mt-0.5 leading-relaxed max-w-xl">
-              In EarnWise, expenses are not just numbers to lament—they dynamically calibrate your <strong>Safe Weekly Spending</strong> allowance (₹{safeSpending.safeWeeklySpending.toLocaleString('en-IN')}) and help detect operational cost shocks early.
+          <div>
+            <strong className="font-questrial text-base text-ink block">How expenses power zero-effort finance</strong>
+            <p className="font-questrial text-sm text-ink-muted mt-0.5 leading-relaxed max-w-xl">
+              Expenses are not just numbers to lament — they dynamically calibrate your{' '}
+              <strong className="text-ink">safe weekly spending</strong> allowance (
+              <Currency value={safeSpending.safeWeeklySpending} />) and help detect operational cost shocks early.
             </p>
           </div>
         </div>
 
-        <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-xs text-right">
-          {importSummary && (
-            <div className="text-[10px] text-emerald-400 mb-1">{importSummary}</div>
-          )}
-          <span className="text-slate-400">Total Tracked:</span>
-          <div className="text-xl font-black font-mono text-white mt-0.5">
-            ₹{totalExpense.toLocaleString('en-IN')}
+        <div className="p-4 rounded-card bg-surface-low text-right shrink-0">
+          {importSummary && <div className="font-ui text-[10px] text-secondary-deep mb-1">{importSummary}</div>}
+          <span className="font-ui text-[11px] text-ink-subtle">Total tracked:</span>
+          <div className="font-currency tabular-nums text-xl text-ink mt-0.5">
+            <Currency value={totalExpense} />
           </div>
         </div>
       </div>
 
-      {/* Mock Receipt Upload Widget (Step 20 Specification) */}
-      <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl">
-        <div className="pb-3 border-b border-slate-800 mb-4">
-          <h3 className="text-base font-bold text-white flex items-center gap-2">
-            <Upload className="w-4 h-4 text-emerald-400" />
-            <span>Instant Receipt Scanner (Mock OCR)</span>
+      {/* Receipt scanner */}
+      <div className="bg-surface rounded-card p-5 sm:p-6 shadow-[0_6px_0_0_#845400]">
+        <div className="pb-3 border-b border-bevel-neutral mb-4">
+          <h3 className="font-questrial text-lg text-ink flex items-center gap-2">
+            <MaterialIcon name="document_scanner" className="text-xl text-primary-deep" />
+            <span>Instant receipt scanner (mock OCR)</span>
           </h3>
-          <p className="text-xs text-slate-400">Upload fuel slips or mechanic invoices for instant classification</p>
+          <p className="font-ui text-[11px] text-ink-subtle">
+            Upload fuel slips or mechanic invoices for instant classification
+          </p>
         </div>
 
         {!detectedReceipt ? (
-          <div 
+          <button
+            type="button"
             onClick={handleSimulateReceiptUpload}
-            className="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-2xl p-6 text-center bg-slate-950/60 cursor-pointer transition-all"
+            className="w-full border-2 border-dashed border-bevel-neutral hover:border-primary rounded-card p-6 text-center bg-surface-low transition-all cursor-pointer"
           >
-            <Upload className={`w-8 h-8 mx-auto mb-2 ${isReceiptScanning ? 'text-emerald-400 animate-bounce' : 'text-slate-400'}`} />
-            <p className="text-xs font-semibold text-slate-200">
-              {isReceiptScanning ? 'Analyzing Receipt via Smart Classifier...' : 'Click to Upload Receipt / Fuel Slip'}
+            <MaterialIcon
+              name="upload"
+              className={`text-3xl mx-auto mb-2 block ${isReceiptScanning ? 'text-primary-deep animate-bounce' : 'text-ink-subtle'}`}
+            />
+            <p className="font-ui text-xs font-semibold text-ink">
+              {isReceiptScanning ? 'Analyzing receipt via smart classifier…' : 'Click to upload receipt / fuel slip'}
             </p>
-            <p className="text-[10px] text-slate-500 mt-1">
-              Supports petrol pump slips, workshop bills & maintenance receipts
+            <p className="font-ui text-[10px] text-ink-subtle mt-1">
+              Supports petrol pump slips, workshop bills &amp; maintenance receipts
             </p>
-          </div>
+          </button>
         ) : (
-          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="p-4 rounded-card bg-secondary/15 border-2 border-secondary flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+              <MaterialIcon name="check_circle" className="text-2xl text-secondary-deep shrink-0" filled />
               <div>
-                <div className="flex items-center gap-2 text-xs font-bold text-emerald-300">
-                  <span>Detected: {detectedReceipt.category}</span>
-                  <span className="font-mono text-white text-sm">₹{detectedReceipt.amount}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-questrial text-sm text-secondary-deep">Detected: {detectedReceipt.category}</span>
+                  <span className="font-currency tabular-nums text-sm text-ink">
+                    <Currency value={detectedReceipt.amount} />
+                  </span>
+                  <span className="font-ui text-[10px] px-2 py-0.5 rounded-full bg-primary-fixed text-primary-deep">
                     Pending review
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300 mt-0.5">
+                <p className="font-ui text-[11px] text-ink-muted mt-0.5">
                   Extracted from petrol pump receipt timestamp 09:30 AM
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setDetectedReceipt(null)}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white bg-slate-800"
-              >
+            <div className="flex items-center gap-2 shrink-0">
+              <Button variant="ghost" size="sm" onClick={() => setDetectedReceipt(null)} className="rounded-full">
                 Discard
-              </button>
-              <button
-                onClick={handleAcceptReceipt}
-                className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow"
-              >
-                Confirm & Log Expense
-              </button>
+              </Button>
+              <Button variant="secondary" size="sm" onClick={handleAcceptReceipt} className="rounded-full">
+                Confirm &amp; log
+              </Button>
             </div>
           </div>
         )}
       </div>
 
-      {/* Expense History List */}
-      <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-xl">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
-          <h3 className="text-base font-bold text-white">Recent Expenses</h3>
-          <span className="text-xs text-slate-400">{expenses.length} entries</span>
+      {/* History */}
+      <div className="bg-surface rounded-card p-5 sm:p-6 shadow-[0_6px_0_0_#d8c3ad]">
+        <div className="flex items-center justify-between gap-2 pb-3 border-b border-bevel-neutral mb-4">
+          <h3 className="font-questrial text-lg text-ink">Recent expenses</h3>
+          <span className="font-currency tabular-nums text-xs text-ink-subtle">{expenses.length} entries</span>
         </div>
 
-        <div className="divide-y divide-slate-800/60">
+        <div className="divide-y divide-bevel-neutral">
           {expenses.map(exp => (
-            <div key={exp.id} className="py-3.5 flex items-center justify-between text-xs">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 font-bold">
-                  {exp.category === 'Fuel' ? <Fuel className="w-4 h-4 text-red-400" /> :
-                   exp.category === 'Vehicle Maintenance' ? <Wrench className="w-4 h-4 text-orange-400" /> :
-                   exp.category === 'Food' ? <Utensils className="w-4 h-4 text-yellow-400" /> :
-                   exp.category === 'Phone/Data' ? <Smartphone className="w-4 h-4 text-blue-400" /> :
-                   exp.category === 'Rent' ? <Home className="w-4 h-4 text-violet-400" /> :
-                   exp.category === 'EMI/Repayment' ? <CreditCard className="w-4 h-4 text-rose-400" /> :
-                   <Receipt className="w-4 h-4 text-slate-400" />}
+            <div key={exp.id} className="py-3.5 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-ink-muted shrink-0">
+                  <MaterialIcon name={CATEGORY_ICON[exp.category] ?? 'receipt_long'} className="text-lg" />
                 </div>
 
-                <div>
-                  <div className="font-semibold text-white">{exp.note}</div>
-                  <div className="text-[11px] text-slate-400">{exp.date} • {exp.category}</div>
+                <div className="min-w-0">
+                  <div className="font-ui text-xs font-semibold text-ink truncate">{exp.note}</div>
+                  <div className="font-ui text-[11px] text-ink-subtle">{exp.date} • {exp.category}</div>
                 </div>
               </div>
 
-              <div className="text-right">
-                <div className="font-mono font-bold text-white text-sm">
-                  -₹{exp.amount.toLocaleString('en-IN')}
+              <div className="text-right shrink-0">
+                <div className="font-currency tabular-nums font-bold text-ink text-sm">
+                  <Currency value={-exp.amount} />
                 </div>
-                <span className="text-[10px] text-emerald-400">
-                  {exp.receiptStatus === 'verified' ? 'Verified Receipt' : 'Manual Entry'}
+                <span className="font-ui text-[10px] text-secondary-deep">
+                  {exp.receiptStatus === 'verified' ? 'Verified receipt' : 'Manual entry'}
                 </span>
               </div>
             </div>
@@ -271,74 +259,65 @@ export const ExpensesView: React.FC = () => {
         </div>
       </div>
 
-      {/* Add Expense Modal */}
-      {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6">
-            <h2 className="text-base font-bold text-white mb-3">Add Operational Expense</h2>
-
-            <form onSubmit={handleCreateExpense} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-semibold text-slate-300 mb-1">Category</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {categories.map(c => (
-                    <button
-                      key={c.label}
-                      type="button"
-                      onClick={() => setCategory(c.label)}
-                      className={`p-2 rounded-xl border text-center font-semibold text-xs ${
-                        category === c.label 
-                          ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
-                          : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
-                      }`}
-                    >
-                      {c.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-300 mb-1">Amount (₹)</label>
-                <input
-                  type="number"
-                  required
-                  value={amount}
-                  onChange={e => setAmount(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono text-sm focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-slate-300 mb-1">Description / Note</label>
-                <input
-                  type="text"
-                  value={note}
-                  onChange={e => setNote(e.target.value)}
-                  placeholder="e.g. Fuel top-up / Mobile data pack"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-emerald-500"
-                />
-              </div>
-
-              <div className="flex gap-2 pt-2">
+      {/* Add expense modal */}
+      <Modal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        title="Add operational expense"
+        maxWidth="max-w-md"
+      >
+        <form onSubmit={handleCreateExpense} className="space-y-4">
+          <div>
+            <span className="block font-ui font-semibold text-ink-muted mb-1.5 text-sm">Category</span>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {CATEGORIES.map(c => (
                 <button
+                  key={c.label}
                   type="button"
-                  onClick={() => setIsAddModalOpen(false)}
-                  className="flex-1 py-2.5 rounded-xl font-semibold bg-slate-800 text-slate-300"
+                  onClick={() => setCategory(c.label)}
+                  aria-pressed={category === c.label}
+                  className={`p-2.5 rounded-btn border-2 flex flex-col items-center gap-1 font-ui text-[11px] font-semibold transition-all cursor-pointer ${
+                    category === c.label
+                      ? 'bg-primary-fixed border-primary text-primary-deep shadow-[0_2px_0_0_#f9a61f]'
+                      : 'bg-surface-low border-bevel-neutral text-ink-muted hover:bg-surface-high'
+                  }`}
                 >
-                  Cancel
+                  <MaterialIcon name={c.icon} className="text-lg" />
+                  <span className="text-center leading-tight">{c.label}</span>
                 </button>
-                <button
-                  type="submit"
-                  className="flex-1 py-2.5 rounded-xl font-bold bg-emerald-500 text-slate-950 hover:bg-emerald-400"
-                >
-                  Save Expense
-                </button>
-              </div>
-            </form>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+
+          <Input
+            id="expense-amount"
+            label="Amount (₹)"
+            type="number"
+            required
+            min={1}
+            className="font-currency tabular-nums"
+            value={amount}
+            onChange={e => setAmount(Number(e.target.value))}
+          />
+
+          <Input
+            id="expense-note"
+            label="Description / note"
+            value={note}
+            onChange={e => setNote(e.target.value)}
+            placeholder="e.g. Fuel top-up / Mobile data pack"
+          />
+
+          <div className="flex gap-2 pt-1">
+            <Button type="button" variant="ghost" full onClick={() => setIsAddModalOpen(false)} className="rounded-full">
+              Cancel
+            </Button>
+            <Button type="submit" variant="secondary" full className="rounded-full">
+              Save expense
+            </Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

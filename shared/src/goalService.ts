@@ -1,5 +1,14 @@
 import type { SavingsGoal } from './types.js';
 
+/**
+ * The only goal fields the 70/30 waterfall reads. Narrowing to this keeps the
+ * helpers usable straight from Prisma rows (where dates are `Date`, not `string`).
+ */
+export type GoalAllocationTarget = Pick<
+  SavingsGoal,
+  'id' | 'category' | 'currentAmount' | 'targetAmount'
+>;
+
 export const INITIAL_SAVINGS_GOALS: SavingsGoal[] = [
   {
     id: 'goal-1',
@@ -38,7 +47,7 @@ export const INITIAL_SAVINGS_GOALS: SavingsGoal[] = [
  * Recorded on each auto-save log so Undo can reverse the waterfall precisely.
  */
 export function computeGoalDeltas(
-  goals: SavingsGoal[],
+  goals: GoalAllocationTarget[],
   savedAmount: number
 ): { goalId: string; amount: number }[] {
   if (savedAmount <= 0) return [];
@@ -59,9 +68,9 @@ export function computeGoalDeltas(
 }
 
 export function allocateSavedAmountToGoals(
-  goals: SavingsGoal[],
+  goals: GoalAllocationTarget[],
   savedAmount: number
-): SavingsGoal[] {
+): GoalAllocationTarget[] {
   if (savedAmount <= 0) return goals;
 
   return goals.map(goal => {

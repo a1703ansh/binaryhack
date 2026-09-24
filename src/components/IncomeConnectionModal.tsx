@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Smartphone, 
-  Building2, 
-  Bike, 
-  FileSpreadsheet, 
-  CheckCircle2, 
-  ArrowRight,
-  Upload,
-  Loader2
-} from 'lucide-react';
 import { useEarnWise } from '../context/EarnWiseContext';
 import { type Platform, ALL_PLATFORMS, parseCSVTransactions, sanitizeCSVTransactions } from '@earnwise/shared';
+import { Currency } from '../lib/currency';
+import { MaterialIcon } from './ui';
 
 interface IncomeConnectionModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+/* =========================================================
+   Connect an income stream — "Flat Mascot Playful" restyle.
+   Ingestion logic (platform / UPI / bank / CSV parsing and
+   import) is unchanged; only the presentation moved to tokens.
+   ========================================================= */
+
+const METHODS = [
+  { id: 'platform', label: 'Gig App', icon: 'two_wheeler' },
+  { id: 'upi', label: 'UPI Auto', icon: 'smartphone' },
+  { id: 'bank', label: 'Bank Stmt', icon: 'account_balance' },
+  { id: 'csv', label: 'CSV File', icon: 'upload_file' },
+] as const;
 
 export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
   isOpen,
@@ -38,7 +42,7 @@ export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
   const handleConnect = async () => {
     setIsConnecting(true);
     await new Promise(resolve => setTimeout(resolve, 1400));
-    
+
     if (selectedMethod === 'platform') {
       await simulatePlatformConnection(selectedPlatform);
       setIngestedRecords([
@@ -109,179 +113,179 @@ export const IncomeConnectionModal: React.FC<IncomeConnectionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-      <div className="relative w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/55 backdrop-blur-sm overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Connect Income Stream"
+    >
+      <div className="relative w-full max-w-md bg-surface rounded-card shadow-[0_8px_0_0_#d8c3ad] p-5 sm:p-6">
+        <div className="flex items-start justify-between gap-3 pb-4 border-b border-bevel-neutral">
           <div>
-            <h2 className="text-base font-bold text-white">Connect Income Stream</h2>
-            <p className="text-xs text-slate-400">Sync payouts automatically into EarnWise</p>
+            <h2 className="font-questrial text-lg text-ink leading-tight">Connect Income Stream</h2>
+            <p className="font-ui text-[11px] text-ink-subtle">Sync payouts automatically into EarnWise</p>
           </div>
-          <button onClick={onClose} className="p-1 rounded-lg text-slate-400 hover:text-white">
-            <X className="w-5 h-5" />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="p-1.5 rounded-full text-ink-subtle hover:bg-surface-high hover:text-ink transition-colors cursor-pointer"
+          >
+            <MaterialIcon name="close" className="text-xl" />
           </button>
         </div>
 
         {!isSuccess ? (
           <div className="mt-4 space-y-4">
-            {/* Method Tabs */}
-            <div className="grid grid-cols-4 gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800">
-              <button
-                type="button"
-                onClick={() => setSelectedMethod('platform')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition-all ${
-                  selectedMethod === 'platform' ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <Bike className="w-4 h-4" />
-                <span>Gig App</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedMethod('upi')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition-all ${
-                  selectedMethod === 'upi' ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <Smartphone className="w-4 h-4" />
-                <span>UPI Auto</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedMethod('bank')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition-all ${
-                  selectedMethod === 'bank' ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <Building2 className="w-4 h-4" />
-                <span>Bank Stmt</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedMethod('csv')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center gap-1 transition-all ${
-                  selectedMethod === 'csv' ? 'bg-slate-800 text-emerald-400 shadow' : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <FileSpreadsheet className="w-4 h-4" />
-                <span>CSV File</span>
-              </button>
+            {/* Method tabs */}
+            <div className="grid grid-cols-4 gap-1.5 p-1 bg-surface-container rounded-btn">
+              {METHODS.map(m => (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => setSelectedMethod(m.id)}
+                  aria-pressed={selectedMethod === m.id}
+                  className={`py-2 px-1 rounded-btn font-ui text-[11px] font-semibold flex flex-col items-center gap-1 transition-all cursor-pointer ${
+                    selectedMethod === m.id
+                      ? 'bg-primary text-primary-on shadow-[0_2px_0_0_#ad3300]'
+                      : 'text-ink-muted hover:bg-surface-high'
+                  }`}
+                >
+                  <MaterialIcon name={m.icon} className="text-lg" />
+                  <span>{m.label}</span>
+                </button>
+              ))}
             </div>
 
-            {/* Platform Selection */}
+            {/* Platform selection */}
             {selectedMethod === 'platform' && (
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-slate-300">Choose Gig Platform</label>
+                <span className="font-ui text-[11px] font-semibold text-ink-muted">Choose gig platform</span>
                 <div className="grid grid-cols-2 gap-2">
                   {(['Zomato', 'Rapido', 'Urban Company', 'Other'] as Platform[]).map(plat => (
                     <button
                       key={plat}
                       type="button"
                       onClick={() => setSelectedPlatform(plat)}
-                      className={`p-3 rounded-xl border text-left flex items-center justify-between text-xs font-semibold ${
+                      aria-pressed={selectedPlatform === plat}
+                      className={`p-3 rounded-btn border-2 text-left flex items-center justify-between font-ui text-xs font-semibold transition-all cursor-pointer ${
                         selectedPlatform === plat
-                          ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
-                          : 'bg-slate-950 border-slate-800 text-slate-300 hover:border-slate-700'
+                          ? 'bg-primary-fixed border-primary text-primary-deep shadow-[0_2px_0_0_#f9a61f]'
+                          : 'bg-surface-low border-bevel-neutral text-ink-muted hover:bg-surface-high'
                       }`}
                     >
                       <span>{plat}</span>
-                      {selectedPlatform === plat && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                      {selectedPlatform === plat && <MaterialIcon name="check_circle" className="text-base" filled />}
                     </button>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* UPI Simulated */}
+            {/* UPI */}
             {selectedMethod === 'upi' && (
-              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
-                <p className="text-slate-300">Simulate reading incoming UPI settlement SMS/Webhooks from gig partners:</p>
+              <div className="p-3.5 rounded-btn bg-surface-low space-y-2">
+                <p className="font-questrial text-[13px] text-ink-muted">
+                  Simulate reading incoming UPI settlement SMS / webhooks from gig partners:
+                </p>
                 <input
                   type="text"
                   readOnly
+                  aria-label="Simulated UPI identifiers"
                   value="swiggy.partner@icici / gig.payout@axis"
-                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-mono text-xs"
+                  className="w-full px-3 py-2 rounded-btn bg-surface border-2 border-bevel-neutral text-ink-subtle font-currency text-[11px]"
                 />
               </div>
             )}
 
-            {/* CSV File Upload */}
+            {/* CSV upload */}
             {selectedMethod === 'csv' && (
-              <div className="space-y-2">
-                <div className="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 rounded-xl p-5 text-center bg-slate-950/50 cursor-pointer">
-                  <Upload className="w-7 h-7 text-slate-400 mx-auto mb-2" />
-                  <p className="text-xs font-medium text-slate-300">
-                    {csvFileName || "Click to upload payout CSV or statement"}
-                  </p>
-                  <p className="text-[10px] text-slate-500 mt-1">Columns: Date, Amount, Platform, Description</p>
-                  {csvError && (
-                    <p className="text-[10px] text-rose-400 mt-1">{csvError}</p>
-                  )}
-                  <input
-                    type="file"
-                    accept=".csv"
-                    onChange={e => {
-                      if (e.target.files?.[0]) {
-                        setCsvFile(e.target.files[0]);
-                        setCsvError(null);
-                      }
-                    }}
-                    className="hidden"
-                    id="csv-file-input"
-                  />
-                  <label htmlFor="csv-file-input" className="mt-2 inline-block px-3 py-1 rounded bg-slate-800 text-slate-200 text-xs font-medium hover:bg-slate-700 cursor-pointer">
-                    Browse File
-                  </label>
+              <div className="border-2 border-dashed border-bevel-neutral hover:border-primary rounded-card p-5 text-center bg-surface-low">
+                <MaterialIcon name="upload" className="text-2xl text-ink-subtle mb-1" />
+                <p className="font-ui text-xs font-medium text-ink-muted">
+                  {csvFileName || 'Click to upload payout CSV or statement'}
+                </p>
+                <p className="font-ui text-[10px] text-ink-subtle mt-1">
+                  Columns: Date, Amount, Platform, Description
+                </p>
+                {csvError && <p className="font-ui text-[10px] text-danger mt-1">{csvError}</p>}
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={e => {
+                    if (e.target.files?.[0]) {
+                      setCsvFile(e.target.files[0]);
+                      setCsvError(null);
+                    }
+                  }}
+                  className="hidden"
+                  id="csv-file-input"
+                />
+                <label
+                  htmlFor="csv-file-input"
+                  className="mt-2 inline-block px-3 py-1.5 rounded-full bg-surface-container text-ink font-ui text-xs font-semibold shadow-[0_3px_0_0_#d8c3ad] hover:bg-surface-high cursor-pointer"
+                >
+                  Browse file
+                </label>
+              </div>
+            )}
+
+            {/* Bank statement */}
+            {selectedMethod === 'bank' && (
+              <div className="p-3.5 rounded-btn bg-surface-low space-y-1.5">
+                <p className="font-questrial text-[13px] text-ink-muted">
+                  Simulate connecting your salary or digital savings account via a mock Account Aggregator protocol.
+                </p>
+                <div className="font-ui text-[11px] text-secondary-deep flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-secondary" />
+                  100% read-only metadata ingestion
                 </div>
               </div>
             )}
 
-            {/* Bank Statement */}
-            {selectedMethod === 'bank' && (
-              <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs text-slate-300">
-                <p>Simulate connecting your salary or digital savings account via mock Account Aggregator protocol.</p>
-                <div className="text-[11px] text-emerald-400">● 100% read-only metadata ingestion</div>
-              </div>
-            )}
-
             <button
+              type="button"
               onClick={handleConnect}
               disabled={isConnecting}
-              className="w-full py-3 rounded-xl font-bold text-xs sm:text-sm bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20"
+              className="w-full py-3 rounded-full font-ui font-bold text-sm bg-secondary text-white shadow-[0_5px_0_0_#065f46] hover:brightness-105 active:translate-y-1 active:shadow-[0_2px_0_0_#065f46] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isConnecting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  <span>Connecting Securely...</span>
+                  <MaterialIcon name="progress_activity" className="text-lg animate-spin" />
+                  <span>Connecting securely…</span>
                 </>
               ) : (
                 <>
-                  <span>Connect & Ingest Past Payouts</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Connect &amp; ingest past payouts</span>
+                  <MaterialIcon name="arrow_forward" className="text-lg" />
                 </>
               )}
             </button>
           </div>
         ) : (
-          <div className="mt-6 text-center space-y-4 py-3">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-7 h-7" />
+          <div className="mt-5 text-center space-y-4">
+            <div className="w-14 h-14 rounded-full bg-secondary/15 text-secondary-deep flex items-center justify-center mx-auto">
+              <MaterialIcon name="check_circle" className="text-3xl" filled />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Connected Successfully!</h3>
-              <p className="text-xs text-slate-400 mt-1">
-                Ingested recent settlement records into your Income stream.
+              <h3 className="font-questrial text-lg text-ink">Connected successfully!</h3>
+              <p className="font-ui text-[11px] text-ink-subtle mt-1">
+                Ingested recent settlement records into your income stream.
               </p>
             </div>
-            <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 text-left text-xs space-y-1 font-mono text-slate-300">
+            <div className="p-3 rounded-btn bg-surface-low text-left font-currency tabular-nums text-[11px] text-ink-muted space-y-1">
               {ingestedRecords.map((r, idx) => (
-                <div key={idx}>• {r.date} — ₹{r.amount.toLocaleString('en-IN')} ({r.platform} • Synced)</div>
+                <div key={idx}>
+                  • {r.date} — <Currency value={r.amount} /> ({r.platform} • Synced)
+                </div>
               ))}
             </div>
             <button
+              type="button"
               onClick={handleReset}
-              className="w-full py-2.5 rounded-xl font-bold text-xs bg-emerald-500 text-slate-950 hover:bg-emerald-400"
+              className="w-full py-3 rounded-full font-ui font-bold text-sm bg-secondary text-white shadow-[0_4px_0_0_#065f46] hover:brightness-105 active:translate-y-1 active:shadow-[0_1px_0_0_#065f46] transition-all cursor-pointer"
             >
-              View Updated Income
+              View updated income
             </button>
           </div>
         )}
