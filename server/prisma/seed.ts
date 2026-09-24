@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { createUserWithOnboardData } from '../src/services/seed.service.js';
 
 const prisma = new PrismaClient();
+const TX_TIMEOUT_MS = 120_000;
 
 async function main() {
   const email = 'demo@earnwise.app';
@@ -11,20 +12,23 @@ async function main() {
   const existing = await prisma.user.findUnique({ where: { email } });
   if (existing) {
     console.log(`Demo user already exists (${email}). Re-seeding data.`);
-    await prisma.$transaction(async (tx) => {
-      await tx.ledgerEntry.deleteMany({ where: { userId: existing.id } });
-      await tx.ledgerAccount.deleteMany({ where: { userId: existing.id } });
-      await tx.payoutRun.deleteMany({ where: { userId: existing.id } });
-      await tx.automationLog.deleteMany({ where: { userId: existing.id } });
-      await tx.chatMessage.deleteMany({ where: { userId: existing.id } });
-      await tx.transaction.deleteMany({ where: { userId: existing.id } });
-      await tx.expense.deleteMany({ where: { userId: existing.id } });
-      await tx.savingsGoal.deleteMany({ where: { userId: existing.id } });
-      await tx.incomeSource.deleteMany({ where: { userId: existing.id } });
-      await tx.savingsSettings.deleteMany({ where: { userId: existing.id } });
-      await tx.taxProfile.deleteMany({ where: { userId: existing.id } });
-      await tx.investmentProfile.deleteMany({ where: { userId: existing.id } });
-    });
+    await prisma.$transaction(
+      async (tx) => {
+        await tx.ledgerEntry.deleteMany({ where: { userId: existing.id } });
+        await tx.ledgerAccount.deleteMany({ where: { userId: existing.id } });
+        await tx.payoutRun.deleteMany({ where: { userId: existing.id } });
+        await tx.automationLog.deleteMany({ where: { userId: existing.id } });
+        await tx.chatMessage.deleteMany({ where: { userId: existing.id } });
+        await tx.transaction.deleteMany({ where: { userId: existing.id } });
+        await tx.expense.deleteMany({ where: { userId: existing.id } });
+        await tx.savingsGoal.deleteMany({ where: { userId: existing.id } });
+        await tx.incomeSource.deleteMany({ where: { userId: existing.id } });
+        await tx.savingsSettings.deleteMany({ where: { userId: existing.id } });
+        await tx.taxProfile.deleteMany({ where: { userId: existing.id } });
+        await tx.investmentProfile.deleteMany({ where: { userId: existing.id } });
+      },
+      { timeout: TX_TIMEOUT_MS }
+    );
     await createUserWithOnboardData(prisma, existing.id);
     console.log('Demo user data refreshed.');
     return;
@@ -32,12 +36,15 @@ async function main() {
 
   const passwordHash = await bcrypt.hash(password, 12);
 
-  await prisma.$transaction(async (tx) => {
-    const user = await tx.user.create({
-      data: { name: 'Rahul', email, passwordHash, occupation: 'Delivery Partner' }
-    });
-    await createUserWithOnboardData(tx, user.id);
-  });
+  await prisma.$transaction(
+    async (tx) => {
+      const user = await tx.user.create({
+        data: { name: 'Rahul', email, passwordHash, occupation: 'Delivery Partner' }
+      });
+      await createUserWithOnboardData(tx, user.id);
+    },
+    { timeout: TX_TIMEOUT_MS }
+  );
 
   console.log(`Created demo user: ${email} / ${password}`);
 }
