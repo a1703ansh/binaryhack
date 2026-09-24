@@ -24,20 +24,20 @@
   "dependencies": {
     "@earnwise/shared": "*",
     "@types/canvas-confetti": "^1.9.0",
-    "canvas-confetti": "^1.9.4",
-    "lucide-react": "^1.47.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
-  },
-  "devDependencies": {
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
-    "concurrently": "^9.1.2",
-    "oxlint": "^1.81.0",
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.47.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "oxlint": "^1.81.0"
   },
   "allowScripts": {
     "@prisma/client@6.19.3": true,
